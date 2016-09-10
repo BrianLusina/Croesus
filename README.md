@@ -55,6 +55,9 @@
 5. __<app>/wsgi.py__
    Entry point for WSGI compatible web servers to save your project
     
+## teamdirectory app
+  
+  
 ## Models
 
 This defines the data structure and communicates with the database. It is a good way to organize the data.
@@ -119,4 +122,5 @@ First register your app in the projects `settings` file.
 
 In the `settings.py` file, you will find a list called `INSTALLED_APPS`, register your application name there.
 Then render the template in the views like so:
+    
     
