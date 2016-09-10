@@ -10,10 +10,10 @@
 </head>
 <body>
 <h1>Team</h1>
-<% for person in person %}
-    <p>{{ person.first_name }}</p>
-    <p>{{ person.last_name }}</p>
-    <p>{{ person.email }}</p>
+{% for p in person %}
+    <p>{{ p.first_name }}</p>
+    <p>{{ p.last_name }}</p>
+    <p>{{ p.email }}</p>
 {% endfor %}
 </body>
 </html>
