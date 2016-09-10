@@ -54,9 +54,11 @@
 
 5. __<app>/wsgi.py__
    Entry point for WSGI compatible web servers to save your project
-    
-## teamdirectory app
   
+    
+### teamdirectory app
+  
+  An app displaying the team involved in building this application
   
 ## Models
 
