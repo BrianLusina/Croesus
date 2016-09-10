@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Team Directory</title>
 </head>
 <body>
-
+<h1>Team</h1>
+<% for person in person %}
+    <p>{{ person.first_name }}</p>
+    <p>{{ person.last_name }}</p>
+    <p>{{ person.email }}</p>
+{% endfor %}
 </body>
 </html>
