@@ -11,5 +11,9 @@ def team_directory(request):
 # takes in a request and a slug field which will enable a display like this brian-lusina-ombito
 def member_detail(request, slug):
     person = Person.objects.get(slug=slug)
-    context = {"persion": person}
+    context = {"person": person}
     return render(request=request, template_name="member_detail.html", context=context)
+
+
+def member_edit(request):
+    pass
