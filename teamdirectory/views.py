@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Person
 from .forms import PersonForm
 
+
 # Create your views here.
 def team_directory(request):
     context = {"person": Person.objects.all()}
@@ -17,5 +18,5 @@ def member_detail(request, slug):
 
 def member_edit(request, slug):
     form = PersonForm
-    context = {"form":form}
+    context = {"form": form}
     return render(request=request, template_name='member_edit.html', context=context)

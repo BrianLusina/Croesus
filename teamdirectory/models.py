@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
 
 
 # Create your models here.
@@ -10,12 +11,13 @@ class Person(models.Model):
     slug = models.SlugField(max_length=1000, blank=True)
     email = models.CharField(max_length=200)
     title = models.CharField(max_length=100)
-    linkedin_url = models.CharField(max_length=200, null=True)
-    github_url = models.CharField(max_length=200, null=True)
-    twitter_url = models.CharField(max_length=200, null=True)
+    linkedin = models.CharField(max_length=200, null=True)
+    github = models.CharField(max_length=200, null=True)
+    twitter = models.CharField(max_length=200, null=True)
     image = models.CharField(max_length=500)
     responsibilities = models.CharField(max_length=1000, default='')
     bio = models.CharField(max_length=1000, default='')
+    birthday = models.DateField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         if not self.pk:
