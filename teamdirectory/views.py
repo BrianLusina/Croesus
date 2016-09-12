@@ -4,6 +4,7 @@ from .forms import PersonForm
 from django.forms.models import model_to_dict
 from django.core.urlresolvers import reverse
 
+
 # Create your views here.
 def team_directory(request):
     context = {"person": Person.objects.all()}
