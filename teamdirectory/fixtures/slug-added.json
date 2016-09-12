@@ -3,7 +3,7 @@
     "model": "teamdirectory.person",
     "pk": 1,
     "fields": {
-      "name": "Adam Fortuna",
+      "first_name": "Adam Fortuna",
       "slug": "adam-fortuna",
       "title": "Course Director",
       "email": "adam@codeschool.com",
@@ -14,7 +14,7 @@
     "model": "teamdirectory.person",
     "pk": 2,
     "fields": {
-      "name": "Adam Rensel",
+      "first_name": "Adam Rensel",
       "slug": "adam-rensel",
       "title": "Developer",
       "email": "adamrensel@codeschool.com",
@@ -25,7 +25,7 @@
     "model": "teamdirectory.person",
     "pk": 3,
     "fields": {
-      "name": "Ann Grafelman",
+      "first_name": "Ann Grafelman",
       "slug": "ann-grafelman",
       "title": "Designer",
       "email": "ann@codeschool.com",
@@ -36,7 +36,7 @@
     "model": "teamdirectory.person",
     "pk": 4,
     "fields": {
-      "name": "Ashley Emert",
+      "first_name": "Ashley Emert",
       "slug": "ashley-emert",
       "title": "Copy Specialist",
       "email": "aemert@codeschool.com",
@@ -47,7 +47,7 @@
     "model": "teamdirectory.person",
     "pk": 5,
     "fields": {
-      "name": "Ashley Smith",
+      "first_name": "Ashley Smith",
       "slug": "ashley-smith",
       "title": "Chief Operating Officer",
       "email": "ashley@codeschool.com",
@@ -58,7 +58,7 @@
     "model": "teamdirectory.person",
     "pk": 6,
     "fields": {
-      "name": "Bijan Boustani",
+      "first_name": "Bijan Boustani",
       "slug": "bijan-boustani",
       "title": "Developer",
       "email": "bijan@codeschool.com",
@@ -69,7 +69,7 @@
     "model": "teamdirectory.person",
     "pk": 7,
     "fields": {
-      "name": "Brittany Luttrell",
+      "first_name": "Brittany Luttrell",
       "slug": "brittany-luttrell",
       "title": "Team Support Specialist",
       "email": "brittany@codeschool.com",
@@ -80,7 +80,7 @@
     "model": "teamdirectory.person",
     "pk": 8,
     "fields": {
-      "name": "Brittany Stephens",
+      "first_name": "Brittany Stephens",
       "slug": "brittany-stephens",
       "title": "Administrative Assistant",
       "email": "bstephens@codeschool.com",
@@ -91,7 +91,7 @@
     "model": "teamdirectory.person",
     "pk": 9,
     "fields": {
-      "name": "Carlos Souza",
+      "first_name": "Carlos Souza",
       "slug": "carlos-souza",
       "title": "Content Author",
       "email": "carlos@codeschool.com",
@@ -102,7 +102,7 @@
     "model": "teamdirectory.person",
     "pk": 10,
     "fields": {
-      "name": "Cher Cloude",
+      "first_name": "Cher Cloude",
       "slug": "cher-cloude",
       "title": "Designer",
       "email": "cher@codeschool.com",
@@ -113,7 +113,7 @@
     "model": "teamdirectory.person",
     "pk": 11,
     "fields": {
-      "name": "Christine Wong",
+      "first_name": "Christine Wong",
       "slug": "christine-wong",
       "title": "Office Manager",
       "email": "christine@codeschool.com",
@@ -124,7 +124,7 @@
     "model": "teamdirectory.person",
     "pk": 12,
     "fields": {
-      "name": "Corey Rabazinski",
+      "first_name": "Corey Rabazinski",
       "slug": "corey-rabazinski",
       "title": "Marketing Manager",
       "email": "corey@codeschool.com",
@@ -135,7 +135,7 @@
     "model": "teamdirectory.person",
     "pk": 13,
     "fields": {
-      "name": "Dan Bickford",
+      "first_name": "Dan Bickford",
       "slug": "dan-bickford",
       "title": "Developer",
       "email": "dbickford@codeschool.com",
@@ -146,7 +146,7 @@
     "model": "teamdirectory.person",
     "pk": 14,
     "fields": {
-      "name": "Dan Denney",
+      "first_name": "Dan Denney",
       "slug": "dan-denney",
       "title": "Front-end Developer",
       "email": "dand@codeschool.com",
@@ -157,7 +157,7 @@
     "model": "teamdirectory.person",
     "pk": 15,
     "fields": {
-      "name": "Drew Barontini",
+      "first_name": "Drew Barontini",
       "slug": "drew-barontini",
       "title": "Front-end Director",
       "email": "drew@codeschool.com",
@@ -168,7 +168,7 @@
     "model": "teamdirectory.person",
     "pk": 16,
     "fields": {
-      "name": "Eric Fisher",
+      "first_name": "Eric Fisher",
       "slug": "eric-fisher",
       "title": "Content Author",
       "email": "eric@codeschool.com",
@@ -179,7 +179,7 @@
     "model": "teamdirectory.person",
     "pk": 17,
     "fields": {
-      "name": "Hampton Paulk",
+      "first_name": "Hampton Paulk",
       "slug": "hampton-paulk",
       "title": "Senior Content Producer",
       "email": "hampton@codeschool.com",
@@ -190,7 +190,7 @@
     "model": "teamdirectory.person",
     "pk": 18,
     "fields": {
-      "name": "Hemarie Jones",
+      "first_name": "Hemarie Jones",
       "slug": "hemarie-jones",
       "title": "Marketing Project Manager",
       "email": "hemarie@codeschool.com",
@@ -201,7 +201,7 @@
     "model": "teamdirectory.person",
     "pk": 19,
     "fields": {
-      "name": "Joel Taylor",
+      "first_name": "Joel Taylor",
       "slug": "joel-taylor",
       "title": "Developer",
       "email": "joel@codeschool.com",
@@ -212,7 +212,7 @@
     "model": "teamdirectory.person",
     "pk": 20,
     "fields": {
-      "name": "John Jameson",
+      "first_name": "John Jameson",
       "slug": "john-jameson",
       "title": "Front-end Developer",
       "email": "jdj@codeschool.com",
@@ -223,7 +223,7 @@
     "model": "teamdirectory.person",
     "pk": 21,
     "fields": {
-      "name": "Jon Friskics",
+      "first_name": "Jon Friskics",
       "slug": "jon-friskics",
       "title": "Content Director",
       "email": "jon@codeschool.com",
@@ -234,7 +234,7 @@
     "model": "teamdirectory.person",
     "pk": 22,
     "fields": {
-      "name": "Jordan Wade",
+      "first_name": "Jordan Wade",
       "slug": "jordan-wade",
       "title": "Front-end Developer",
       "email": "jordan@codeschool.com",
@@ -245,7 +245,7 @@
     "model": "teamdirectory.person",
     "pk": 23,
     "fields": {
-      "name": "Joseph Perez",
+      "first_name": "Joseph Perez",
       "slug": "joseph-perez",
       "title": "Support Director",
       "email": "joseph@codeschool.com",
@@ -256,7 +256,7 @@
     "model": "teamdirectory.person",
     "pk": 24,
     "fields": {
-      "name": "Justin Mezzell",
+      "first_name": "Justin Mezzell",
       "slug": "justin-mezzell",
       "title": "Art Director",
       "email": "justin@codeschool.com",
@@ -267,7 +267,7 @@
     "model": "teamdirectory.person",
     "pk": 25,
     "fields": {
-      "name": "Katie Delfin",
+      "first_name": "Katie Delfin",
       "slug": "katie-delfin",
       "title": "Developer",
       "email": "katie@codeschool.com",
@@ -278,7 +278,7 @@
     "model": "teamdirectory.person",
     "pk": 26,
     "fields": {
-      "name": "Matt Adams",
+      "first_name": "Matt Adams",
       "slug": "matt-adams",
       "title": "Data Analyst",
       "email": "matt@codeschool.com",
@@ -289,7 +289,7 @@
     "model": "teamdirectory.person",
     "pk": 27,
     "fields": {
-      "name": "Morgan Laco",
+      "first_name": "Morgan Laco",
       "slug": "morgan-laco",
       "title": "Developer",
       "email": "morgan@codeschool.com",
@@ -300,7 +300,7 @@
     "model": "teamdirectory.person",
     "pk": 28,
     "fields": {
-      "name": "Neela Balkaran",
+      "first_name": "Neela Balkaran",
       "slug": "neela-balkaran",
       "title": "Developer",
       "email": "neela@codeschool.com",
@@ -311,7 +311,7 @@
     "model": "teamdirectory.person",
     "pk": 29,
     "fields": {
-      "name": "Nicholas Roberts",
+      "first_name": "Nicholas Roberts",
       "slug": "nicholoas-roberts",
       "title": "Marketing Coordinator",
       "email": "nroberts@codeschool.com",
@@ -322,7 +322,7 @@
     "model": "teamdirectory.person",
     "pk": 30,
     "fields": {
-      "name": "Nick Wronski",
+      "first_name": "Nick Wronski",
       "slug": "nick-wronski",
       "title": "Developer",
       "email": "nwronski@codeschool.com",
@@ -333,7 +333,7 @@
     "model": "teamdirectory.person",
     "pk": 31,
     "fields": {
-      "name": "Oliver Tosh",
+      "first_name": "Oliver Tosh",
       "slug": "oliver-tosh",
       "title": "Media Production Specialist",
       "email": "oliver@codeschool.com",
@@ -344,7 +344,7 @@
     "model": "teamdirectory.person",
     "pk": 32,
     "fields": {
-      "name": "Olivia Howard",
+      "first_name": "Olivia Howard",
       "slug": "olivia-howard",
       "title": "Designer",
       "email": "olivia@codeschool.com",
@@ -355,7 +355,7 @@
     "model": "teamdirectory.person",
     "pk": 33,
     "fields": {
-      "name": "Olivier Lacan",
+      "first_name": "Olivier Lacan",
       "slug": "olivier-lacan",
       "title": "Developer",
       "email": "olivier@codeschool.com",
@@ -366,7 +366,7 @@
     "model": "teamdirectory.person",
     "pk": 34,
     "fields": {
-      "name": "Robert Babcock",
+      "first_name": "Robert Babcock",
       "slug": "robert-babcock",
       "title": "Technical Support Specialist",
       "email": "robert@codeschool.com",
@@ -377,7 +377,7 @@
     "model": "teamdirectory.person",
     "pk": 35,
     "fields": {
-      "name": "Russell Centanni",
+      "first_name": "Russell Centanni",
       "slug": "russel-centanni",
       "title": "Developer",
       "email": "russell@codeschool.com",
@@ -388,7 +388,7 @@
     "model": "teamdirectory.person",
     "pk": 36,
     "fields": {
-      "name": "Samantha Anastasia",
+      "first_name": "Samantha Anastasia",
       "slug": "samantha-anastasia",
       "title": "Senior Project Manager",
       "email": "samantha@codeschool.com",
@@ -399,7 +399,7 @@
     "model": "teamdirectory.person",
     "pk": 37,
     "fields": {
-      "name": "Sarah Doss",
+      "first_name": "Sarah Doss",
       "slug": "sarah-doss",
       "title": "HR/Culture Coordinator",
       "email": "sarahdoss@codeschool.com",
@@ -410,7 +410,7 @@
     "model": "teamdirectory.person",
     "pk": 38,
     "fields": {
-      "name": "Sarah Holderness",
+      "first_name": "Sarah Holderness",
       "slug": "sarah-holderness",
       "title": "Content Author",
       "email": "sholderness@codeschool.com",
@@ -421,7 +421,7 @@
     "model": "teamdirectory.person",
     "pk": 39,
     "fields": {
-      "name": "Sarah Imbert",
+      "first_name": "Sarah Imbert",
       "slug": "sarah-imbert",
       "title": "Project Manager",
       "email": "sarah@codeschool.com",
@@ -432,7 +432,7 @@
     "model": "teamdirectory.person",
     "pk": 40,
     "fields": {
-      "name": "Sergio Cruz",
+      "first_name": "Sergio Cruz",
       "slug": "sergio-cruz",
       "title": "Developer",
       "email": "sergio@codeschool.com",
@@ -443,7 +443,7 @@
     "model": "teamdirectory.person",
     "pk": 41,
     "fields": {
-      "name": "Stefan Nychka",
+      "first_name": "Stefan Nychka",
       "slug": "stefan-nychka",
       "title": "Technical Support Specialist",
       "email": "stefan@codeschool.com",
@@ -454,7 +454,7 @@
     "model": "teamdirectory.person",
     "pk": 42,
     "fields": {
-      "name": "Thomas Meeks",
+      "first_name": "Thomas Meeks",
       "slug": "thomas-meeks",
       "title": "Internal Development Director",
       "email": "thomas@codeschool.com",
@@ -465,7 +465,7 @@
     "model": "teamdirectory.person",
     "pk": 43,
     "fields": {
-      "name": "Zach Cowart",
+      "first_name": "Zach Cowart",
       "slug": "zach-cowart",
       "title": "Customer Support Specialist",
       "email": "zach@codeschool.com",

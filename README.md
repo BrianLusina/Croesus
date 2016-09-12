@@ -125,4 +125,6 @@ First register your app in the projects `settings` file.
 In the `settings.py` file, you will find a list called `INSTALLED_APPS`, register your application name there.
 Then render the template in the views like so:
     
+## Slug View Model
     
+Slugs are used to display usernames like this `firstname-lastname` 
