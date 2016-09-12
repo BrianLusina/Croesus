@@ -1,11 +1,11 @@
 {% load staticfiles %}
 {% block content %}
 <main>
-    <h1>Directory</h1>
-        {% for person in people %}
+    <h1>The Team</h1>
+        {% for p in person %}
         <section>
             <a href="{% url 'detail' person.slug %}"> <img src="{{ person.image }}"/> </a>
-            <h2>{{ person.name }}</h2>
+            <h2>{{ p.first_name }}</h2>
             <p class="person-title">{{ person.title }}</p>
             <p class="person-email">{{ person.email }}</p>
         </section>
