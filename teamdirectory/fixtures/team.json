@@ -1,6 +1,6 @@
 [
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 1,
     "fields": {
       "name": "Adam Fortuna",
@@ -10,7 +10,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 2,
     "fields": {
       "name": "Adam Rensel",
@@ -20,7 +20,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 3,
     "fields": {
       "name": "Ann Grafelman",
@@ -30,7 +30,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 4,
     "fields": {
       "name": "Ashley Emert",
@@ -40,7 +40,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 5,
     "fields": {
       "name": "Ashley Smith",
@@ -50,7 +50,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 6,
     "fields": {
       "name": "Bijan Boustani",
@@ -60,7 +60,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 7,
     "fields": {
       "name": "Brittany Luttrell",
@@ -70,7 +70,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 8,
     "fields": {
       "name": "Brittany Stephens",
@@ -80,7 +80,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 9,
     "fields": {
       "name": "Carlos Souza",
@@ -90,7 +90,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 10,
     "fields": {
       "name": "Cher Cloude",
@@ -100,7 +100,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 11,
     "fields": {
       "name": "Christine Wong",
@@ -110,7 +110,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 12,
     "fields": {
       "name": "Corey Rabazinski",
@@ -120,7 +120,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 13,
     "fields": {
       "name": "Dan Bickford",
@@ -130,7 +130,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 14,
     "fields": {
       "name": "Dan Denney",
@@ -140,7 +140,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 15,
     "fields": {
       "name": "Drew Barontini",
@@ -150,7 +150,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 16,
     "fields": {
       "name": "Eric Fisher",
@@ -160,7 +160,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 17,
     "fields": {
       "name": "Hampton Paulk",
@@ -170,7 +170,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 18,
     "fields": {
       "name": "Hemarie Jones",
@@ -180,7 +180,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 19,
     "fields": {
       "name": "Joel Taylor",
@@ -190,7 +190,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 20,
     "fields": {
       "name": "John Jameson",
@@ -200,7 +200,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 21,
     "fields": {
       "name": "Jon Friskics",
@@ -210,7 +210,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 22,
     "fields": {
       "name": "Jordan Wade",
@@ -220,7 +220,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 23,
     "fields": {
       "name": "Joseph Perez",
@@ -230,7 +230,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 24,
     "fields": {
       "name": "Justin Mezzell",
@@ -240,7 +240,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 25,
     "fields": {
       "name": "Katie Delfin",
@@ -250,7 +250,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 26,
     "fields": {
       "name": "Matt Adams",
@@ -260,7 +260,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 27,
     "fields": {
       "name": "Morgan Laco",
@@ -270,7 +270,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 28,
     "fields": {
       "name": "Neela Balkaran",
@@ -280,7 +280,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 29,
     "fields": {
       "name": "Nicholas Roberts",
@@ -290,7 +290,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 30,
     "fields": {
       "name": "Nick Wronski",
@@ -300,7 +300,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 31,
     "fields": {
       "name": "Oliver Tosh",
@@ -310,7 +310,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 32,
     "fields": {
       "name": "Olivia Howard",
@@ -320,7 +320,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 33,
     "fields": {
       "name": "Olivier Lacan",
@@ -330,7 +330,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 34,
     "fields": {
       "name": "Robert Babcock",
@@ -340,7 +340,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 35,
     "fields": {
       "name": "Russell Centanni",
@@ -350,7 +350,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 36,
     "fields": {
       "name": "Samantha Anastasia",
@@ -360,7 +360,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 37,
     "fields": {
       "name": "Sarah Doss",
@@ -370,7 +370,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 38,
     "fields": {
       "name": "Sarah Holderness",
@@ -380,7 +380,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 39,
     "fields": {
       "name": "Sarah Imbert",
@@ -390,7 +390,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 40,
     "fields": {
       "name": "Sergio Cruz",
@@ -400,7 +400,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 41,
     "fields": {
       "name": "Stefan Nychka",
@@ -410,7 +410,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 42,
     "fields": {
       "name": "Thomas Meeks",
@@ -420,7 +420,7 @@
     }
   },
   {
-    "model": "www.person",
+    "model": "teamdirectory.person",
     "pk": 43,
     "fields": {
       "name": "Zach Cowart",
