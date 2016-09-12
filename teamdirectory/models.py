@@ -23,3 +23,6 @@ class Person(models.Model):
     def __repr__(self):
         return "<id: %r, Title: %r, Name:<%r %r>, Email: %r ImgUrl: %r>" % (
             self.id, self.title, self.first_name, self.last_name, self.email, self.image)
+
+    def __str__(self):
+        return self.first_name
