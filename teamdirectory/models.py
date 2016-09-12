@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -12,7 +13,12 @@ class Person(models.Model):
     github_url = models.CharField(max_length=200, null=True)
     twitter_url = models.CharField(max_length=200, null=True)
     image = models.CharField(max_length=500)
-    slug = models.SlugField(max_length=100)
+    slug = models.SlugField(max_length=100, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            slug = slugify(self.first_name + self.last_name)
+        super(Person, self, *args, **kwargs)
 
     def __repr__(self):
         return "<id: %r, Title: %r, Name:<%r %r>, Email: %r ImgUrl: %r>" % (
