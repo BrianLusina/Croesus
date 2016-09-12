@@ -18,7 +18,7 @@ class Person(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             slug = slugify(self.first_name + self.last_name)
-        super(Person, self, *args, **kwargs)
+        super(Person, self).save(*args, **kwargs)
 
     def __repr__(self):
         return "<id: %r, Title: %r, Name:<%r %r>, Email: %r ImgUrl: %r>" % (
