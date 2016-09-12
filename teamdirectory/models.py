@@ -12,6 +12,7 @@ class Person(models.Model):
     github_url = models.CharField(max_length=200, null=True)
     twitter_url = models.CharField(max_length=200, null=True)
     image = models.CharField(max_length=500)
+    slug = models.SlugField(max_length=100)
 
     def __repr__(self):
         return "<id: %r, Title: %r, Name:<%r %r>, Email: %r ImgUrl: %r>" % (
