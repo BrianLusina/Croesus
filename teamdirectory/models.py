@@ -14,6 +14,8 @@ class Person(models.Model):
     twitter_url = models.CharField(max_length=200, null=True)
     image = models.CharField(max_length=500)
     slug = models.SlugField(max_length=100, blank=True)
+    responsibilities = models.CharField(max_length=1000, default='')
+    bio = models.CharField(max_length=1000, default='')
 
     def save(self, *args, **kwargs):
         if not self.pk:
