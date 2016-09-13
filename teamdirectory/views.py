@@ -9,12 +9,12 @@ from django.core.urlresolvers import reverse
 def team_directory(request):
     context = {"person": Person.objects.all()}
     if request.user.is_authenticated():
-        return render(request, 'team.html', context=context)
+        return render(request=request, template_name='team.html', context=context)
     else:
-        return redirect('/login/google-oauth2')
+        return redirect(to='/login/google-oauth2')
 
 
-# takes in a request and a slug fiel which will enable a display like this brian-lusina-ombito
+# takes in a request and a slug field which will enable a display like this brian-lusina-ombito
 def member_detail(request, slug):
     person = Person.objects.get(slug=slug)
     context = {"person": person}
