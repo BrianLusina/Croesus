@@ -5,7 +5,7 @@
         <h1>Directory</h1>
           <section>
             {% if user.email == person.email %}
-            <a href="{% url 'edit' person.slug %}">edit</a>
+              <a href="{% url 'member_edit' person.slug %}">edit</a>
             {% endif %}
             <img src="{{ person.image }}"/>
             <h2>{{ person.name }}</h2>
