@@ -26,6 +26,7 @@ PyYAML==3.12
 requests==2.11.1
 requests-file==1.4
 requests-oauthlib==0.6.2
+scikit-learn==0.18
 six==1.10.0
 tldextract==2.0.1
 whitenoise==3.2.1
