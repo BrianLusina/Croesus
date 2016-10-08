@@ -40,6 +40,10 @@ Main Components
   content: 'mobile';
   display: none;
 }
+
+.events li a{
+  color:white !important;
+}
 .cd-horizontal-timeline.loaded {
   /* show the timeline after events position has been set (using JavaScript) */
   opacity: 1;
@@ -68,13 +72,13 @@ Main Components
 }
 .cd-horizontal-timeline .events-wrapper::before {
   left: 0;
-  background-image: -webkit-linear-gradient( left , #f8f8f8, rgba(248, 248, 248, 0));
-  background-image: linear-gradient(to right, #f8f8f8, rgba(248, 248, 248, 0));
+  background-image: -webkit-linear-gradient( left , #2A2B30, rgba(248, 248, 248, 0));
+  background-image: linear-gradient(to right, #2A2B30, rgba(248, 248, 248, 0));
 }
 .cd-horizontal-timeline .events-wrapper::after {
   right: 0;
-  background-image: -webkit-linear-gradient( right , #f8f8f8, rgba(248, 248, 248, 0));
-  background-image: linear-gradient(to left, #f8f8f8, rgba(248, 248, 248, 0));
+  background-image: -webkit-linear-gradient( right , #2A2B30, rgba(248, 248, 248, 0));
+  background-image: linear-gradient(to left, #2A2B30, rgba(248, 248, 248, 0));
 }
 .cd-horizontal-timeline .events {
   /* this is the grey line/timeline */
@@ -211,7 +215,7 @@ Main Components
   -ms-transform: translateX(-50%) translateY(-50%);
   -o-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  background: url(../img/cd-arrow.svg) no-repeat 0 0;
+  background: url(images/cd-arrow.svg) no-repeat 0 0;
 }
 .cd-timeline-navigation a.prev {
   left: 0;
