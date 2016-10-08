@@ -107,14 +107,8 @@
 					"When people ask me why I don't eat meat or any other animal products, I say, 'Because they are unhealthy and they are the product of a violent and inhumane industry.'" &mdash;
 				</p>
 			</header>
-            <main>
-                <!--contain contact section-->
-                <section id="contact-form-container">
-
-                </section>
                 <!--where the timeline will go-->
                 {% include 'aboutus-timeline.html' %}
-            </main>
 		</div>
 
 		<!--Blog and News page-->
@@ -138,9 +132,13 @@
 					"My belief is that communication is the best way to create strong relationships." &mdash; Jada Pinkett Smith
 				</p>
 			</header>
+            <main>
+                <!--contact form-->
+                {% include 'contactform.html' %}
 
-			<!--where the custom map will render-->
-			{% include 'contact-custommap.html' %}
+			    <!--where the custom map will render-->
+			    {% include 'contact-custommap.html' %}
+            </main>
 		</div>
 	</div>
 	<!-- /pages-stack -->
