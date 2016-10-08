@@ -208,7 +208,7 @@ Form
   padding: 16px 20px;
   color: #ffffff;
   font-weight: bold;
-  float: right;
+  width:100%;
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -233,7 +233,7 @@ Form
   transform: scale(0.9);
 }
 .cd-form [required] {
-  background: url("../img/cd-required.svg") no-repeat top right;
+  background: url("images/contact-form/cd-required.svg") no-repeat top right;
 }
 .cd-form .error-message p {
   background: #e94b35;
@@ -315,28 +315,28 @@ Custom icons
 
 }
 .cd-form [required].user {
-  background: url("contact-form/images/cd-icon-user.svg") no-repeat 16px center, url("contact-form/images/cd-required.svg") no-repeat top right;
+  background: url("images/contact-form/cd-icon-user.svg") no-repeat 16px center, url("images/contact-form/cd-required.svg") no-repeat top right;
 }
 .cd-form .company {
-  background: url("contact-form/images/cd-icon-company.svg") no-repeat 16px center;
+  background: url("images/contact-form/images/cd-icon-company.svg") no-repeat 16px center;
   color:black !important;
 }
 .cd-form [required].company {
-  background: url("contact-form/images/cd-icon-company.svg") no-repeat 16px center, url("contact-form/images/cd-required.svg") no-repeat top right;
+  background: url("images/contact-form/cd-icon-company.svg") no-repeat 16px center, url("images/contact-form/cd-required.svg") no-repeat top right;
 
 }
 .cd-form .email {
-  background: url("contact-form/images/cd-icon-email.svg") no-repeat 16px center;
+  background: url("images/contact-form/cd-icon-email.svg") no-repeat 16px center;
 }
 .cd-form [required].email {
-  background: url("contact-form/images/cd-icon-email.svg") no-repeat 16px center, url("contact-form/images/cd-required.svg") no-repeat top right;
+  background: url("images/contact-form/cd-icon-email.svg") no-repeat 16px center, url("images/contact-form/cd-required.svg") no-repeat top right;
 }
 
 .cd-form .message {
-  background: url("contact-form/images/cd-icon-message.svg") no-repeat 16px 16px;
+  background: url("images/contact-form/cd-icon-message.svg") no-repeat 16px 16px;
 }
 .cd-form [required].message {
-  background: url("contact-form/images/cd-icon-message.svg") no-repeat 16px 16px, url("contact-form/images/cd-required.svg") no-repeat top right;
+  background: url("images/contact-form/cd-icon-message.svg") no-repeat 16px 16px, url("images/contact-form/cd-required.svg") no-repeat top right;
 }
 
 /* --------------------------------

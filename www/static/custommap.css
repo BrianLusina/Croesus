@@ -1,7 +1,6 @@
 /* --------------------------------
 
 Main components
-  background-color: #e7eaf0;
 -------------------------------- */
 #contact-form-map-container{
     display:flex;
@@ -25,10 +24,29 @@ Main components
 }
 
 @media only screen and (min-width: 768px) {
-  #google-container {
-    height: 300px;
-  }
+
+    #google-container {
+        height: 300px;
+    }
 }
+
+@media only screen and (max-width:600px){
+    #contact-form-map-container{
+        display:block;
+    }
+
+    #contact-form-container{
+        width:100%;
+        display:block;
+    }
+
+    #cd-google-map{
+        width: 100%;
+        display:block;
+    }
+
+}
+
 @media only screen and (min-width: 1170px) {
   #google-container {
     height: 600px;
