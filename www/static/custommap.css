@@ -10,6 +10,11 @@ Main components
   height: 200px;
   background-color: #e7eaf0;
 }
+
+address{
+  width: 50% !important;
+}
+
 @media only screen and (min-width: 768px) {
   #google-container {
     height: 300px;
@@ -51,7 +56,7 @@ Main components
   background-color: rgba(211, 104, 104, 0.9);
   background-repeat: no-repeat;
   background-size: 32px 64px;
-  background-image: url("../img/cd-icon-controller.svg");
+  background-image: url("images/cd-icon-controller.svg");
 }
 .no-touch #cd-zoom-in:hover, .no-touch #cd-zoom-out:hover {
   background-color: #d36868;
