@@ -7,11 +7,6 @@ img {
   max-width: 100% !important ;
 }
 
-/* --------------------------------
-
-Modules - reusable parts of our design
-
--------------------------------- */
 .cd-container {
   /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
   width: 90% !important ;
@@ -97,9 +92,11 @@ Modules - reusable parts of our design
   -moz-transition: opacity 0.2s, background-color 0.2s !important ;
   transition: opacity 0.2s, background-color 0.2s !important ;
 }
-.no-touch .cd-trigger:hover {
-  background: rgba(0, 0, 0, 0.2) !important;
+
+.cd-trigger:hover {
+  background-color:rgba(192,192,192,0.5);
 }
+
 @media only screen and (min-width: 1024px) {
   .cd-trigger {
     /* always visible on small devices */
@@ -324,14 +321,14 @@ Modules - reusable parts of our design
   appearance: none !important ;
   border-radius: 0.25em !important ;
   border: none !important ;
-  padding: .6em 1.2em !important ;
+  padding: 1.0em 3.5em !important ;
   background-color: #f82f53 !important ;
   color: #ffffff !important ;
   -webkit-font-smoothing: antialiased !important ;
   -moz-osx-font-smoothing: grayscale !important ;
   font-family: "PT Sans", sans-serif !important ;
   font-size: 16px !important ;
-  font-size: 1rem !important ;
+  font-size: 1.3rem !important ;
   cursor: pointer !important ;
 }
 .add-content .cd-item-info {
