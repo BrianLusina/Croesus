@@ -10,7 +10,6 @@ def home(request):
     :return: renders the home page
     """
     context = {'news': fetch_news()}
-    print(context)
     return render(request=request, template_name='index.html')
 
 
@@ -21,24 +20,19 @@ def fetch_news():
     """
     news = {}
 
-    motley_fool_investingnews = newspaper.build("http://www.fool.com/investing-news/")
-    african_market_news = newspaper.build("https://www.african-markets.com/en/news")
+    bloomberg = newspaper.build("http://www.bloomberg.com/europe")
 
     # get the urls and pass them into Article
-    for news_articles in motley_fool_investingnews.articles:
-        count = 0
+    for news_articles in bloomberg.articles:
+        count = 1
         article = Article(news_articles.url)
         article.download()
         article.parse()
-        article.nlp()
-        news = {"news" + str(count): {'authors': article.authors,
-                                      "date": article.publish_date,
-                                      'text': article.text,
-                                      'top_image': article.top_image,
-                                      "movies": article.movies,
-                                      "summary": article.summary
-                                      }
-                }
+        news["news" + str(count)] = {'authors': article.authors,
+                                     "date": article.publish_date,
+                                     'text': article.text,
+                                     'top_image': article.top_image,
+                                     "movies": article.movies,
+                                     }
         count += 1
-
     return news
