@@ -311,14 +311,14 @@ Custom icons
   color:white;
 }
 .cd-form .user {
-  background: url("contact-form/images/cd-icon-user.svg") no-repeat 16px center;
+  background: url("images/contact-form/images/cd-icon-user.svg") no-repeat 16px center;
 
 }
 .cd-form [required].user {
   background: url("images/contact-form/cd-icon-user.svg") no-repeat 16px center, url("images/contact-form/cd-required.svg") no-repeat top right;
 }
 .cd-form .company {
-  background: url("images/contact-form/images/cd-icon-company.svg") no-repeat 16px center;
+  background: url("images/contact-form/cd-icon-company.svg") no-repeat 16px center;
   color:black !important;
 }
 .cd-form [required].company {
