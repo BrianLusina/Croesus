@@ -1,5 +1,6 @@
 <section id="contact-form-container">
-	<form class="cd-form floating-labels">
+	<form class="cd-form floating-labels" action="contact/">
+		{% csrf_token %}
 		<fieldset>
 			<div class="icon">
 				<label class="cd-label" for="cd-name">Name</label>

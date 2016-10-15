@@ -9,7 +9,6 @@ def home(request):
     :param request that will be handle by the url
     :return: renders the home page
     """
-    context = {'news': fetch_news()}
     return render(request=request, template_name='index.html')
 
 
@@ -18,21 +17,17 @@ def fetch_news():
     fetch the news and blog posts for the blogs and news section
     :return: a dictionary with the blogs and news items
     """
-    news = {}
+    investopedia = newspaper.build("http://www.investopedia.com/")
 
-    bloomberg = newspaper.build("http://www.bloomberg.com/europe")
+    for categories in investopedia.category_urls():
+        print(categories)
 
-    # get the urls and pass them into Article
-    for news_articles in bloomberg.articles:
-        count = 1
-        article = Article(news_articles.url)
-        article.download()
-        article.parse()
-        news["news" + str(count)] = {'authors': article.authors,
-                                     "date": article.publish_date,
-                                     'text': article.text,
-                                     'top_image': article.top_image,
-                                     "movies": article.movies,
-                                     }
-        count += 1
-    return news
+
+def contact(request):
+    """
+    Handles the contact form, picks data and sends the contact form to server
+    :param request: the request handle by this function
+    :return:
+    """
+    
+    pass
