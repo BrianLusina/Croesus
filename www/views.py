@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from newspaper import Article
 import newspaper
+from .forms import ContactForm
 
 
 def home(request):
@@ -29,5 +30,8 @@ def contact(request):
     :param request: the request handle by this function
     :return:
     """
-    
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+
+
     pass

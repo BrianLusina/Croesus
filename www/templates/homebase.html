@@ -47,6 +47,14 @@
 
 	<link rel="stylesheet" type="text/css" href="{% static 'index.css' %}" />
 	<script src="{% static 'js/vendor/modernizr-custom.js' %}"></script>
+
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+        emailjs.init("user_n6D1blF4cSJhBZkK6Qugw");
+        })();
+    </script>
+
 </head>
 <body>
   {% block content %}
@@ -72,6 +80,9 @@
 
   <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 
+  <script>
+    emailjs.sendForm("gmail","template_qrsDHDOo","contact_form")
+    </script>
 </body>
 
 </html>
