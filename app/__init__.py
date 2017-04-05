@@ -63,6 +63,12 @@ def error_handlers(app):
     Error handlers function that will initialize error handling templates for the entire application
     :param app: the flask app
     """
+    @app.errorhandler(404)
+    def not_found(error):
+        """
+        This will handle errors that involve 404 messages
+        :return: a template instructing user they have sent a request that does not exist on the server
+        """
 
 
 def register_app_blueprints(app):
