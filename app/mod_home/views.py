@@ -1,16 +1,17 @@
-from django.shortcuts import render
-from newspaper import Article
+from . import home
 import newspaper
-from .forms import ContactForm
+from flask import render_template
+from app.forms import ContactForm
 
 
-def home(request):
+@home.route("")
+def home():
     """
     Entry point into the app
     :param request that will be handle by the url
     :return: renders the home page
     """
-    return render(request=request, template_name='index.html')
+    return render_template("home/index.html")
 
 
 def fetch_news():
@@ -32,6 +33,5 @@ def contact(request):
     """
     if request.method == "POST":
         form = ContactForm(request.POST)
-
 
     pass
