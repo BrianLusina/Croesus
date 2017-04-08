@@ -76,3 +76,6 @@ def register_app_blueprints(app):
     Registers the application blueprints
     :param app: the current flask app
     """
+    from app.mod_dashboard import dashboard
+
+    app.register_blueprint(dashboard)

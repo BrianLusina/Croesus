@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from . import dashboard
+from flask import render_template, url_for
 
 
-def dashboard(request):
-    return render(request=request, template_name='mod_dashboard.html')
+@dashboard.route("")
+def dashboard():
+    return render_template("dashboard/dashboard.html")
