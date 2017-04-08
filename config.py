@@ -63,8 +63,8 @@ class Config(object):
     #     }
     # }
 
-    @abstractmethod
-    def init_app(self, app):
+    @staticmethod
+    def init_app(app):
         """Initializes the current application"""
         pass
 
@@ -74,9 +74,6 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-
-    def init_app(self, app):
-        super().init_app(app)
 
 
 class TestingConfig(Config):
@@ -91,9 +88,6 @@ class TestingConfig(Config):
     CSRF_ENABLED = False
     PRESERVE_CONTEXT_ON_EXCEPTION = False
 
-    def init_app(self, app):
-        super().init_app(app)
-
 
 class ProductionConfig(Config):
     """
@@ -103,8 +97,6 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     ADMINS = [os.environ.get("ADMIN_EMAIL_1")]
 
-    def init_app(self, app):
-        super().init_app(app)
 
 config = {
     'development': DevelopmentConfig,

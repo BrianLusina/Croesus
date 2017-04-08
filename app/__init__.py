@@ -24,7 +24,7 @@ def create_app(config_name):
     app = Flask(__name__, static_folder="static", template_folder="templates")
 
     # configure the application with the given configuration name, testing, development, production
-    app.config.from_object(config_name)
+    app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
     # initialize the db
