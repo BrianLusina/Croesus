@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm
-
+from wtforms import StringField, PasswordField, TextAreaField
+from wtforms.validators import DataRequired, Email
 
 
 class ContactForm(FlaskForm):
     """
     Form will have name, company, email, project description
     """
-    name = forms.CharField(label="Name", required=True)
-    company = forms.CharField(label="Company", required=False)
-    email = forms.EmailField(label="Email", widget=forms.EmailInput, required=True, validators=[validate_email])
-    projectDesc = forms.CharField(label="Project Description", widget=forms.Textarea, required=True)
+    name = StringField(label="Name", )
+    company = StringField(label="Company")
+    email = StringField(label="Email", validators=[DataRequired(), Email()])
+    projectDesc = TextAreaField(label="Project Description", validators=[DataRequired()])

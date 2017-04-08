@@ -69,4 +69,5 @@ def test(cover=False):
 
 
 if __name__ == "__main__":
+    print("Application created in: {} mode".format(app.config))
     manager.run()
