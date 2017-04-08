@@ -1,8 +1,8 @@
-from django import forms
-from django.core.validators import validate_email
+from flask_wtf import FlaskForm
 
 
-class ContactForm(forms.Form):
+
+class ContactForm(FlaskForm):
     """
     Form will have name, company, email, project description
     """
