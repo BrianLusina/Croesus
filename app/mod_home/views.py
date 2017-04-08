@@ -5,6 +5,8 @@ from app.forms import ContactForm
 
 
 @home.route("")
+@home.route("home")
+@home.route("index")
 def home():
     """
     Entry point into the app

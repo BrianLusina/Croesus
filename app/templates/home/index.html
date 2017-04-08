@@ -1,4 +1,4 @@
-{% extends 'homebase.html' %}
+{% extends 'base.html' %}
 {% block content %}
 	<!-- navigation -->
 	<nav class="pages-nav">
@@ -20,10 +20,12 @@
 			<a class="link link--social link--faded" href="#"><i class="fa fa-facebook"></i><span class="text-hidden">Facebook</span></a>
 		</div>
 	</nav>
+
 	<!-- /navigation-->
 	<!-- pages stack -->
 	<div class="pages-stack">
-		<!-- home page -->
+
+        <!-- home page -->
 		<div class="page" id="page-home">
 			<!-- Blueprint header -->
 			<header class="bp-header cf">
@@ -38,10 +40,11 @@
 				</nav>
 			</header>
             <!--todo: where content comes in-->
-			<img class="poster" src="images/1.jpg" alt="img01" />
+			<img class="poster" src="{{ url_for('static', filename='images/1.jpg') }}" alt="img01" />
 
 		</div>
-		<!-- documentation page -->
+
+        <!-- documentation page -->
 		<div class="page" id="page-docu">
 			<header class="bp-header cf">
 				<h1 class="bp-header__title">Documentation</h1>
@@ -50,7 +53,7 @@
 					"We cannot have peace among men whose hearts find delight in killing any living creature." &mdash; Rachel Carson
 				</p>
 			</header>
-			<img class="poster" src="images/6.jpg" alt="img06" />
+			<img class="poster" src="{{ url_for('static', filename='images/6.jpg') }}" alt="img06" />
 		</div>
 		<!--Manuals Page-->
 		<div class="page" id="page-manuals">
@@ -61,9 +64,10 @@
 					"When you adopt a vegan diet we make a connection, you don't go back, it is not a diet, it is a lifestyle." &mdash; Freelee Frugivore
 				</p>
 			</header>
-			<img class="poster" src="images/2.jpg" alt="img02" />
+			<img class="poster" src="{{ url_for('static', filename='images/2.jpg') }}" alt="img02" />
 		</div>
-		<!--Software page-->
+
+        <!--Software page-->
 		<div class="page" id="page-software">
 			<header class="bp-header cf">
 				<h1 class="bp-header__title">Software &amp; Downloads</h1>
@@ -72,8 +76,9 @@
 					"I decided to pick the diet that I thought would maximize my chances of long-term survival." &mdash; Al Gore
 				</p>
 			</header>
-			<img class="poster" src="images/3.jpg" alt="img03" />
+			<img class="poster" src="{{ url_for('static', filename='images/3.jpg') }}" alt="img03" />
 		</div>
+
 		<!--Customization and settings-->
 		<div class="page" id="page-custom">
 			<header class="bp-header cf">
@@ -83,8 +88,9 @@
 					"You have to make a conscious decision to change for your own well-being, that of your family and your country." &mdash;Bill Clinton
 				</p>
 			</header>
-			<img class="poster" src="images/4.jpg" alt="img04" />
+			<img class="poster" src="{{ url_for('static', filename='images/4.jpg') }}" alt="img04" />
 		</div>
+
 		<!--Training pages-->
 		<div class="page" id="page-training">
 			<header class="bp-header cf">
@@ -94,7 +100,7 @@
 					"The moment I began to understand what was going on with the treatment of animals, it led me more and more in the way of the path I am [on] now, which is a complete vegan." &mdash; Bryan Adams
 				</p>
 			</header>
-			<img class="poster" src="images/5.jpg" alt="img05" />
+			<img class="poster" src="{{ url_for('static', filename='images/5.jpg') }}" alt="img05" />
 		</div>
 
         <!--About page-->
@@ -108,7 +114,7 @@
 				</p>
 			</header>
                 <!--where the timeline will go-->
-                {% include 'aboutus-timeline.html' %}
+                {% include 'home/aboutus-timeline.html' %}
 		</div>
 
 		<!--Blog and News page-->
@@ -120,7 +126,7 @@
 				</p>
 			</header>
 			<!--Blogs and news container-->
-            {% include 'blogsnews.html' %}
+            {% include 'home/blogsnews.html' %}
 
 		</div>
 
@@ -135,13 +141,14 @@
 			</header>
             <main id="contact-form-map-container">
                 <!--contact form-->
-                {% include 'contactform.html' %}
+                {% include 'home/contactform.html' %}
 
 			    <!--where the custom map will render-->
-			    {% include 'contact-custommap.html' %}
+			    {% include 'home/contact-custommap.html' %}
             </main>
 		</div>
 	</div>
+
 	<!-- /pages-stack -->
 	<button class="menu-button"><span>Menu</span></button>
 

@@ -69,5 +69,5 @@ def test(cover=False):
 
 
 if __name__ == "__main__":
-    print("Application created in: {} mode".format(app.config))
+    print("App created in: {} mode".format(app.config.get(os.getenv("FLASK_CONFIG") or "default")))
     manager.run()
