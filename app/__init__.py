@@ -7,6 +7,43 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 from flask_login import LoginManager
+import jinja2
+
+
+class ArcoApp(Flask):
+    """
+    Custom application class subclassing Flask application. This is to ensure more modularity in terms
+    of static files and templates. This way a module will have its own templates and the root template
+    folder will be more modularized and easier to manage
+    """
+    def __init__(self):
+        """
+        jinja_loader object (a FileSystemLoader pointing to the global templates folder) is being
+        replaced with a ChoiceLoader object that will first search the normal FileSystemLoader and
+        then check a PrefixLoader that we create
+        """
+        Flask.__init__(self, __name__, static_folder="static", template_folder="templates")
+        self.jinja_loader = jinja2.ChoiceLoader([
+            self.jinja_loader,
+            jinja2.PrefixLoader({}, delimiter=".")
+        ])
+
+    def create_global_jinja_loader(self):
+        """
+        Overriding to return the loader set up in __init__
+        :return: jinja_loader 
+        """
+        return self.jinja_loader
+
+    def register_blueprint(self, blueprint, **options):
+        """
+        Overriding to add the blueprint’s name to the prefix loader’s mapping
+        :param blueprint: 
+        :param options: 
+        """
+        Flask.register_blueprint(self, blueprint, **options)
+        self.jinja_loader.loaders[1].mapping[blueprint.name] = blueprint.jinja_loader
+
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -21,7 +58,7 @@ def create_app(config_name):
     :return: a new WSGI Flask app
     :rtype: Flask
     """
-    app = Flask(__name__, static_folder="static", template_folder="templates")
+    app = ArcoApp()
 
     # configure the application with the given configuration name, testing, development, production
     app.config.from_object(config[config_name])
@@ -29,8 +66,8 @@ def create_app(config_name):
 
     # initialize the db
     db.init_app(app)
-
     # initialize the login manager
+
     login_manager.init_app(app)
 
     error_handlers(app)
@@ -63,6 +100,7 @@ def error_handlers(app):
     Error handlers function that will initialize error handling templates for the entire application
     :param app: the flask app
     """
+
     @app.errorhandler(404)
     def not_found(error):
         """
