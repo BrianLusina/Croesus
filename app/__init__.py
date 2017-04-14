@@ -75,6 +75,9 @@ def create_app(config_name):
     app_request_handlers(app)
     app_logger_handler(app)
 
+    # this will reduce the load time for templates and increase the application performance
+    app.jinja_env.cache = {}
+
     return app
 
 

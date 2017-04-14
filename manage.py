@@ -76,6 +76,20 @@ def test(cover=False):
         cov.erase()
 
 
+@manager.command
+def profile(length=25, profile_dir=None):
+    """
+    This module provides a simple WSGI profiler middleware for finding 
+    bottlenecks in web application. It uses the profile or cProfile 
+    module to do the profiling and writes the stats to the stream provided
+    
+    see: http://werkzeug.pocoo.org/docs/0.9/contrib/profiler/
+    """
+    from werkzeug.contrib.profiler import ProfilerMiddleware
+
+    app.config["PROFILE"] = True
+    app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length], profile_dir=profile_dir)
+    app.run()
+
 if __name__ == "__main__":
-    print("App created in: {} mode".format(app.config.get(os.getenv("FLASK_CONFIG") or "default")))
     manager.run()
