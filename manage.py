@@ -3,6 +3,14 @@ from app import create_app, db
 from flask_script import Manager, Shell, Server
 from flask_migrate import Migrate, MigrateCommand
 
+# import environment variables
+if os.path.exists(".env"):
+    print("Importing environment variables")
+    for line in open(".env"):
+        var = line.strip().split("=")
+        if len(var) == 2:
+            os.environ[var[0]] = var[1]
+
 # create the application with given configuration from environment
 # todo: set the creation of the application based on whether debug is true or false
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
