@@ -23,7 +23,7 @@ class ArcoApp(Flask):
         replaced with a ChoiceLoader object that will first search the normal FileSystemLoader and
         then check a PrefixLoader that we create
         """
-        Flask.__init__(self, __name__, static_folder="static", template_folder="templates")
+        Flask.__init__(self, __name__)
         self.jinja_loader = jinja2.ChoiceLoader([
             self.jinja_loader,
             jinja2.PrefixLoader({}, delimiter=".")
@@ -61,7 +61,8 @@ def create_app(config_name):
     """
     app = ArcoApp()
 
-    # configure the application with the given configuration name, testing, development, production
+    # configure the application with the given configuration name, testing, development,
+    # production
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 

@@ -17,8 +17,9 @@ app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
 # import the data with app context
 # this prevents the data from being deleted after every migration
-with app.app_context():
-    from app.models import *
+
+# with app.app_context():
+    # from app.models import *
 
 manager = Manager(app)
 migrate = Migrate(app, db)
