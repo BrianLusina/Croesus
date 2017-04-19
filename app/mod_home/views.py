@@ -13,7 +13,7 @@ def home():
     :param request that will be handle by the url
     :return: renders the home page
     """
-    return render_template("home/index.html")
+    return render_template("home.index.html")
 
 
 def fetch_news():

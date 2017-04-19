@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 This defines the application module that essentially creates a new flask app object
 """
