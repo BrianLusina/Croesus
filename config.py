@@ -25,7 +25,7 @@ class Config(object):
 
     __abstract__ = True
     __metaclass__ = ABCMeta
-
+    SSL_DISABLE = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'arco'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
@@ -33,7 +33,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'
     CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
-    CELERY_RESULT_BACKEND=os.environ.get("CELERY_RESULT_BACKEND")
+    CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
     ROOT_DIR = APP_ROOT
     WTF_CSRF_ENABLED = True
     CSRF_ENABLED = True
@@ -44,15 +44,15 @@ class Config(object):
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 465
-    MAIL_USE_TLS = False
-    MAIL_USE_SSL = True
+    MAIL_USE_TLS = True
 
     # gmail authentication
-    # MAIL_USERNAME = os.environ['APP_MAIL_USERNAME']
-    # MAIL_PASSWORD = os.environ['APP_MAIL_PASSWORD']
-    #
-    # MAIL_DEFAULT_SENDER = os.environ["MAIL_DEFAULT_SENDER"]
-    #
+    MAIL_SUBJECT_PREFIX = '[Arco]'
+    MAIL_USERNAME = os.environ['MAIL_USERNAME']
+    MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
+    MAIL_SENDER = 'Arco Admin <arcoadmin@arco.com>'
+    MAIL_DEFAULT_SENDER = os.environ["MAIL_DEFAULT_SENDER"]
+
     # # credentials for external service accounts
     # OAUTH_CREDENTIALS = {
     #     "facebook": {
@@ -99,10 +99,67 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     ADMINS = [os.environ.get("ADMIN_EMAIL_1")]
 
+    @classmethod
+    def init_app(cls, app):
+        Config.init_app(app)
+
+        # email errors to the administrators
+        import logging
+        from logging.handlers import SMTPHandler
+        credentials = None
+        secure = None
+        if getattr(cls, 'MAIL_USERNAME', None) is not None:
+            credentials = (cls.MAIL_USERNAME, cls.MAIL_PASSWORD)
+            if getattr(cls, 'MAIL_USE_TLS', None):
+                secure = ()
+        mail_handler = SMTPHandler(
+            mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
+            fromaddr=cls.MAIL_SENDER,
+            toaddrs=[cls.ADMINS],
+            subject=cls.MAIL_SUBJECT_PREFIX + ' Application Error',
+            credentials=credentials,
+            secure=secure)
+        mail_handler.setLevel(logging.ERROR)
+        app.logger.addHandler(mail_handler)
+
+
+class HerokuConfig(ProductionConfig):
+    SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+
+    @classmethod
+    def init_app(cls, app):
+        ProductionConfig.init_app(app)
+
+        # handle proxy server headers
+        from werkzeug.contrib.fixers import ProxyFix
+        app.wsgi_app = ProxyFix(app.wsgi_app)
+
+        # log to stderr
+        import logging
+        from logging import StreamHandler
+        file_handler = StreamHandler()
+        file_handler.setLevel(logging.WARNING)
+        app.logger.addHandler(file_handler)
+
+
+class UnixConfig(ProductionConfig):
+    @classmethod
+    def init_app(cls, app):
+        ProductionConfig.init_app(app)
+
+        # log to syslog
+        import logging
+        from logging.handlers import SysLogHandler
+        syslog_handler = SysLogHandler()
+        syslog_handler.setLevel(logging.WARNING)
+        app.logger.addHandler(syslog_handler)
+
 
 config = {
     'develop': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
-    'default': DevelopmentConfig
+    'default': DevelopmentConfig,
+    "heroku": HerokuConfig,
+    'unix': UnixConfig,
 }
