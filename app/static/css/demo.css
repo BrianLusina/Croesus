@@ -4,16 +4,10 @@
 	font-family: 'bpicons';
 	font-weight: normal;
 	font-style: normal;
-	src: url('../../../mod_home/static/fonts/bpicons/bpicons.eot');
-	src: url('../../../mod_home/static/fonts/bpicons/bpicons.eot?#iefix') format('embedded-opentype'),
-	url('../../../mod_home/static/fonts/bpicons/bpicons.woff') format('woff'), url('../../../mod_home/static/fonts/bpicons/bpicons.ttf') format('truetype'), url('../../../mod_home/static/fonts/bpicons/bpicons.svg#bpicons') format('svg');
+	src: url('../fonts/bpicons/bpicons.eot');
+	src: url('../fonts/bpicons/bpicons.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/bpicons/bpicons.woff') format('woff'), url('../fonts/bpicons/bpicons.ttf') format('truetype'), url('../fonts/bpicons/bpicons.svg#bpicons') format('svg');
 }
-
-
-/* Made with http://icomoon.io/ */
-
-
-/* Resets */
 
 *,
 *:after,

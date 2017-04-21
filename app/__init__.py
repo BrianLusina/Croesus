@@ -38,7 +38,7 @@ class ArcoApp(Flask):
 
     def register_blueprint(self, blueprint, **options):
         """
-        Overriding to add the blueprint’s name to the prefix loader’s mapping
+        Overriding to add the blueprints names to the prefix loader's mapping
         :param blueprint: 
         :param options: 
         """
@@ -68,8 +68,8 @@ def create_app(config_name):
 
     # initialize the db
     db.init_app(app)
-    # initialize the login manager
 
+    # initialize the login manager
     login_manager.init_app(app)
 
     error_handlers(app)
@@ -110,7 +110,8 @@ def error_handlers(app):
     def not_found(error):
         """
         This will handle errors that involve 404 messages
-        :return: a template instructing user they have sent a request that does not exist on the server
+        :return: a template instructing user they have sent a request that does not exist on the
+         server
         """
 
 

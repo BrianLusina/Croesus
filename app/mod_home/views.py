@@ -7,7 +7,7 @@ from app.forms import ContactForm
 @home.route("")
 @home.route("home")
 @home.route("index")
-def home():
+def index():
     """
     Entry point into the app
     :param request that will be handle by the url

@@ -74,14 +74,12 @@ Main components
 }
 
 #cd-zoom-in, #cd-zoom-out {
-  height: 32px;
-  width: 32px;
-  cursor: pointer;
-  margin-left: 10px;
-  background-color: rgba(211, 104, 104, 0.9);
-  background-repeat: no-repeat;
-  background-size: 32px 64px;
-  background-image: url("../../img/cd-icon-controller.svg");
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    margin-left: 10px;
+    background-size: 32px 64px;
+    background: rgba(211, 104, 104, 0.9) url("../images/cd-icon-controller.svg") no-repeat;
 }
 .no-touch #cd-zoom-in:hover, .no-touch #cd-zoom-out:hover {
   background-color: #d36868;
