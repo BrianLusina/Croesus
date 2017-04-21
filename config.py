@@ -32,6 +32,8 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'
+    CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+    CELERY_RESULT_BACKEND=os.environ.get("CELERY_RESULT_BACKEND")
     ROOT_DIR = APP_ROOT
     WTF_CSRF_ENABLED = True
     CSRF_ENABLED = True

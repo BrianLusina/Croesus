@@ -2,6 +2,7 @@ from . import home
 import newspaper
 from flask import render_template
 from app.forms import ContactForm
+from app import celery
 
 
 @home.route("")
@@ -13,12 +14,16 @@ def index():
     :param request that will be handle by the url
     :return: renders the home page
     """
+
+    fetch_news().delay()
     return render_template("home.index.html")
 
 
+@celery.task
 def fetch_news():
     """
     fetch the news and blog posts for the blogs and news section
+    This will be done on a different thread
     :return: a dictionary with the blogs and news items
     """
     investopedia = newspaper.build("http://www.investopedia.com/")

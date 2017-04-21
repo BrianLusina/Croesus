@@ -2,13 +2,23 @@
 """
 This defines the application module that essentially creates a new flask app object
 """
-from config import config
+from config import config, Config
 from flask import render_template, Flask
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 from flask_login import LoginManager
 import jinja2
+from celery import Celery
+
+# initialize objects of flask extensions that will be used and then initialize the application
+# once the flask object has been created and initialized. 1 caveat for this is that when
+#  configuring Celery, the broker will remain constant for all configurations
+db = SQLAlchemy()
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "auth.login"
+celery = Celery(__name__, Config.CELERY_BROKER_URL)
 
 
 class ArcoApp(Flask):
@@ -46,12 +56,6 @@ class ArcoApp(Flask):
         self.jinja_loader.loaders[1].mapping[blueprint.name] = blueprint.jinja_loader
 
 
-db = SQLAlchemy()
-login_manager = LoginManager()
-login_manager.session_protection = "strong"
-login_manager.login_view = "auth.login"
-
-
 def create_app(config_name):
     """
     Creates a new flask app instance with the given configuration
@@ -65,6 +69,9 @@ def create_app(config_name):
     # production
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+
+    # configure celery
+    celery.conf.update(app.config)
 
     # initialize the db
     db.init_app(app)
