@@ -86,15 +86,15 @@ img {
   -webkit-font-smoothing: antialiased !important ;
   -moz-osx-font-smoothing: grayscale !important ;
   color: #ffffff !important ;
-  opacity: 0 !important ;
-  visibility: hidden !important ;
+  opacity: 1 !important ;
+  visibility: visible !important ;
   -webkit-transition: opacity 0.2s, background-color 0.2s !important ;
   -moz-transition: opacity 0.2s, background-color 0.2s !important ;
   transition: opacity 0.2s, background-color 0.2s !important ;
 }
 
 .cd-trigger:hover {
-  background-color:rgba(192,192,192,0.5);
+  background-color:rgba(192,192,192,0.5) !important;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -107,7 +107,8 @@ img {
 @media only screen and (min-width: 1170px) {
   .cd-trigger {
     /* only visible on hover on big devices */
-    opacity: 0 !important ;
+    opacity: 1 !important;
+    visibility: visible !important ;
   }
 }
 
