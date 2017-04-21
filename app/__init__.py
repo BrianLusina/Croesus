@@ -10,15 +10,7 @@ import os
 from flask_login import LoginManager
 import jinja2
 from celery import Celery
-
-# initialize objects of flask extensions that will be used and then initialize the application
-# once the flask object has been created and initialized. 1 caveat for this is that when
-#  configuring Celery, the broker will remain constant for all configurations
-db = SQLAlchemy()
-login_manager = LoginManager()
-login_manager.session_protection = "strong"
-login_manager.login_view = "auth.login"
-celery = Celery(__name__, Config.CELERY_BROKER_URL)
+import redis
 
 
 class ArcoApp(Flask):
@@ -27,6 +19,7 @@ class ArcoApp(Flask):
     of static files and templates. This way a module will have its own templates and the root template
     folder will be more modularized and easier to manage
     """
+
     def __init__(self):
         """
         jinja_loader object (a FileSystemLoader pointing to the global templates folder) is being
@@ -56,6 +49,18 @@ class ArcoApp(Flask):
         self.jinja_loader.loaders[1].mapping[blueprint.name] = blueprint.jinja_loader
 
 
+# initialize objects of flask extensions that will be used and then initialize the application
+# once the flask object has been created and initialized. 1 caveat for this is that when
+#  configuring Celery, the broker will remain constant for all configurations
+db = SQLAlchemy()
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "auth.login"
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL, backend=Config.CELERY_RESULT_BACKEND)
+redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
+                             db=Config.REDIS_DB)
+
+
 def create_app(config_name):
     """
     Creates a new flask app instance with the given configuration
@@ -67,6 +72,7 @@ def create_app(config_name):
 
     # configure the application with the given configuration name, testing, development,
     # production
+
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
@@ -75,6 +81,15 @@ def create_app(config_name):
 
     # initialize the db
     db.init_app(app)
+
+    # redis configuration
+    # redisdb = Config.REDIS_DB
+    # redis_port = Config.REDIS_PORT
+    # redis_server = Config.REDIS_SERVER
+    #
+    # redis_db.set(name="host", value=redis_server)
+    # redis_db.set(name="port", value=redis_port)
+    # redis_db.set(name="db", value=redisdb)
 
     # initialize the login manager
     login_manager.init_app(app)

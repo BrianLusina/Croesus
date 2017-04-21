@@ -32,8 +32,14 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'
+
+    # task configurations
     CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+    REDIS_SERVER = os.environ.get("REDIS_SERVER")
+    REDIS_PORT = os.environ.get("REDIS_PORT")
+    REDIS_DB = os.environ.get("REDIS_DB")
+
     ROOT_DIR = APP_ROOT
     WTF_CSRF_ENABLED = True
     CSRF_ENABLED = True
@@ -48,10 +54,10 @@ class Config(object):
 
     # gmail authentication
     MAIL_SUBJECT_PREFIX = '[Arco]'
-    MAIL_USERNAME = os.environ['MAIL_USERNAME']
-    MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_SENDER = 'Arco Admin <arcoadmin@arco.com>'
-    MAIL_DEFAULT_SENDER = os.environ["MAIL_DEFAULT_SENDER"]
+    MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER")
 
     # # credentials for external service accounts
     # OAUTH_CREDENTIALS = {

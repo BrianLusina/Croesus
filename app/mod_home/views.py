@@ -2,7 +2,7 @@ from . import home
 import newspaper
 from flask import render_template
 from app.forms import ContactForm
-from app import celery
+from .. import celery
 
 
 @home.route("")
@@ -14,9 +14,14 @@ def index():
     :param request that will be handle by the url
     :return: renders the home page
     """
-
-    fetch_news().delay()
+    fetch_news.delay()
     return render_template("home.index.html")
+
+
+@celery.task
+def add(a, b):
+    print(a + b)
+    return a + b
 
 
 @celery.task
@@ -26,10 +31,12 @@ def fetch_news():
     This will be done on a different thread
     :return: a dictionary with the blogs and news items
     """
+    results = []
     investopedia = newspaper.build("http://www.investopedia.com/")
 
     for categories in investopedia.category_urls():
-        print(categories)
+        results.append(categories)
+    return results
 
 
 def contact(request):
@@ -41,7 +48,7 @@ def contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
 
-    pass
+    return None
 
 
 # def team_directory(request):

@@ -5,7 +5,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 /bin/envvar.sh
-
+redis-stable
 .idea
 
 # C extensions
