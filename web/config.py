@@ -35,7 +35,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     POSTGRES_USER = os.environ.get("POSTGRES_USER")
     POSTGRES_DB = os.environ.get("POSTGRES_DB")
-    POSTGRES_PASSWORD = os.environ.get("POSTGRESS_PASSWORD")
+    POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
     DATABASE_CONNECT_OPTIONS = {}
 
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'

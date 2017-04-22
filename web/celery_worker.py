@@ -13,14 +13,10 @@ This creates a Flask application and pushes an application context, which will r
 import os
 
 from web.app import create_app
+from setup_environment import setup_environment_variables
 
 # import environment variables
-if os.path.exists(".env"):
-    print("Importing environment variables")
-    for line in open(".env"):
-        var = line.strip().split("=")
-        if len(var) == 2:
-            os.environ[var[0]] = var[1]
+setup_environment_variables()
 
 app = create_app(os.environ.get("FLASK_CONFIG", "default"))
 app.app_context().push()

@@ -3,7 +3,7 @@ from flask import render_template
 
 from forms import ContactForm
 from . import home
-from .. import celery
+from app import celery
 
 
 @home.route("")

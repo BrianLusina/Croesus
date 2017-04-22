@@ -3,8 +3,13 @@ This creates a docker file for the postgres configuration
 """
 import os
 from web.app import create_app
+from setup_environment import setup_environment_variables
 
-app = create_app(os.getenv("FLASK_CONFIG") or "default")
+setup_environment_variables()
+
+config_name = os.getenv("FLASK_CONFIG") or "default"
+
+app = create_app(config_name)
 
 # Postgres Initialization Files
 docker_file = 'Dockerfile'
@@ -19,8 +24,8 @@ if not os.path.isdir(destination_dir):
 with open(os.path.join(destination_dir, docker_file), 'w') as postgres_dockerfile:
     postgres_dockerfile.write('FROM postgres:9.6')
     postgres_dockerfile.write('\n')
-    postgres_dockerfile.write('\n# Set environment variables')
-    postgres_dockerfile.write('\nENV POSTGRES_USER {}'.format(app.config['POSTGRES_USER']))
-    postgres_dockerfile.write('\nENV POSTGRES_PASSWORD {}'.format(app.config['POSTGRES_PASSWORD']))
-    postgres_dockerfile.write('\nENV POSTGRES_DB {}'.format(app.config['POSTGRES_DB']))
+    postgres_dockerfile.write('\n# Set environment variables for postgres')
+    postgres_dockerfile.write('\nENV POSTGRES_USER {}'.format(app.config.get('POSTGRES_USER')))
+    postgres_dockerfile.write('\nENV POSTGRES_PASSWORD {}'.format(app.config.get('POSTGRES_PASSWORD')))
+    postgres_dockerfile.write('\nENV POSTGRES_DB {}'.format(app.config.get('POSTGRES_DB')))
     postgres_dockerfile.write('\n')

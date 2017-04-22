@@ -2,16 +2,11 @@ import os
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Shell, Server
-
+from setup_environment import setup_environment_variables
 from web.app import create_app, db
 
 # import environment variables
-if os.path.exists(".env"):
-    print("Importing environment variables")
-    for line in open(".env"):
-        var = line.strip().split("=")
-        if len(var) == 2:
-            os.environ[var[0]] = var[1]
+setup_environment_variables()
 
 # create the application with given configuration from environment
 # todo: set the creation of the application based on whether debug is true or false
@@ -21,7 +16,7 @@ app = create_app(os.getenv("FLASK_CONFIG") or "default")
 # this prevents the data from being deleted after every migration
 
 # with app.app_context():
-    # from app.models import *
+#     from app.models import *
 
 manager = Manager(app)
 migrate = Migrate(app, db)
