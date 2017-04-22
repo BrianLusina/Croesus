@@ -1,7 +1,6 @@
-import newspaper
+# import newspaper
 from flask import render_template
-
-from forms import ContactForm
+from app.forms import ContactForm
 from . import home
 from app import celery
 
@@ -15,7 +14,7 @@ def index():
     :param request that will be handle by the url
     :return: renders the home page
     """
-    fetch_news.delay()
+    # fetch_news.delay()
     return render_template("home.index.html")
 
 
@@ -25,19 +24,19 @@ def add(a, b):
     return a + b
 
 
-@celery.task
-def fetch_news():
-    """
-    fetch the news and blog posts for the blogs and news section
-    This will be done on a different thread
-    :return: a dictionary with the blogs and news items
-    """
-    results = []
-    investopedia = newspaper.build("http://www.investopedia.com/")
-
-    for categories in investopedia.category_urls():
-        results.append(categories)
-    return results
+# @celery.task
+# def fetch_news():
+#     """
+#     fetch the news and blog posts for the blogs and news section
+#     This will be done on a different thread
+#     :return: a dictionary with the blogs and news items
+#     """
+#     results = []
+#     investopedia = newspaper.build("http://www.investopedia.com/")
+#
+#     for categories in investopedia.category_urls():
+#         results.append(categories)
+#     return results
 
 
 def contact(request):

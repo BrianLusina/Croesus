@@ -12,7 +12,7 @@ This creates a Flask application and pushes an application context, which will r
 """
 import os
 
-from web.app import create_app
+from app import create_app
 from setup_environment import setup_environment_variables
 
 # import environment variables

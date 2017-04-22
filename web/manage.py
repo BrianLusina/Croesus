@@ -3,7 +3,7 @@ import os
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager, Shell, Server
 from setup_environment import setup_environment_variables
-from web.app import create_app, db
+from app import create_app, db
 
 # import environment variables
 setup_environment_variables()
