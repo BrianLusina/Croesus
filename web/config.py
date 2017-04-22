@@ -27,10 +27,17 @@ class Config(object):
     __metaclass__ = ABCMeta
     SSL_DISABLE = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'arco'
+
+    # DATABASE CONFIGS
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    POSTGRES_USER = os.environ.get("POSTGRES_USER")
+    POSTGRES_DB = os.environ.get("POSTGRES_DB")
+    POSTGRES_PASSWORD = os.environ.get("POSTGRESS_PASSWORD")
+    DATABASE_CONNECT_OPTIONS = {}
+
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'
 
     # task configurations
@@ -45,7 +52,6 @@ class Config(object):
     CSRF_ENABLED = True
     CSRF_SESSION_KEY = os.environ.get("CSRF_SESSION_KEY")
     THREADS_PER_PAGE = 2
-    DATABASE_CONNECT_OPTIONS = {}
 
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
