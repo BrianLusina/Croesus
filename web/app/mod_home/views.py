@@ -1,7 +1,8 @@
-from . import home
 import newspaper
 from flask import render_template
-from app.forms import ContactForm
+
+from forms import ContactForm
+from . import home
 from .. import celery
 
 

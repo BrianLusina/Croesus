@@ -11,7 +11,8 @@ This creates a Flask application and pushes an application context, which will r
 (venv) $ celery worker -A celery_worker.celery --loglevel=info 
 """
 import os
-from app import celery, create_app
+
+from web.app import create_app
 
 # import environment variables
 if os.path.exists(".env"):

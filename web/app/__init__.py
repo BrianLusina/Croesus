@@ -2,15 +2,13 @@
 """
 This defines the application module that essentially creates a new flask app object
 """
-from config import config, Config
-from flask import render_template, Flask
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-import os
-from flask_login import LoginManager
 import jinja2
-from celery import Celery
 import redis
+from celery import Celery
+from config import config, Config
+from flask import Flask
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 
 class ArcoApp(Flask):
@@ -142,8 +140,8 @@ def register_app_blueprints(app):
     Registers the application blueprints
     :param app: the current flask app
     """
-    from app.mod_dashboard import dashboard
-    from app.mod_home import home
+    from mod_dashboard import dashboard
+    from web.app import home
 
     app.register_blueprint(home)
     app.register_blueprint(dashboard)
