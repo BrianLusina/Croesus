@@ -1,0 +1,41 @@
+version: "3.2"
+
+services:
+  web:
+    restart: always
+    build: ./web
+    ports:
+      - "5000:5000"
+    expose:
+      - "8000"
+    volumes:
+     - /usr/src/app/app/static
+    command: /usr/bin/python manage.py runserver
+    depends_on:
+     - postgres
+
+  redis:
+    restart: always
+    build: ./redis
+    volumes_from:
+      - web
+    depends_on:
+      - web
+
+  data:
+    image: postgres:9.6
+    volumes:
+      - /var/lib/postgresql
+    command: "true"
+
+  postgres:
+    restart: always
+    build: ./postgresql
+    volumes_from:
+      - data
+    ports:
+      - "5432:5432"
+
+
+
+
