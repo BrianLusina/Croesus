@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.0"
 
 services:
   web:
@@ -17,8 +17,8 @@ services:
   redis:
     restart: always
     build: ./redis
-    volumes_from:
-      - web
+    #volumes:
+    #  - web
     depends_on:
       - web
 
@@ -31,8 +31,8 @@ services:
   postgres:
     restart: always
     build: ./postgresql
-    volumes_from:
-      - data
+    #volumes:
+    #  - data
     ports:
       - "5432:5432"
 
