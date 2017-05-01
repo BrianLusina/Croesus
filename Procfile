@@ -1,1 +1,1 @@
-web: sh -c "cd teamdirectory && gunicorn arco.wsgi"
+web: gunicorn server:manage:app"

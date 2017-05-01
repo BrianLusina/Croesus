@@ -1,15 +1,16 @@
 import os
 
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate, MigrateCommand, upgrade
 from flask_script import Manager, Shell, Server
 from setup_environment import setup_environment_variables
 from app import create_app, db
+import alembic
+import alembic.config
 
 # import environment variables
 setup_environment_variables()
 
 # create the application with given configuration from environment
-# todo: set the creation of the application based on whether debug is true or false
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
 # import the data with app context
@@ -19,8 +20,9 @@ app = create_app(os.getenv("FLASK_CONFIG") or "default")
 #     from app.models import *
 
 manager = Manager(app)
-migrate = Migrate(app, db)
-server = Server(host="0.0.0.0", port=5000)
+migrate = Migrate(app, db, directory="migrations")
+server = Server(host="127.0.0.1", port=5000)
+public_server = Server(host="0.0.0.0", port=5000)
 
 
 def make_shell_context():
@@ -35,6 +37,7 @@ def make_shell_context():
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command("db", MigrateCommand)
 manager.add_command("runserver", server)
+manager.add_command("publicserver", public_server)
 
 cov = None
 if os.environ.get('FLASK_COVERAGE'):
@@ -88,6 +91,64 @@ def profile(length=25, profile_dir=None):
     app.config["PROFILE"] = True
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length], profile_dir=profile_dir)
     app.run()
+
+
+@manager.option('-m', '--migration',
+                help='create database from migrations',
+                action='store_true', default=None)
+def init_db(migration):
+    """drop all databases, instantiate schemas"""
+    db.drop_all()
+
+    if migration:
+        # create database using migrations
+        print("applying migrations")
+        upgrade()
+    else:
+        # create database from model schema directly
+        db.create_all()
+        db.session.commit()
+        cfg = alembic.config.Config("app/migrations/alembic.ini")
+        alembic.command.stamp(cfg, "head")
+        # todo: add default roles
+        # Role.add_default_roles()
+
+
+# todo: user commands
+# @manager.option('-e', '--email', help='email address', required=True)
+# @manager.option('-p', '--password', help='password', required=True)
+# @manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
+# def user_add(email, password, admin=False):
+#     """add a user to the database"""
+#     if admin:
+#         roles = ["Admin"]
+#     else:
+#         roles = ["User"]
+#     User.register(
+#         email=email,
+#         password=password,
+#         confirmed=True,
+#         roles=roles
+#     )
+
+
+# @manager.option('-e', '--email', help='email address', required=True)
+# def user_del(email):
+#     """delete a user from the database"""
+#     obj = User.find(email=email)
+#     if obj:
+#         obj.delete()
+#         print("Deleted")
+#     else:
+#         print("User not found")
+
+
+@manager.command
+def drop_db():
+    """drop all databases, instantiate schemas"""
+    db.reflect()
+    db.drop_all()
+
 
 if __name__ == "__main__":
     manager.run()
