@@ -2,7 +2,7 @@
 This creates a docker file for the postgres configuration
 """
 import os
-from web.app import create_app
+from server.app import create_app
 from setup_environment import setup_environment_variables
 
 setup_environment_variables()
