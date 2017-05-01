@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# diamdond-sample (c) Brian Lusina
+# Arco (c) Brian Lusina
 
 import re
 import os
