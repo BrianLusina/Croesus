@@ -1,9 +1,22 @@
 version: "3.0"
 
 services:
-  web:
+  client:
     restart: always
-    build: ./web
+    build: ./client
+    ports:
+      - "3000:3000"
+    expose:
+      - "5000"
+    volumes:
+      - /usr/src/app/
+    command: /usr/bin/npm run start
+    depends_on:
+      - server
+
+  server:
+    restart: always
+    build: ./server
     ports:
       - "5000:5000"
     expose:
@@ -20,7 +33,7 @@ services:
     #volumes:
     #  - web
     depends_on:
-      - web
+      - server
 
   data:
     image: postgres:9.6
