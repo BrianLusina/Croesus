@@ -13,9 +13,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 class ArcoApp(Flask):
     """
-    Custom application class subclassing Flask application. This is to ensure more modularity in terms
-    of static files and templates. This way a module will have its own templates and the root template
-    folder will be more modularized and easier to manage
+    Custom application class subclassing Flask application. This is to ensure more modularity in
+     terms of static files and templates. This way a module will have its own templates and the
+      root template folder will be more modularized and easier to manage
     """
 
     def __init__(self):
