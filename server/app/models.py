@@ -8,6 +8,7 @@ from sqlalchemy.ext.declarative import declared_attr
 from flask_login import UserMixin
 from . import db, login_manager
 from datetime import datetime
+from app import db
 
 
 # class Person(models.Model):

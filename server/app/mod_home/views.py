@@ -1,5 +1,5 @@
 # import newspaper
-from flask import render_template
+from flask import render_template, jsonify
 from app.forms import ContactForm
 from . import home
 from app import celery
@@ -16,6 +16,14 @@ def index():
     """
     # fetch_news.delay()
     return render_template("home.index.html")
+
+
+@home.route("json")
+def index_json():
+    return jsonify(
+        name="Brian", message="hello",
+        list=["me", "them"]
+    )
 
 
 @celery.task
@@ -49,7 +57,6 @@ def contact(request):
         form = ContactForm(request.POST)
 
     return None
-
 
 # def team_directory(request):
 #     context = {"person": Person.objects.all()}
