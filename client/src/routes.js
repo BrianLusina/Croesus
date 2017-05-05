@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import App from './containers/App';
 import DocumentationPage from './components/DocumentationsPage';
 import HomePage from './components/HomePage';
+import ManualPage from './components/ManualsPage';
 
 /**
  * Maps components to different routes in the application
@@ -16,7 +17,10 @@ import HomePage from './components/HomePage';
 
 export default (
     <App>
-        <Route component={HomePage} />
-        <Route component={DocumentationPage} />
+        <div className="pages-stack">
+            <Route component={HomePage} />
+            <Route component={DocumentationPage} />
+            <Route component={ManualPage}/>
+        </div>
     </App>
 )

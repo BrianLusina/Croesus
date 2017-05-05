@@ -18,7 +18,7 @@ const navigationItems = [
     {name:"Customization &amp; Settings"},
     {name:"Training"},
     {name:"About Us"},
-    {name:"Blog &amp; News"},
+    {name:"Blog & News"},
     {name:"Contact"},
 ];
 
