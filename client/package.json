@@ -3,11 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "prop-types": "^15.5.8",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
-    "react-scripts": "0.9.3"
+    "enzyme": "^2.8.2",
+    "expect": "^1.20.2",
+    "isomorphic-fetch": "^2.2.1",
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "react-scripts": "0.9.3",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.15.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,22 +1,20 @@
-FROM ubuntu:latest
+FROM node:7
 
 MAINTAINER Brian Lusina "lusinabrian@gmail.com"
 
-# install node
-RUN apt-get update -y && apt-get install -y node
+RUN mkdir -p /src/app
 
-# We copy just the requirements.txt first to leverage Docker cache
-COPY ./package.json /app/package.json
+WORKDIR /src/app
 
-WORKDIR /app
+# copy package.json
+COPY package.json /src/app
 
+# run an npm install
 RUN npm install
 
-COPY . /app
+# bundle app source
+COPY . /src/app
 
-# this will expose this app to other containers via port 8000
-EXPOSE 5000
-
-CMD ["npm", "run", "build"]
+EXPOSE 3000
 
 CMD ["npm", "run", "start"]
