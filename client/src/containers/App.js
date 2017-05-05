@@ -6,9 +6,12 @@ import Navigation from '../common/Navigation';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
           <Navigation />
           {this.props.children}
+          <button className="menu-button">
+              <span>Menu</span>
+          </button>
       </div>
     );
   }

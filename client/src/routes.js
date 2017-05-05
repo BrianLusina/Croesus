@@ -2,19 +2,21 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
-import {Route, IndexRoute} from 'react-router';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import App from './containers/App';
+import DocumentationPage from './components/DocumentationsPage';
 import HomePage from './components/HomePage';
 
-/* Maps components to different routes in the application
-The parent component(App) maps other routes and serves as the entry point
-to other components.
-IndexRoute maps HomePage to default route
+/**
+ * Maps components to different routes in the application
+ * The parent component(App) maps other routes and serves as the entry point
+ * to other components.
+ * Route maps HomePage to default route
  */
 
 export default (
-    <Route path="/" component={App}>
-        <IndexRoute component={HomePage}/>
-{/*        <Route path="" component={}/>*/}
-    </Route>
+    <App>
+        <Route component={HomePage} />
+        <Route component={DocumentationPage} />
+    </App>
 )

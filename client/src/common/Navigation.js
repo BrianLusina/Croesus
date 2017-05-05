@@ -2,7 +2,7 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
-import {Link, IndexLink } from 'react-router';
+import { Link } from 'react-router-dom';
 
 /**
  * Stateless Component responsible for presentation

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import './styles/index.css';
 import routes from './routes';
-import {Router, hashHistory } from 'react-router';
+import { HashRouter } from 'react-router-dom';
 
 /**
  * Entry point into the application
@@ -12,6 +12,8 @@ import {Router, hashHistory } from 'react-router';
 */
 
 render(
-    <Router  routes={routes} history=""/>,
+    <HashRouter>
+        {routes}
+    </HashRouter>,
     document.getElementById('root')
 );
