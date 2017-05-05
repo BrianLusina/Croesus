@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/App.css';
+import '../styles/app.css';
 import Navigation from '../common/Navigation';
 
 class App extends Component {
