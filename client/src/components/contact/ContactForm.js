@@ -2,6 +2,7 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
+import '../../styles/contactform.css';
 
 
 const ContactForm = () => {

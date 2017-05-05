@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import BlogItems from './BlogItems';
-
+import '../../styles/blogpage.css';
 
 const BlogPage = () => {
     return(

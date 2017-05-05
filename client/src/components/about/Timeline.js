@@ -2,36 +2,37 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
+import '../../styles/timeline.css';
 
 const Timeline = () => {
     return(
         <section className="cd-horizontal-timeline">
             <div className="timeline">
-		<div className="events-wrapper">
-			<div className="events">
-				<ol>
-					<li><a href="#0" data-date="1/10/2016" className="selected">1 Oct, 2016</a></li>
-					<li><a href="#0" data-date="15/10/2016">15 Oct, 2016</a></li>
-					<li><a href="#0" data-date="30/10/2016">30 Oct, 2016</a></li>
-					<li><a href="#0" data-date="13/11/2016">13 Nov, 2016</a></li>
-					<li><a href="#0" data-date="25/11/2016">25 Nov, 2016</a></li>
-					<li><a href="#0" data-date="5/12/2016">5 Dec, 2016</a></li>
-					<li><a href="#0" data-date="18/12/2016">18 Dec, 2016</a></li>
-					<li><a href="#0" data-date="27/12/2016">27 Dec, 2016</a></li>
-					<li><a href="#0" data-date="10/1/2017">10 Jan, 2017</a></li>
-					<li><a href="#0" data-date="29/1/2017">29 Jan, 2017</a></li>
-					<li><a href="#0" data-date="02/02/2017">3 Feb, 2017</a></li>
-				</ol>
+                <div className="events-wrapper">
+                    <div className="events">
+				        <ol>
+                            <li><a href="#0" data-date="1/10/2016" className="selected">1 Oct, 2016</a></li>
+                            <li><a href="#0" data-date="15/10/2016">15 Oct, 2016</a></li>
+                            <li><a href="#0" data-date="30/10/2016">30 Oct, 2016</a></li>
+                            <li><a href="#0" data-date="13/11/2016">13 Nov, 2016</a></li>
+                            <li><a href="#0" data-date="25/11/2016">25 Nov, 2016</a></li>
+                            <li><a href="#0" data-date="5/12/2016">5 Dec, 2016</a></li>
+                            <li><a href="#0" data-date="18/12/2016">18 Dec, 2016</a></li>
+                            <li><a href="#0" data-date="27/12/2016">27 Dec, 2016</a></li>
+                            <li><a href="#0" data-date="10/1/2017">10 Jan, 2017</a></li>
+                            <li><a href="#0" data-date="29/1/2017">29 Jan, 2017</a></li>
+                            <li><a href="#0" data-date="02/02/2017">3 Feb, 2017</a></li>
+        				</ol>
 
-				<span className="filling-line" aria-hidden="true"></span>
-			</div> <!-- .events -->
-		</div> <!-- .events-wrapper -->
+        				<span className="filling-line" aria-hidden="true"></span>
+		        	</div>
+		        </div>
 
-		<ul className="cd-timeline-navigation">
-			<li><a href="#0" className="prev inactive">Prev</a></li>
-			<li><a href="#0" className="next">Next</a></li>
-		</ul> <!-- .cd-timeline-navigation -->
-	</div> <!-- .timeline -->
+                <ul className="cd-timeline-navigation">
+                    <li><a href="#0" className="prev inactive">Prev</a></li>
+                    <li><a href="#0" className="next">Next</a></li>
+                </ul>
+            </div>
 
             <div className="events-content">
                 <ol>
@@ -82,24 +83,8 @@ const Timeline = () => {
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
                         </p>
                     </li>
-
-                    <li data-date="18/12/2016">
-                        <h2>Event title here</h2>
-                        <em>December 18th, 2016</em>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
-                        </p>
-                    </li>
-
-                    <li data-date="27/12/2016">
-                        <h2>Event title here</h2>
-                        <em>December 27th, 2016</em>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.
-                        </p>
-                    </li>
         		</ol>
-            </div> <!-- .events-content -->
+            </div>
         </section>
     )
 };

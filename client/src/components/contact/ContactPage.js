@@ -17,7 +17,6 @@ const ContactPage = () =>{
 				</p>
 			</header>
             <main id="contact-form-map-container">
-                <!--contact form-->
                 <ContactForm/>
 
                 {/* Custom map*/}

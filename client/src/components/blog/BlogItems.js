@@ -10,18 +10,16 @@ const BlogItems = () => {
                 <li className="cd-item">
                     <img src="{{ url_for('static', filename='images/blogs/item-1.jpg' )}}" alt="Item Preview"/>
                         <a href="#0" className="cd-trigger">Read More</a>
-                </li> <!-- cd-item -->
-
+                </li>
                 <li className="cd-item">
                     <img src="{{ url_for('static', filename='images/blogs/item-1.jpg' )}}" alt="Item Preview"/>
                     <a href="#0" className="cd-trigger">Read More</a>
-                </li> <!-- cd-item -->
-
+                </li>
                 <li className="cd-item">
                     <img src="{{ url_for('static', filename='images/blogs/item-1.jpg' )}}" alt="Item Preview"/>
                     <a href="#0" className="cd-trigger">Read More</a>
-                </li> <!-- cd-item -->
-            </ul> <!-- cd-items -->
+                </li>
+            </ul>
 
             <div className="cd-quick-view">
                 <div className="cd-slider-wrapper">
@@ -37,13 +35,13 @@ const BlogItems = () => {
                         <li>
                             <img src="{{ url_for('static', filename='images/blogs/item-3.jpg' )}}" alt="Product 3"/>
                         </li>
-                    </ul> <!-- cd-slider -->
+                    </ul>
 
                     <ul className="cd-slider-navigation">
                         <li><a className="cd-next" href="#0">Prev</a></li>
                         <li><a className="cd-prev" href="#0">Next</a></li>
-                    </ul> <!-- cd-slider-navigation -->
-                </div> <!-- cd-slider-wrapper -->
+                    </ul>
+                </div>
 
                 <div className="cd-item-info">
                     <h2>News Title</h2>
@@ -51,10 +49,10 @@ const BlogItems = () => {
 
                     <ul className="cd-item-action">
                         <li><button className="learn-more">Learn More</button></li>
-                    </ul> <!-- cd-item-action -->
-                </div> <!-- cd-item-info -->
+                    </ul>
+                </div>
                 <a href="#0" className="cd-close">Close</a>
-            </div> <!-- cd-quick-view -->
+            </div>
         </div>
     );
 };
