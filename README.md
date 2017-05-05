@@ -1,10 +1,10 @@
 # Arco Project
 
-This is a containerized application with the server having a contained flask application, client running a ReactJS application with a PostgreSQL data backend and redis client to manage sessions in the server.
+This is a containerized application with the server having a contained [Flask](http://flask.pocoo.org/) application, client running a [ReactJS](https://facebook.github.io/react/) application with a [PostgreSQL](https://www.postgresql.org/) data backend and [Redis](https://redis.io/) to manage sessions in the server.
 
 Each container can be build separately and all are put together with `docker-compose`
 
-### Requirements
+### Requirements and setup
 
 There are a couple of things you need to have before hand as you set up this project:
 
@@ -78,3 +78,40 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ### Running the application
 
+Since the project has been setup in seperate directories. They may be run separately, i.e. you may run the client with:
+
+```bash
+cd client
+npm run start
+# or if using yarn
+yarn start
+```
+
+Running the server:
+
+```bash
+cd server
+source venv/bin/activate
+python manage.py runserver
+```
+
+Running Redis:
+```bash
+cd redis
+# this will setup and install redis if not there and start it up
+./run-redis.sh
+```
+
+Alternatively, you could use docker-compose to run the application
+
+At the root of the project:
+
+```bash
+docker-compose build
+docker-compose up
+```
+> This will build the application and start it in the foreground
+
+This will set the applications from the Dockerfiles in each container and start them up.
+
+Each application/container has a README with further instructions on how to set it all up.
