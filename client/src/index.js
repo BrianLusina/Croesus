@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import './styles/index.css';
-import routes from './routes';
-import { HashRouter } from 'react-router-dom';
+import App from './containers/App';
+
 
 /**
  * Entry point into the application
@@ -12,8 +12,5 @@ import { HashRouter } from 'react-router-dom';
 */
 
 render(
-    <HashRouter>
-        {routes}
-    </HashRouter>,
-    document.getElementById('root')
+    <App />, document.getElementById('root')
 );

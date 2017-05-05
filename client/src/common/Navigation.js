@@ -2,7 +2,7 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 
 /**
  * Stateless Component responsible for presentation
@@ -11,15 +11,15 @@ import { Link } from 'react-router-dom';
  * */
 
 const navigationItems = [
-    {name:"Home"},
-    {name:"Documentation"},
-    {name:"Manuals"},
-    {name:"Software"},
-    {name:"Customization &amp; Settings"},
-    {name:"Training"},
-    {name:"About Us"},
-    {name:"Blog & News"},
-    {name:"Contact"},
+    {name:"Home", link:"#page-home"},
+    {name:"Documentation", link:"#page-docu"},
+    {name:"Manuals", link:"#page-manuals"},
+    {name:"Software", link:"#page-software"},
+    {name:"Customization & Settings", link:"#page-custom"},
+    {name:"Training", link:"#page-training"},
+    {name:"About Us", link:"#page-about"},
+    {name:"Blog & News", link:"#page-blog"},
+    {name:"Contact", link:"#page-contact"},
 ];
 
 const socialMediaLinks = [
@@ -34,11 +34,12 @@ const Navigation = () =>(
                 navigationItems.map((item, indx) => {
                     return (
                         <div key={indx} className="pages-nav__item">
-                            <Link to="home" className="link link--page">{item.name}</Link>
+                            <a href={item.link} className="link link--page">{item.name}</a>
                         </div>
                     );
                 })
             }
+
 	    	<div className="pages-nav__item pages-nav__item--social">
                 {
                     socialMediaLinks.map((item, indx)=>{
