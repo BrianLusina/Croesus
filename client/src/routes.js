@@ -11,6 +11,8 @@ import SoftwarePage from './components/SoftwarePage';
 import CustomSettingsPage from './components/CustomSettingsPage';
 import TrainingPage from './components/TrainingPage';
 import AboutPage from './components/about/AboutPage';
+import BlogPage from './components/blog/BlogPage';
+
 
 /**
  * Maps components to different routes in the application
@@ -29,6 +31,7 @@ export default (
             <Route component={CustomSettingsPage}/>
             <Route component={TrainingPage}/>
             <Route component={AboutPage}/>
+            <Route component={BlogPage}/>
         </div>
     </App>
 )
