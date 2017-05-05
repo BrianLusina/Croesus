@@ -44,5 +44,7 @@ There are a couple of things you need to have before hand as you set up this pro
     
 > sets up and installs pip and virtualenv, then installs the application requirements 
 
+3. __Docker__
+
 
 ### Setup
