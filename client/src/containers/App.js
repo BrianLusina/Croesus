@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <div>
           <Navigation />
-          {/*{this.props.children}*/}
+          {this.props.children}
           <button className="menu-button">
               <span>Menu</span>
           </button>

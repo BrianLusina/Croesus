@@ -7,6 +7,10 @@ import App from './containers/App';
 import DocumentationPage from './components/DocumentationsPage';
 import HomePage from './components/HomePage';
 import ManualPage from './components/ManualsPage';
+import SoftwarePage from './components/SoftwarePage';
+import CustomSettingsPage from './components/CustomSettingsPage';
+import TrainingPage from './components/TrainingPage';
+import AboutPage from './components/about/AboutPage';
 
 /**
  * Maps components to different routes in the application
@@ -21,6 +25,10 @@ export default (
             <Route component={HomePage} />
             <Route component={DocumentationPage} />
             <Route component={ManualPage}/>
+            <Route component={SoftwarePage}/>
+            <Route component={CustomSettingsPage}/>
+            <Route component={TrainingPage}/>
+            <Route component={AboutPage}/>
         </div>
     </App>
 )
