@@ -12,7 +12,7 @@ import CustomSettingsPage from './components/CustomSettingsPage';
 import TrainingPage from './components/TrainingPage';
 import AboutPage from './components/about/AboutPage';
 import BlogPage from './components/blog/BlogPage';
-
+import ContactPage from './components/contact/ContactPage';
 
 /**
  * Maps components to different routes in the application
@@ -32,6 +32,7 @@ export default (
             <Route component={TrainingPage}/>
             <Route component={AboutPage}/>
             <Route component={BlogPage}/>
+            <Route component={ContactPage}/>
         </div>
     </App>
 )
