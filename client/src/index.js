@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import './styles/index.css';
 import routes from './routes';
-import {Router, browserHistory } from 'react-router';
+import {Router, hashHistory } from 'react-router';
+
 /**
  * Entry point into the application
  * Router keeps UI and URL in sync and ensures that the props are passed
@@ -11,6 +12,6 @@ import {Router, browserHistory } from 'react-router';
 */
 
 render(
-    <Router history={browserHistory} routes={routes}/>,
+    <Router  routes={routes} history=""/>,
     document.getElementById('root')
 );

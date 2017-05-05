@@ -15,6 +15,6 @@ IndexRoute maps HomePage to default route
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={HomePage}/>
-        <Route path="" component={}/>
+{/*        <Route path="" component={}/>*/}
     </Route>
 )
