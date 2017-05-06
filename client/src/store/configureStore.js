@@ -8,16 +8,14 @@
  */
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/rootReducer';
-import rootSaga from '../sagas/rootSaga';
-import createSagaMiddleware  from 'redux-saga';
-
+// todo: install redux-devtools-extension
+// import { composeWithDevTools } from 'redux-devtools-extension';
 
 const configureStore = () => {
-    const sagaMiddleware = createSagaMiddleware();
-    return {
-        ...createStore(rootReducer, applyMiddleware(sagaMiddleware)),
-        runSaga: sagaMiddleware.run(rootSaga)
-    };
+    return createStore(
+        rootReducer,
+        //composeWithDevTools()
+    );
 };
 
 export default configureStore;

@@ -16,7 +16,7 @@ import { Provider } from 'react-redux';
 // initialize store
 const store = configureStore();
 
-
+// render the application to the DOM
 render(
     <Provider store={store}>
         <App />

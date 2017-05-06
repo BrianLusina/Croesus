@@ -4,3 +4,7 @@
  * reducers take the current state tree and an action object and then evaluate and return the
  * outcome, they return the next state of the application
  */
+
+export default {
+
+}
