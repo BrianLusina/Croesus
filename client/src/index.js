@@ -1,8 +1,3 @@
-import React from 'react';
-import { render } from 'react-dom';
-import './styles/index.css';
-import App from './containers/App';
-
 /**
  * Entry point into the application
  * Router keeps UI and URL in sync and ensures that the props are passed
@@ -11,6 +6,20 @@ import App from './containers/App';
  * method call.
 */
 
+import React from 'react';
+import { render } from 'react-dom';
+import './styles/index.css';
+import App from './containers/App';
+import configureStore from './store/configureStore';
+import { Provider } from 'react-redux';
+
+// initialize store
+const store = configureStore();
+
+
 render(
-    <App />, document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 );
