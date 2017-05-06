@@ -7,7 +7,7 @@ import "whatwg-fetch";
 async function request({ url, data, params = {} }){
     try {
         const response = await fetch(url, {
-            credentials: 'include',
+            //credentials: 'include',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'

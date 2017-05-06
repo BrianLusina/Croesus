@@ -18,7 +18,7 @@ def index():
     return render_template("home.index.html")
 
 
-@home.route("json")
+@home.route("json", methods=["GET", "POST"])
 def index_json():
     return jsonify(
         name="Brian", message="hello",

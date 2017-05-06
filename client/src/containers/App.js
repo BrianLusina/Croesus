@@ -12,27 +12,35 @@ import BlogPage from '../components/blog/BlogPage';
 import ContactPage from '../components/contact/ContactPage';
 
 class App extends Component {
-  render() {
-    return (
-      <div>
-          <Navigation />
-          <div className="pages-stack">
-              <HomePage />
-              <DocumentationPage />
-              <ManualPage />
-              <SoftwarePage />
-              <CustomSettingsPage />
-              <TrainingPage />
-              <AboutPage />
-              <BlogPage />
-              <ContactPage />
+    constructor(){
+        super();
+    }
+
+    componentWillMount(){
+
+    }
+
+    render() {
+        return (
+          <div>
+              <Navigation />
+              <div className="pages-stack">
+                  <HomePage />
+                  <DocumentationPage />
+                  <ManualPage />
+                  <SoftwarePage />
+                  <CustomSettingsPage />
+                  <TrainingPage />
+                  <AboutPage />
+                  <BlogPage />
+                  <ContactPage />
+              </div>
+              <button className="menu-button">
+                  <span>Menu</span>
+              </button>
           </div>
-          <button className="menu-button">
-              <span>Menu</span>
-          </button>
-      </div>
-    );
-  }
+        );
+    }
 }
 
 export default App;
