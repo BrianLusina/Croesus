@@ -1,4 +1,23 @@
 /**
  * @author lusinabrian on 06/05/17.
- * @Notes:
+ * @Notes: Returns the store instance
+ * It can  also take initialState argument when provided
+ * Initialize your SagaMiddleWare.
+ * Pass rootReducer and sagaMiddleware to the createStore function to create our redux store.
+ * Finally, we run our sagas. You can either spread them or wire them up to a rootSaga.
  */
+import { createStore, applyMiddleware } from 'redux';
+import rootReducer from '../reducers/rootReducer';
+import rootSaga from '../sagas/rootSaga';
+import createSagaMiddleware  from 'redux-saga';
+
+
+const configureStore = () => {
+    const sagaMiddleware = createSagaMiddleware();
+    return {
+        ...createStore(rootReducer, applyMiddleware(sagaMiddleware)),
+        runSaga: sagaMiddleware.run(rootSaga)
+    };
+};
+
+export default configureStore;
