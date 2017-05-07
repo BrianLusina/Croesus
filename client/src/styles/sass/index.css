@@ -43,6 +43,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+/*Components*/
 /*vendor styles*/
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -2460,8 +2461,8 @@ html.js,
   font-family: 'bpicons';
   font-weight: normal;
   font-style: normal;
-  src: url("./fonts/bpicons/bpicons.eot");
-  src: url("./fonts/bpicons/bpicons.eot?#iefix") format("embedded-opentype"), url("./fonts/bpicons/bpicons.woff") format("woff"), url("./fonts/bpicons/bpicons.ttf") format("truetype"), url("./fonts/bpicons/bpicons.svg#bpicons") format("svg"); }
+  src: url("../../fonts/bpicons/bpicons.eot");
+  src: url("../../fonts/bpicons/bpicons.eot?#iefix") format("embedded-opentype"), url("../../fonts/bpicons/bpicons.woff") format("woff"), url("../../fonts/bpicons/bpicons.ttf") format("truetype"), url("../../fonts/bpicons/bpicons.svg#bpicons") format("svg"); }
 *,
 *:after,
 *:before {
