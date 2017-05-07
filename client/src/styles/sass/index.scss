@@ -1,8 +1,19 @@
 /*Base styles*/
 @import "base/reset";
 
+/*vendor styles*/
+@import "vendors/font-awesome/font-awesome";
+
 /*helpers*/
 @import "helpers/variables";
+
+/*Pages*/
+@import "pages/map";
+@import "pages/app";
+@import "pages/blogpage";
+@import "pages/contactform";
+@import "pages/timeline";
+@import "pages/userdash";
 
 html.js,
 .js body {
