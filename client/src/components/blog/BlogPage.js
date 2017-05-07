@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import BlogItems from './BlogItems';
-import '../../styles/sass/pages/blogpage.css';
 
 const BlogPage = () => {
     return(

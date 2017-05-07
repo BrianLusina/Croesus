@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../styles/sass/pages/_app.css';
 import Navigation from '../common/Navigation';
 import DocumentationPage from '../components/DocumentationsPage';
 import HomePage from '../components/HomePage';

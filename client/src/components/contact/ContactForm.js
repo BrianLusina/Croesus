@@ -2,7 +2,6 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
-import '../../styles/sass/pages/contactform.css';
 
 
 const ContactForm = () => {
