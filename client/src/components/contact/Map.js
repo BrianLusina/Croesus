@@ -2,7 +2,7 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React from 'react';
-import '../../styles/map.css';
+import '../../styles/sass/pages/map.css';
 
 const Map = () => {
     return (

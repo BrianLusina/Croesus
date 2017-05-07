@@ -8,7 +8,7 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import './styles/index.css';
+import './styles/sass/index.css';
 import App from './containers/App';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';

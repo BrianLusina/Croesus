@@ -1,3 +1,9 @@
+/*Base styles*/
+@import "base/reset";
+
+/*helpers*/
+@import "helpers/variables";
+
 html.js,
 .js body {
 	overflow: hidden;
