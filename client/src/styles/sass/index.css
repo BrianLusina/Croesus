@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/*Base styles*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -43,8 +42,6 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
-/*Components*/
-/*vendor styles*/
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -2369,8 +2366,6 @@ table {
   overflow: visible;
   clip: auto; }
 
-/*helpers*/
-/*Pages*/
 /*Page module to import all other styles within this page*/
 /* --------------------------------
 

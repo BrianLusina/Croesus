@@ -1,14 +1,20 @@
-/*Base styles*/
+//Base styles
 @import "base/module";
 
-/*Components*/
+//themes
+@import "themes/module";
+
+// layouts
+@import "layouts/module";
+
+// Components
 @import "components/module";
 
-/*vendor styles*/
+//vendor styles
 @import "vendors/module";
 
-/*helpers*/
+//helpers
 @import "helpers/module";
 
-/*Pages*/
+//Pages
 @import "pages/module";
