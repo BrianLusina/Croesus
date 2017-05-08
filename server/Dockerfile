@@ -36,9 +36,10 @@ EXPOSE 8000
 # needs to be set else Celery gives an error (because docker runs commands inside
 # container as root)
 ENV C_FORCE_ROOT=1
+# TODO: set other environment variables from .env file to docker container
 
 # starts up server application
 # CMD ["python3", "manage.py", "runserver"]
 
 # run supervisord, command to use when starting this container
-CMD ["/usr/bin/supervisord"]
+# CMD ["/usr/bin/supervisord"]
