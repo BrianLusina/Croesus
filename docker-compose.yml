@@ -10,7 +10,7 @@ services:
       - "5000"
     volumes:
       - /usr/src/app/
-    command: /usr/bin/npm run start
+    command: npm run start
     depends_on:
       - server
 
@@ -24,14 +24,13 @@ services:
     volumes:
      - /usr/src/app/app/static
     command: /usr/bin/python manage.py runserver
+    # command: /usr/bin/supervisord
     depends_on:
      - postgres
 
   redis:
     restart: always
     build: ./redis
-    #volumes:
-    #  - web
     depends_on:
       - server
 
@@ -44,8 +43,6 @@ services:
   postgres:
     restart: always
     build: ./postgresql
-    #volumes:
-    #  - data
     ports:
       - "5432:5432"
 

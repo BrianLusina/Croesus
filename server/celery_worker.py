@@ -16,9 +16,13 @@ import os
 # to run
 from app import create_app, celery
 from setup_environment import setup_environment_variables
+import click
 
 # import environment variables
 setup_environment_variables()
+
+# log info
+click.echo(click.style("Running celery worker", fg="yellow", bg="black", bold=True))
 
 app = create_app(os.environ.get("FLASK_CONFIG", "default"))
 app.app_context().push()
