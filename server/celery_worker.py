@@ -12,7 +12,9 @@ This creates a Flask application and pushes an application context, which will r
 """
 import os
 
-from app import create_app
+# celery import is necessary, even though it will not be used here. it is vital for celery
+# to run
+from app import create_app, celery
 from setup_environment import setup_environment_variables
 
 # import environment variables

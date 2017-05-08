@@ -92,8 +92,7 @@ def profile(length=25, profile_dir=None):
     app.run()
 
 
-@manager.option('-m', '--migration',
-                help='create database from migrations',
+@manager.option('-m', '--migration', help='create database from migrations',
                 action='store_true', default=None)
 def init_db(migration):
     """drop all databases, instantiate schemas"""
