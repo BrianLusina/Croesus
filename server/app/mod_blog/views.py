@@ -13,10 +13,11 @@ from app import celery
 import newspaper
 
 
-@blog.route("")
+@blog.route("", methods=["GET", "POST"])
 def display_top_news():
     """
     Will create a proper JSON response for the top news to display to the client
+    Accessed via route <API_URL>/blog/
     :return: JSON response of data related to blog posts and news
     """
 

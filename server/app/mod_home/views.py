@@ -1,6 +1,8 @@
-import newspaper
+"""
+Entry point to API application. This will be for running simple checks on the application
+
+"""
 from flask import render_template, jsonify
-from app.forms import ContactForm
 from . import home
 from app import celery
 
@@ -23,15 +25,3 @@ def index_json():
         name="Brian", message="hello",
         list=["me", "them"]
     )
-
-
-def contact(request):
-    """
-    Handles the contact form, picks data and sends the contact form to server
-    :param request: the request handle by this function
-    :return:
-    """
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-
-    return None
