@@ -2,8 +2,8 @@ sudo: required
 dist: trusty
 language: node_js
 env:
-  - TEST_DIR=server
-  - TEST_DIR=client
+  - SERVER_TEST_DIR=server
+  - CLIENT_TEST_DIR=client
 
   global:
     - NODE_ENV=development
@@ -39,3 +39,4 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  # todo: configure building images with docker compose and setting them up on docker hub
