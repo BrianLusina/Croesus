@@ -1,5 +1,10 @@
 # Arco Project
 
+[![Build Status](https://travis-ci.org/BrianLusina/Arco.svg?branch=master)](https://travis-ci.org/BrianLusina/Arco)
+[![codecov](https://codecov.io/gh/BrianLusina/Arco/branch/master/graph/badge.svg)](https://codecov.io/gh/BrianLusina/Arco)
+[![CircleCI](https://circleci.com/gh/BrianLusina/Arco.svg?style=svg)](https://circleci.com/gh/BrianLusina/Arco)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4be2525d96664d3c9d5e471603cb97fc)](https://www.codacy.com/app/BrianLusina/Arco?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BrianLusina/Arco&amp;utm_campaign=Badge_Grade)
+
 This is a containerized application with the server having a contained [Flask](http://flask.pocoo.org/) application, client running a [ReactJS](https://facebook.github.io/react/) application with a [PostgreSQL](https://www.postgresql.org/) data backend and [Redis](https://redis.io/) to manage sessions in the server.
 
 Each container can be build separately and all are put together with `docker-compose`
