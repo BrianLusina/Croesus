@@ -51,8 +51,8 @@ html.js,
   font-family: 'bpicons';
   font-weight: normal;
   font-style: normal;
-  src: url("../../fonts/bpicons/bpicons.eot");
-  src: url("../../fonts/bpicons/bpicons.eot?#iefix") format("embedded-opentype"), url("../../fonts/bpicons/bpicons.woff") format("woff"), url("../../fonts/bpicons/bpicons.ttf") format("truetype"), url("../../fonts/bpicons/bpicons.svg#bpicons") format("svg"); }
+  src: url("fonts/bpicons/bpicons.eot");
+  src: url("fonts/bpicons/bpicons.eot?#iefix") format("embedded-opentype"), url("fonts/bpicons/bpicons.woff") format("woff"), url("fonts/bpicons/bpicons.ttf") format("truetype"), url("fonts/bpicons/bpicons.svg#bpicons") format("svg"); }
 *,
 *:after,
 *:before {
@@ -82,8 +82,8 @@ body {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url("../fonts/fontawesome-webfont.eot?v=4.7.0");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("../fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("../fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("../fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
+  src: url("/fonts/fontawesome-webfont.eot?v=4.7.0");
+  src: url("/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0") format("embedded-opentype"), url("/fonts/fontawesome-webfont.woff2?v=4.7.0") format("woff2"), url("/fonts/fontawesome-webfont.woff?v=4.7.0") format("woff"), url("/fonts/fontawesome-webfont.ttf?v=4.7.0") format("truetype"), url("/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular") format("svg");
   font-weight: normal;
   font-style: normal; }
 .fa {
@@ -3391,7 +3391,7 @@ Form
   display: block;
   width: 16px;
   height: 16px;
-  background: url("../../../images/cd-arrow.svg") no-repeat center center;
+  background: url("images/cd-arrow.svg") no-repeat center center;
   pointer-events: none; }
 
 .cd-form select {
@@ -3470,19 +3470,17 @@ Form
 
 .cd-form input[type="radio"] + label::after,
 .cd-form input[type="checkbox"] + label::after {
-  background-color: #2c97de;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: #2c97de no-repeat center center;
   box-shadow: 0 0 5px rgba(44, 151, 222, 0.4);
   display: none; }
 
 .cd-form input[type="radio"] + label::after {
   /* custom image for radio button */
-  background-image: url("../../../images/contact/cd-icon-radio.svg"); }
+  background-image: url("images/contact/cd-icon-radio.svg"); }
 
 .cd-form input[type="checkbox"] + label::after {
   /* custom image for checkbox */
-  background-image: url("../../../images/contact/cd-icon-check.svg"); }
+  background-image: url("images/contact/cd-icon-check.svg"); }
 
 .cd-form input[type="radio"]:focus + label::before,
 .cd-form input[type="checkbox"]:focus + label::before {
@@ -3539,7 +3537,7 @@ Form
   transform: scale(0.9); }
 
 .cd-form [required] {
-  background: url("../../../images/contact/cd-required.svg") no-repeat top right; }
+  background: url("images/contact/cd-required.svg") no-repeat top right; }
 
 .cd-form .error-message p {
   background: #e94b35;
@@ -3605,29 +3603,29 @@ Custom icons
   color: white; }
 
 .cd-form .user {
-  background: url("../../../images/contact/cd-icon-user.svg") no-repeat 16px center; }
+  background: url("images/contact/cd-icon-user.svg") no-repeat 16px center; }
 
 .cd-form [required].user {
-  background: url("../../../images/contact/cd-icon-user.svg") no-repeat 16px center, url("../../../images/contact/cd-required.svg") no-repeat top right; }
+  background: url("images/contact/cd-icon-user.svg") no-repeat 16px center, url("images/contact/cd-required.svg") no-repeat top right; }
 
 .cd-form .company {
-  background: url("../../../images/contact/cd-icon-company.svg") no-repeat 16px center;
+  background: url("images/contact/cd-icon-company.svg") no-repeat 16px center;
   color: black !important; }
 
 .cd-form [required].company {
-  background: url("../../../images/contact/cd-icon-company.svg") no-repeat 16px center, url("../../../images/contact/cd-required.svg") no-repeat top right; }
+  background: url("images/contact/cd-icon-company.svg") no-repeat 16px center, url("images/contact/cd-required.svg") no-repeat top right; }
 
 .cd-form .email {
-  background: url("../../../images/contact/cd-icon-email.svg") no-repeat 16px center; }
+  background: url("images/contact/cd-icon-email.svg") no-repeat 16px center; }
 
 .cd-form [required].email {
-  background: url("../../../images/contact/cd-icon-email.svg") no-repeat 16px center, url("../../../images/contact/cd-required.svg") no-repeat top right; }
+  background: url("images/contact/cd-icon-email.svg") no-repeat 16px center, url("images/contact/cd-required.svg") no-repeat top right; }
 
 .cd-form .message {
-  background: url("../../../images/contact/cd-icon-message.svg") no-repeat 16px 16px; }
+  background: url("images/contact/cd-icon-message.svg") no-repeat 16px 16px; }
 
 .cd-form [required].message {
-  background: url("../../../images/contact/cd-icon-message.svg") no-repeat 16px 16px, url("../../../images/contact/cd-required.svg") no-repeat top right; }
+  background: url("images/contact/cd-icon-message.svg") no-repeat 16px 16px, url("images/contact/cd-required.svg") no-repeat top right; }
 
 /* --------------------------------
 
@@ -3892,7 +3890,7 @@ Main Components
   -ms-transform: translateX(-50%) translateY(-50%);
   -o-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  background: url(../../../images/cd-arrow.svg) no-repeat 0 0; }
+  background: url(images/cd-arrow.svg) no-repeat 0 0; }
 
 .cd-timeline-navigation a.prev {
   left: 0;
@@ -4070,8 +4068,8 @@ Main Components
   font-family: 'feather';
   font-weight: normal;
   font-style: normal;
-  src: url("../../fonts/feather/feather.eot?1gafuo");
-  src: url("../../fonts/feather/feather.eot?1gafuo#iefix") format("embedded-opentype"), url("../../fonts/feather/feather.woff2?1gafuo") format("woff2"), url("../../fonts/feather/feather.ttf?1gafuo") format("truetype"), url("../../fonts/feather/feather.woff?1gafuo") format("woff"), url("../../fonts/feather/feather.svg?1gafuo#feather") format("svg"); }
+  src: url("./fonts/feather/feather.eot?1gafuo");
+  src: url("./fonts/feather/feather.eot?1gafuo#iefix") format("embedded-opentype"), url("./fonts/feather/feather.woff2?1gafuo") format("woff2"), url("./fonts/feather/feather.ttf?1gafuo") format("truetype"), url("./fonts/feather/feather.woff?1gafuo") format("woff"), url("./fonts/feather/feather.svg?1gafuo#feather") format("svg"); }
 .icon {
   font-family: 'feather';
   font-weight: normal;
