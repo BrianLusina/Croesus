@@ -1,11 +1,41 @@
-language: python
-cache: pip
+sudo: required
+dist: trusty
+language: node_js
+env:
+  - TEST_DIR=server
+  - TEST_DIR=client
+
+  global:
+    - NODE_ENV=development
+
+# specify the languages to use
+node_js:
+  - "5.0"
+  - "5.11"
+  - "6"
+
 python:
   - 2.7
   - 3.5
 
-# command to install dependencies
-install: make install
+services:
+ - docker
+
+before_install:
+  - sudo apt-get -y install python3-pip python-dev
+  - sudo pip3 install -U setuptools
+  - sudo pip3 install -U virtualenvwrapper
+  - python3 -V
+  - pip3 -V
 
 # command to run tests
-script: make test
+script:
+  - cd client && npm install
+  - npm run test
+  - cd ..
+  - cd server
+  - sudo pip3 install -r requirements.txt
+  - python manage.py test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
