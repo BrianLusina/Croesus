@@ -142,6 +142,8 @@ def register_app_blueprints(app):
     """
     from app.mod_dashboard import dashboard
     from app.mod_home import home
+    from app.mod_blog import blog
 
     app.register_blueprint(home)
     app.register_blueprint(dashboard)
+    app.register_blueprint(blog)
