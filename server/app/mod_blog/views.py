@@ -1,3 +1,12 @@
+"""
+View functions that will be responsible for creating JSON response for fetched blog and 
+news posts
+
+This will be used for displaying relevant data to client side code.
+No template is rendered, neither are static files loaded. This will be used to display
+data from various news articles and sites. client will handle static files and HTML page 
+rendering.
+"""
 from . import blog
 from flask import jsonify, request, url_for
 from app import celery
