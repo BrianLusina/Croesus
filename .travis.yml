@@ -1,12 +1,6 @@
 sudo: required
 dist: trusty
 language: node_js
-env:
-  - SERVER_TEST_DIR=server
-  - CLIENT_TEST_DIR=client
-
-  global:
-    - NODE_ENV=development
 
 # specify the languages to use
 node_js:
