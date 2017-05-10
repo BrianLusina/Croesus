@@ -10,6 +10,7 @@ rendering.
 from . import blog
 from flask import jsonify, request, url_for
 from app import celery
+import json
 import newspaper
 
 
@@ -43,4 +44,5 @@ def fetch_news():
 
     for categories in investopedia.category_urls():
         results.append(categories)
-    return results
+    return json.dumps(results)
+    # return results
