@@ -4,7 +4,6 @@ Entry point to API application. This will be for running simple checks on the ap
 """
 from flask import render_template, jsonify
 from . import home
-from app import celery
 
 
 @home.route("")

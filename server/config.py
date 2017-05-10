@@ -43,6 +43,10 @@ class Config(object):
     # task configurations
     CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_ENABLE_UTC = True
     REDIS_SERVER = os.environ.get("REDIS_SERVER")
     REDIS_PORT = os.environ.get("REDIS_PORT")
     REDIS_DB = os.environ.get("REDIS_DB")

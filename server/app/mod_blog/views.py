@@ -20,8 +20,15 @@ def display_top_news():
     Accessed via route <API_URL>/blog/
     :return: JSON response of data related to blog posts and news
     """
-
-    fetch_news.delay()
+    try:
+        news_results = fetch_news.apply_async()
+        if news_results:
+            print("type", type(news_results))
+            print("Async Result", news_results)
+            # return jsonify(news_results)
+        return jsonify()
+    except ValueError as ve:
+        print(ve)
 
 
 @celery.task
