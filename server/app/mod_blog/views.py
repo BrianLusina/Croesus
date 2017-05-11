@@ -24,8 +24,7 @@ def display_top_news():
     try:
         news_results = fetch_news.apply_async()
         if news_results:
-            print("type", type(news_results))
-            print("Async Result", news_results)
+            print(news_results.get(timeout=5000))
             # return jsonify(news_results)
         return jsonify()
     except ValueError as ve:

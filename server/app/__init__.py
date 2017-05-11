@@ -54,9 +54,11 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "auth.login"
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL, backend=Config.CELERY_RESULT_BACKEND)
-redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
-                             db=Config.REDIS_DB)
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL,
+                backend=Config.CELERY_RESULT_BACKEND)
+# redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
+#                              db=Config.REDIS_DB)
+redis_db = redis.StrictRedis()
 
 
 def create_app(config_name):
@@ -81,13 +83,13 @@ def create_app(config_name):
     db.init_app(app)
 
     # redis configuration
-    # redisdb = Config.REDIS_DB
-    # redis_port = Config.REDIS_PORT
-    # redis_server = Config.REDIS_SERVER
-    #
-    # redis_db.set(name="host", value=redis_server)
-    # redis_db.set(name="port", value=redis_port)
-    # redis_db.set(name="db", value=redisdb)
+    redisdb = Config.REDIS_DB
+    redis_port = Config.REDIS_PORT
+    redis_server = Config.REDIS_SERVER
+
+    redis_db.set(name="host", value=redis_server)
+    redis_db.set(name="port", value=redis_port)
+    redis_db.set(name="db", value=redisdb)
 
     # initialize the login manager
     login_manager.init_app(app)
