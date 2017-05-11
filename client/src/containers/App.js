@@ -9,6 +9,7 @@ import TrainingPage from '../components/TrainingPage';
 import AboutPage from '../components/about/AboutPage';
 import BlogPage from '../components/blog/BlogPage';
 import ContactPage from '../components/contact/ContactPage';
+import { connect } from 'react-redux';
 
 class App extends Component {
     constructor(){
@@ -42,4 +43,10 @@ class App extends Component {
     }
 }
 
-export default App;
+// map the redux store state to props on this container
+const mapStateToProps = ({}) =>{
+    return {}
+};
+
+// connect to the redux store
+export default connect(mapStateToProps)(App)

@@ -7,7 +7,7 @@
         }
     }
 
-    @media (#{$query1}-#{$query2}: $point / $doc-font-size +em) {
+    @media only screen and (#{$query1}-#{$query2}: $point / $doc-font-size +em) {
         @content;
     }
 }
