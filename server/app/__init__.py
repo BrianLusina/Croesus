@@ -11,6 +11,20 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 
+# initialize objects of flask extensions that will be used and then initialize the application
+# once the flask object has been created and initialized. 1 caveat for this is that when
+#  configuring Celery, the broker will remain constant for all configurations
+db = SQLAlchemy()
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "auth.login"
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL,
+                backend=Config.CELERY_RESULT_BACKEND)
+# redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
+#                              db=Config.REDIS_DB)
+redis_db = redis.StrictRedis()
+
+
 class ArcoApp(Flask):
     """
     Custom application class subclassing Flask application. This is to ensure more modularity in
@@ -20,9 +34,9 @@ class ArcoApp(Flask):
 
     def __init__(self):
         """
-        jinja_loader object (a FileSystemLoader pointing to the global templates folder) is being
-        replaced with a ChoiceLoader object that will first search the normal FileSystemLoader and
-        then check a PrefixLoader that we create
+        jinja_loader object (a FileSystemLoader pointing to the global templates folder) is
+        being replaced with a ChoiceLoader object that will first search the normal
+        FileSystemLoader and then check a PrefixLoader that we create
         """
         Flask.__init__(self, __name__, static_folder="static", template_folder="templates")
         self.jinja_loader = jinja2.ChoiceLoader([
@@ -45,20 +59,6 @@ class ArcoApp(Flask):
         """
         Flask.register_blueprint(self, blueprint, **options)
         self.jinja_loader.loaders[1].mapping[blueprint.name] = blueprint.jinja_loader
-
-
-# initialize objects of flask extensions that will be used and then initialize the application
-# once the flask object has been created and initialized. 1 caveat for this is that when
-#  configuring Celery, the broker will remain constant for all configurations
-db = SQLAlchemy()
-login_manager = LoginManager()
-login_manager.session_protection = "strong"
-login_manager.login_view = "auth.login"
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL,
-                backend=Config.CELERY_RESULT_BACKEND)
-# redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
-#                              db=Config.REDIS_DB)
-redis_db = redis.StrictRedis()
 
 
 def create_app(config_name):
@@ -132,8 +132,8 @@ def error_handlers(app):
     def not_found(error):
         """
         This will handle errors that involve 404 messages
-        :return: a template instructing user they have sent a request that does not exist on the
-         server
+        :return: a template instructing user they have sent a request that does not exist on
+         the server
         """
 
 

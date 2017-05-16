@@ -9,9 +9,7 @@ rendering.
 """
 from . import blog
 from flask import jsonify, request, url_for
-from app import celery
-import json
-import newspaper
+from app.mod_blog.blog_tasks import fetch_news
 
 
 @blog.route("", methods=["GET", "POST"])
@@ -23,25 +21,16 @@ def display_top_news():
     """
     try:
         news_results = fetch_news.apply_async()
-        if news_results:
-            print(news_results.get(timeout=5000))
+
+        if news_results.state != "FAILURE":
+            print(news_results)
+            print("id", news_results.id)
+            print("state", news_results.state)
+            print("info", news_results.info)
+
             # return jsonify(news_results)
-        return jsonify()
+        return jsonify({}), 202
     except ValueError as ve:
         print(ve)
 
 
-@celery.task
-def fetch_news():
-    """
-    fetch the news and blog posts for the blogs and news section
-    This will be done on a different thread
-    :return: a dictionary with the blogs and news items
-    """
-    results = []
-    investopedia = newspaper.build("http://www.investopedia.com/")
-
-    for categories in investopedia.category_urls():
-        results.append(categories)
-    return json.dumps(results)
-    # return results
