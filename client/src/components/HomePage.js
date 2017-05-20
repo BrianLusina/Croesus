@@ -8,7 +8,8 @@ export default class HomePage extends Component{
         return(
             <div className="page" id="page-home">
                 <header className="bp-header cf">
-                    <span className="bp-header__present">Arco
+                    <span className="bp-header__present">
+                        Arco
                         <span className="bp-tooltip bp-icon bp-icon--about" data-content="All you will ever need to track your financial information"></span>
                     </span>
 
@@ -29,7 +30,7 @@ export default class HomePage extends Component{
                     </nav>
                 </header>
 
-                <img className="poster" src="{{ url_for('static', filename='images/1.jpg') }}" alt="img01" />
+                <img className="poster" src="" alt="img01" />
 
 		</div>
         )
