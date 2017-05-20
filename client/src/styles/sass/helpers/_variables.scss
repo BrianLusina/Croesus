@@ -1,8 +1,12 @@
 $doc-font-size: 16;
 $doc-line-height: 24;
+// screen sizes
 $mobile: 320;
 $tablet: 760;
 $desktop: 1200;
+$S: 600px;
+$M: 768px;
+$L: 1170px;
 
 // images
 $icon-message :url("../../images/contact/cd-icon-message.svg");
@@ -15,3 +19,27 @@ $icon-radio: url("../../images/contact/cd-icon-radio.svg");
 $icon-arrow: url("../../images/cd-arrow.svg");
 $icon-controller: url("../../images/maps/cd-icon-controller.svg");
 
+// colors
+
+$main-text: #505260; // main text
+$background: #fff; // body background color
+
+$color-1: #343642; // blue-dark
+$color-2: #2f889a; // blue-light
+$color-3: #d2d8d8; // grey
+
+$red: #d76666; // error messages
+
+// fonts
+
+$primary-font: 'PT Sans', sans-serif;
+
+// z-index
+
+$header-zindex: 2;
+$modal-zindex: 3;
+
+// header
+
+$header-height-S: 50px;
+$header-height-M: 80px;
