@@ -35,4 +35,12 @@ export default class HomePage extends Component{
 		</div>
         )
     }
+
+    /**
+     * Open login modal
+     * @param {Object} e
+     * */
+    handleOnLoginClick(e){
+
+    }
 }

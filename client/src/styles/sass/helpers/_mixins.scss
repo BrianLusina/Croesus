@@ -38,6 +38,7 @@
         url('../fonts/feather/feather.ttf?1gafuo') format('truetype'),
         url('../fonts/feather/feather.woff?1gafuo') format('woff'),
         url('../fonts/feather/feather.svg?1gafuo#feather') format('svg');
+      
     }@else if($font_name == "FontAwesome"){
         font:{
             family:$font_name;
