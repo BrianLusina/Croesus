@@ -1,9 +1,13 @@
+html * {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 html.js,
 .js body {
 	overflow: hidden;
 	height: 100vh;
 }
-
 
 *,
 *:after,
@@ -30,11 +34,34 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+//body {
+//	font: {
+//		size: 100%;
+//		family: $primary-font; // variables inside partials > _variables.scss
+//	}
+//	color: $main-text;
+//	background-color: $background;
+//}
+
+
 a {
 	text-decoration: none;
 	color: #5c5edc;
 	outline: none;
 	&:hover {
 		color: #fff;
+	}
+}
+
+img {
+	max-width: 100%;
+}
+
+input, textarea {
+	font-family: $primary-font;
+	@include font-size(16px);
+
+	&::-ms-clear {
+		display: none;
 	}
 }
