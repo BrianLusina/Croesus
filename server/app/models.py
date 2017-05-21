@@ -31,7 +31,7 @@ class Base(db.Model):
         pass
 
     @abstractmethod
-    def from_json(self):
+    def from_json(self, *args):
         """
         Initializes this model from JSON received params
         :return: initialized model

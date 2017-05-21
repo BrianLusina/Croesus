@@ -11,6 +11,7 @@ from flask_login import UserMixin
 from .. import db, login_manager
 from datetime import datetime
 from sqlalchemy.orm import relationship, backref, dynamic
+import json
 
 
 class UserAccountStatus(db.Model):
@@ -101,7 +102,7 @@ class UserAccount(Base):
     def to_json(self):
         pass
 
-    def from_json(self):
+    def from_json(self, user_account):
         pass
 
 
@@ -111,7 +112,7 @@ class UserProfile(Base):
     :cvar first_name first name of user
     :cvar last_name user's last name
     :cvar email user's email address
-    :cvar accept_terms_of_service boolean value indicating user accepts terms of service
+    :cvar accept_tos boolean value indicating user accepts terms of service
     :cvar time_zone user's current timezone
     """
     __tablename__ = "user_profile"
@@ -119,21 +120,42 @@ class UserProfile(Base):
     first_name = Column(String(100), nullable=False, index=True)
     last_name = Column(String(100), nullable=False, index=True)
     email = Column(String(250), nullable=False, unique=True, index=True)
-    accept_terms_of_service = Column(Boolean, nullable=False, default=True)
+    accept_tos = Column(Boolean, nullable=False, default=True)
     time_zone = Column(DateTime)
 
-    def from_json(self):
-        pass
-
-    def __repr__(self):
-        pass
+    def from_json(self, user_profile):
+        user = json.loads(user_profile)
+        self.first_name = user["first_name"]
+        self.last_name = user["last_name"]
+        self.email = user["email"]
+        self.accept_tos = user["accept_tos"]
+        self.time_zone = user["time_zone"]
 
     def to_json(self):
-        pass
+        return dict(
+            first_name=self.first_name,
+            last_name=self.last_name,
+            date_created=self.date_created,
+            date_modified=self.date_modified,
+            email=self.email,
+            accept_terms_of_service=self.accept_tos,
+            time_zone=self.time_zone,
+        )
+
+    def __repr__(self):
+        return "FirstName: {first_name}, LastName:{last_name}\n " \
+               "Dates:[Created:{date_created}, Modified:{date_modified}]\n " \
+               "Email:{email} accept_terms_of_service:{accept_tos}\n" \
+               " TimeZone:{time_zone}".format(first_name=self.first_name,
+                                              last_name=self.last_name,
+                                              date_created=self.date_created,
+                                              date_modified=self.date_modified,
+                                              email=self.email,
+                                              accept_tos=self.accept_tos,
+                                              time_zone=self.time_zone, )
 
 
 # This callback is used to reload the user object from the user ID stored in the session
 @login_manager.user_loader
 def load_author(user_id):
     return UserAccount.query.get(int(user_id))
-
