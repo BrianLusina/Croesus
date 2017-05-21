@@ -3,6 +3,7 @@ Models dealing with authentication
 """
 from sqlalchemy import Column, String, Integer, DateTime, func, ForeignKey, Boolean, Table
 from app.models import Base
+from abc import ABCMeta
 from hashlib import md5
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -157,5 +158,109 @@ class UserProfile(Base):
 
 # This callback is used to reload the user object from the user ID stored in the session
 @login_manager.user_loader
-def load_author(user_id):
+def load_user(user_id):
     return UserAccount.query.get(int(user_id))
+
+
+class ExternalServiceAccount(db.Model):
+    """
+    Abstract class that will superclass all external service accounts,
+
+    :cvar first_name: first name as received from the external service account
+    :cvar last_name: last name as received from external service account
+    """
+    __metaclass__ = ABCMeta
+    __abstract__ = True
+
+    first_name = Column(String(250), nullable=False)
+    last_name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+
+    def __init__(self, email, first_name, last_name):
+        self.email = email
+        self.first_name = first_name
+        self.last_name = last_name
+
+    @declared_attr
+    def user_profile_id(self):
+        """
+        This is a declared attr, that will be used in all external accounts
+        :return: User profile id that is a foreign and primary key
+        """
+        return Column(Integer, ForeignKey(UserProfile.id), primary_key=True)
+
+
+class FacebookAccount(ExternalServiceAccount):
+    """
+    Facebook account details for the author
+    :cvar __tablename__: name of this table as represented in the database
+    :cvar facebook_id: Facebook id received from
+    """
+    __tablename__ = "facebook_account"
+    facebook_id = Column(String(100), nullable=True, unique=True)
+
+    def __init__(self, facebook_id, email, first_name, last_name):
+        super().__init__(email, first_name, last_name)
+        self.facebook_id = facebook_id
+
+
+class TwitterAccount(ExternalServiceAccount):
+    """
+    Twitter account table
+    :cvar __tablename__: table name as rep in database
+    :cvar twitter_id: The twitter id as set in Twitter, or as received from Twitter
+    """
+    __tablename__ = "twitter_account"
+    twitter_id = Column(String(100), nullable=True, unique=True)
+
+    def __init__(self, twitter_id, email, first_name, last_name):
+        super().__init__(email, first_name, last_name)
+        self.twitter_id = twitter_id
+
+
+class GoogleAccount(ExternalServiceAccount):
+    """
+    Google Account table
+    :cvar __tablename__: name of table in database
+    :cvar google_id: Google id as received from Google on registration
+    """
+    __tablename__ = "google_account"
+    google_id = Column(String(100), nullable=True, unique=True)
+
+    def __init__(self, google_id, email, first_name, last_name):
+        super().__init__(email, first_name, last_name)
+        self.google_id = google_id
+
+
+class AsyncOperationStatus(Base):
+    """
+    Dictionary table that stores 3 available statuses, pending, ok, error
+    """
+    __tablename__ = "async_operation_status"
+
+    code = Column("code", String(20), nullable=True)
+
+    def __repr__(self):
+        pass
+
+
+class AsyncOperation(Base):
+    """
+
+    """
+    __tablename__ = "async_operation"
+
+    async_operation_status_id = Column(Integer, ForeignKey(AsyncOperationStatus.id))
+    user_profile_id = Column(Integer, ForeignKey(UserProfile.id))
+
+    status = relationship("AsyncOperationStatus", foreign_keys=async_operation_status_id)
+    user_profile = relationship("UserAccount", foreign_keys=user_profile_id)
+
+    def __repr__(self):
+        pass
+
+        # todo add events
+        # event.listen(
+        #     AsyncOperationStatus.__table__, "after_create",
+        #     DDL(""" INSERT INTO async_operation_status (id,code) VALUES(1,'pending'),(2, 'ok'),(3, 'error'); """)
+        # )
