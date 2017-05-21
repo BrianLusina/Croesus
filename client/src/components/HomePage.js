@@ -64,7 +64,8 @@ export default class HomePage extends Component{
     handleOnLoginClick(e){
         e.preventDefault();
         this.setState({
-            openLoginModal:true
+            openLoginModal:true,
+            openSignUpModal:false
         });
     }
 
@@ -74,7 +75,8 @@ export default class HomePage extends Component{
     handleOnSignUpClicked(e){
         e.preventDefault();
         this.setState({
-            openSignUpModal:true
+            openSignUpModal:true,
+            openLoginModal:false
         })
     }
 
