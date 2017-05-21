@@ -67,8 +67,36 @@ class UserAccount(Base):
     user_profile_id = Column(Integer, ForeignKey("user_profile.id"))
     user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"))
 
+    @property
+    def registered(self):
+        return self.registered_on
+
+    @registered.setter
+    def registered(self):
+        self.registered_on = datetime.now()
+
+    @property
+    def password(self):
+        raise AttributeError("Password is not a readable attribute")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    @password.getter
+    def get_password(self):
+        return self.password_hash
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
-        pass
+        return "Id: {},\n uuid: {}, Username: {} ProfileId:{}, AccountStatusId:{}" \
+               "\n Dates: [created: {}, modified: {}]\n " \
+               "Registered:{}\n Confirmed: [{} date: {}]\n Last Seen: {}" \
+            .format(self.id, self.uuid, self.username, self.user_profile_id,
+                    self.user_account_status_id, self.date_created, self.date_modified,
+                    self.registered_on, self.confirmed, self.confirmed_on, self.last_seen)
 
     def to_json(self):
         pass
@@ -109,29 +137,3 @@ class UserProfile(Base):
 def load_author(user_id):
     return UserAccount.query.get(int(user_id))
 
-# class Person(models.Model):
-#     id = models.IntegerField(primary_key=True, auto_created=True, unique=True)
-#     first_name = models.CharField(max_length=100)
-#     last_name = models.CharField(max_length=100)
-#     slug = models.SlugField(max_length=1000, blank=True)
-#     email = models.CharField(max_length=200)
-#     title = models.CharField(max_length=100)
-#     linkedin = models.CharField(max_length=200, null=True)
-#     github = models.CharField(max_length=200, null=True)
-#     twitter = models.CharField(max_length=200, null=True)
-#     image = models.CharField(max_length=500)
-#     responsibilities = models.CharField(max_length=1000, default='')
-#     bio = models.CharField(max_length=1000, default='')
-#     birthday = models.DateField(default=timezone.now)
-#
-#     def save(self, *args, **kwargs):
-#         if not self.pk:
-#             self.slug = slugify(self.first_name + self.last_name)
-#         super(Person, self).save(*args, **kwargs)
-#
-#     def __repr__(self):
-#         return "<id: %r, Title: %r, Name:<%r %r>, Email: %r ImgUrl: %r>" % (
-#             self.id, self.title, self.first_name, self.last_name, self.email, self.image)
-#
-#     def __str__(self):
-#         return self.first_name
