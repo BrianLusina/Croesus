@@ -2,6 +2,8 @@
  * Created by lusinabrian on 05/05/17.
  */
 import React, { Component } from 'react';
+import Auth from './auth/AuthContainer';
+
 
 export default class HomePage extends Component{
 
@@ -41,8 +43,8 @@ export default class HomePage extends Component{
                         </a>
                     </nav>
                 </header>
-
                 <img className="poster" src="" alt="img01" />
+                <Auth />
             </div>
         )
     }
@@ -53,6 +55,7 @@ export default class HomePage extends Component{
      * */
     handleOnLoginClick(e){
         e.preventDefault();
+        let modal = document.getElementsByClassName("cd-user-modal");
     }
 
     /**

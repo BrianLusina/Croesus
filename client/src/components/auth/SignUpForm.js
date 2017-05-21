@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 export default class SignUpForm extends Component{
     render(){
         return(
-            <div id="cd-signup"> <!-- sign up htmlForm -->
+            <div id="cd-signup">
                 <form className="cd-form">
                     <p className="fieldset">
                         <label className="image-replace cd-username"
@@ -46,7 +46,6 @@ export default class SignUpForm extends Component{
                         <input className="full-width has-padding" type="submit" value="Create account"/>
                     </p>
                 </form>
-                <!-- <a href="#0" className="cd-close-form">Close</a> -->
             </div>
         )
     }

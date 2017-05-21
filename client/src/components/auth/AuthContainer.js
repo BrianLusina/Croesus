@@ -2,9 +2,9 @@
  * @author lusinabrian on 20/05/17.
  * @notes: Auth container for login and sign up components
  */
-import LoginForm from 'LoginForm';
-import SignUpForm from 'SignUpForm';
-import ResetForm from 'ResetForm';
+import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
+import ResetForm from './ResetForm';
 import React, { Component } from 'react';
 
 export default class Auth extends Component{

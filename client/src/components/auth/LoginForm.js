@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 export default class LoginForm extends Component{
     render(){
         return(
-            <div id="cd-login"> <!-- log in htmlForm -->
+            <div id="cd-login">
                 <form className="cd-form">
                     <p className="fieldset">
                         <label className="image-replace cd-email" htmlFor="signin-email">
@@ -39,7 +39,6 @@ export default class LoginForm extends Component{
                 <p className="cd-htmlForm-bottom-message">
                     <a href="#0">Forgot your password?</a>
                 </p>
-                <!-- <a href="#0" className="cd-close-form">Close</a> -->
             </div>
         )
     }
