@@ -80,6 +80,7 @@ export default class HomePage extends Component{
         })
     }
 
+    //todo: open about modal
     /**
      * Handle About click event
      * @param {object} e event object

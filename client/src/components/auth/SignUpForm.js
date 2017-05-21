@@ -7,7 +7,16 @@ import PropTypes from 'prop-types';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+// import EmailIcon from 'material-ui/svg-icons/communication/email';
+// import LockIcon from 'material-ui/svg-icons/action/lock-open';
+// import AssistantIcon from 'material-ui/svg-icons/image/assistant-photo';
+// import {red500, yellow500, blue500} from 'material-ui/styles/colors';
 
+/**
+ * Sign up form modal
+ * This will enable user to sign up
+ * Sends data over api to server
+ * */
 export default class SignUpForm extends Component{
     constructor(){
         super();
@@ -28,6 +37,9 @@ export default class SignUpForm extends Component{
         });
     }
 
+    /**
+     * Render to DOM
+     * */
     render(){
         const actions = [
             <FlatButton
@@ -38,7 +50,6 @@ export default class SignUpForm extends Component{
             <FlatButton
                 label="Create Account"
                 primary={true}
-                disabled={true}
                 onTouchTap={this.handleModalClose}
             />,
         ];
@@ -51,17 +62,20 @@ export default class SignUpForm extends Component{
                 open={this.state.modalOpen}>
                 <div id="cd-signup">
                     <TextField
+                        id="signup-username"
                         hintText="Username"
                         floatingLabelText="Username"
                         fullWidth={true}
                         type="text"
                     />
+
                     <TextField
                         hintText="Email"
                         floatingLabelText="Email"
                         fullWidth={true}
                         type="email"
                     />
+
                     <TextField
                         hintText="Password"
                         floatingLabelText="Password"
@@ -69,22 +83,23 @@ export default class SignUpForm extends Component{
                         type="password"
                     />
 
+                    <TextField
+                        hintText="Retype Password"
+                        floatingLabelText="Retype Password"
+                        fullWidth={true}
+                        type="password"
+                    />
+                </div>
+
 {/*
-     <form className="cd-form">
                          <p className="fieldset">
                              <input type="checkbox" id="accept-terms"/>
                              <label htmlFor="accept-terms">I agree to the
                                  <a href="#0">Terms</a>
                              </label>
                          </p>
-                
-                         <p className="fieldset">
-                             <input className="full-width has-padding" type="submit" value="Create account"/>
-                         </p>
-                         </form>
 */}
 
-                 </div>
             </Dialog>
         )
     }

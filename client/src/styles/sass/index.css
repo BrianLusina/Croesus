@@ -696,6 +696,9 @@ input, textarea {
   padding: .6em 1em;
   border: none; }
 
+#signup-username {
+  display: inline-block; }
+
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
