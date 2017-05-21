@@ -9,12 +9,14 @@ from config import config, Config
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 
 # initialize objects of flask extensions that will be used and then initialize the application
 # once the flask object has been created and initialized. 1 caveat for this is that when
 #  configuring Celery, the broker will remain constant for all configurations
 db = SQLAlchemy()
+mail = Mail()
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "auth.login"
@@ -93,6 +95,9 @@ def create_app(config_name):
 
     # initialize the login manager
     login_manager.init_app(app)
+
+    # initialize flask mail
+    mail.init_app(app)
 
     error_handlers(app)
     register_app_blueprints(app)

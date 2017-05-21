@@ -6,6 +6,8 @@ Will deal with security utility
 
 from itsdangerous import URLSafeTimedSerializer
 from flask import current_app
+from flask_mail import Message
+from app import mail
 
 
 def generate_confirmation_token(email):
@@ -25,3 +27,19 @@ def confirm_token(token):
     :param token: 
     :return: 
     """
+
+
+def send_email(to, subject, template):
+    """
+    Sends a confirmation email to registering user
+    :param to: who we are sending this email to
+    :param subject: subject of email
+    :param template: template of the email
+    """
+    msg = Message(
+        subject=subject,
+        recipients=[to],
+        html=template,
+        sender=current_app.config.get("MAIL_DEFAULT_SENDER")
+    )
+    mail.send(msg)
