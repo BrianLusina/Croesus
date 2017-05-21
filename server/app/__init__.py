@@ -9,6 +9,22 @@ from config import config, Config
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
+
+
+# initialize objects of flask extensions that will be used and then initialize the application
+# once the flask object has been created and initialized. 1 caveat for this is that when
+#  configuring Celery, the broker will remain constant for all configurations
+db = SQLAlchemy()
+mail = Mail()
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.login_view = "auth.login"
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL,
+                backend=Config.CELERY_RESULT_BACKEND)
+# redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
+#                              db=Config.REDIS_DB)
+redis_db = redis.StrictRedis()
 
 
 class ArcoApp(Flask):
@@ -20,9 +36,9 @@ class ArcoApp(Flask):
 
     def __init__(self):
         """
-        jinja_loader object (a FileSystemLoader pointing to the global templates folder) is being
-        replaced with a ChoiceLoader object that will first search the normal FileSystemLoader and
-        then check a PrefixLoader that we create
+        jinja_loader object (a FileSystemLoader pointing to the global templates folder) is
+        being replaced with a ChoiceLoader object that will first search the normal
+        FileSystemLoader and then check a PrefixLoader that we create
         """
         Flask.__init__(self, __name__, static_folder="static", template_folder="templates")
         self.jinja_loader = jinja2.ChoiceLoader([
@@ -47,18 +63,6 @@ class ArcoApp(Flask):
         self.jinja_loader.loaders[1].mapping[blueprint.name] = blueprint.jinja_loader
 
 
-# initialize objects of flask extensions that will be used and then initialize the application
-# once the flask object has been created and initialized. 1 caveat for this is that when
-#  configuring Celery, the broker will remain constant for all configurations
-db = SQLAlchemy()
-login_manager = LoginManager()
-login_manager.session_protection = "strong"
-login_manager.login_view = "auth.login"
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL, backend=Config.CELERY_RESULT_BACKEND)
-redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
-                             db=Config.REDIS_DB)
-
-
 def create_app(config_name):
     """
     Creates a new flask app instance with the given configuration
@@ -81,16 +85,19 @@ def create_app(config_name):
     db.init_app(app)
 
     # redis configuration
-    # redisdb = Config.REDIS_DB
-    # redis_port = Config.REDIS_PORT
-    # redis_server = Config.REDIS_SERVER
-    #
-    # redis_db.set(name="host", value=redis_server)
-    # redis_db.set(name="port", value=redis_port)
-    # redis_db.set(name="db", value=redisdb)
+    redisdb = Config.REDIS_DB
+    redis_port = Config.REDIS_PORT
+    redis_server = Config.REDIS_SERVER
+
+    redis_db.set(name="host", value=redis_server)
+    redis_db.set(name="port", value=redis_port)
+    redis_db.set(name="db", value=redisdb)
 
     # initialize the login manager
     login_manager.init_app(app)
+
+    # initialize flask mail
+    mail.init_app(app)
 
     error_handlers(app)
     register_app_blueprints(app)
@@ -130,8 +137,8 @@ def error_handlers(app):
     def not_found(error):
         """
         This will handle errors that involve 404 messages
-        :return: a template instructing user they have sent a request that does not exist on the
-         server
+        :return: a template instructing user they have sent a request that does not exist on
+         the server
         """
 
 
@@ -143,7 +150,9 @@ def register_app_blueprints(app):
     from app.mod_dashboard import dashboard
     from app.mod_home import home
     from app.mod_blog import blog
+    from app.mod_auth import auth
 
+    app.register_blueprint(auth)
     app.register_blueprint(home)
     app.register_blueprint(dashboard)
     app.register_blueprint(blog)

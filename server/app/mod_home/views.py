@@ -1,8 +1,10 @@
-import newspaper
-from flask import render_template, jsonify
-from app.forms import ContactForm
+"""
+Entry point to API application. This will be for running simple checks on the application
+
+"""
+from flask import render_template, jsonify, url_for, redirect
+from flask_login import current_user
 from . import home
-from app import celery
 
 
 @home.route("")
@@ -11,27 +13,8 @@ from app import celery
 def index():
     """
     Entry point into the app
-    :param request that will be handle by the url
     :return: renders the home page
     """
+    if current_user is not None:
+        return redirect(url_for("dashboard.dashboard"))
     return render_template("home.index.html")
-
-
-@home.route("json", methods=["GET", "POST"])
-def index_json():
-    return jsonify(
-        name="Brian", message="hello",
-        list=["me", "them"]
-    )
-
-
-def contact(request):
-    """
-    Handles the contact form, picks data and sends the contact form to server
-    :param request: the request handle by this function
-    :return:
-    """
-    if request.method == "POST":
-        form = ContactForm(request.POST)
-
-    return None

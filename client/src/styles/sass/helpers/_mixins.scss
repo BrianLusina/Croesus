@@ -7,7 +7,108 @@
         }
     }
 
-    @media (#{$query1}-#{$query2}: $point / $doc-font-size +em) {
+    @media only screen and (#{$query1}-#{$query2}: $point / $doc-font-size +em) {
         @content;
     }
+}
+
+// mixin for fonts
+@mixin font_mixin($font_name, $font_weight: normal, $font_style: normal){
+    @if($font_name == "bpicons"){
+        font:{
+            family:$font_name;
+            weight:$font_weight;
+            style:$font_style;
+        }
+        src: url('../fonts/bpicons/bpicons.eot');
+        src: url('../fonts/bpicons/bpicons.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/bpicons/bpicons.woff') format('woff'),
+        url('../fonts/bpicons/bpicons.ttf') format('truetype'),
+        url('../fonts/bpicons/bpicons.svg#bpicons') format('svg');
+
+    }@else if($font_name == "feather"){
+        font:{
+            family:$font_name;
+            weight:$font_weight;
+            style:$font_style;
+        }
+        src: url('../fonts/feather/feather.eot?1gafuo');
+        src: url('../fonts/feather/feather.eot?1gafuo#iefix') format('embedded-opentype'),
+        url('../fonts/feather/feather.woff2?1gafuo') format('woff2'),
+        url('../fonts/feather/feather.ttf?1gafuo') format('truetype'),
+        url('../fonts/feather/feather.woff?1gafuo') format('woff'),
+        url('../fonts/feather/feather.svg?1gafuo#feather') format('svg');
+
+    }@else if($font_name == "FontAwesome"){
+        font:{
+            family:$font_name;
+            weight:$font_weight;
+            style:$font_style;
+        }
+        src:url('../fonts/fontawesome/fontawesome-webfont.eot?v=4.7.0');
+        src:url('../fonts/fontawesome/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+        url('../fonts/fontawesome/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+        url('../fonts/fontawesome/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+        url('../fonts/fontawesome/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+        url('../fonts/fontawesome/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular')
+        format('svg');
+    }
+}
+
+// rem fallback - credits: http://zerosixthree.se/
+
+@function calculateRem($size) {
+  $remSize: $size / 16px;
+  @return $remSize * 1rem;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+// center vertically and/or horizontally an absolute positioned element
+@mixin center($xy:xy) {
+  @if $xy == xy {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    // @include transform(translateX(-50%) translateY(-50%));
+  }
+  @else if $xy == x {
+    left: 50%;
+    right: auto;
+    // @include transform(translateX(-50%));
+  }
+  @else if $xy == y {
+    top: 50%;
+    bottom: auto;
+    // @include transform(translateY(-50%));
+  }
+}
+
+// border radius
+
+@mixin border-radius($radius:.25em) {
+  border-radius: $radius;
+}
+
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+    @media only screen and (min-width: $S) { @content; }
+  }
+  @else if $canvas == M {
+    @media only screen and (min-width: $M) { @content; }
+  }
+  @else if $canvas == L {
+    @media only screen and (min-width: $L) { @content; }
+  }
+}
+
+// super light grid - it works with the .cd-container class
+@mixin column($percentage, $float-direction:left) {
+  width: 100% * $percentage;
+  float: $float-direction;
 }

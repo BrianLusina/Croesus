@@ -3,6 +3,7 @@
  * @Notes: connects the client to the server over an api
  */
 import "whatwg-fetch";
+import axios from 'axios';
 
 async function request({ url, data, params = {} }){
     try {

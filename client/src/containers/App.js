@@ -9,21 +9,21 @@ import TrainingPage from '../components/TrainingPage';
 import AboutPage from '../components/about/AboutPage';
 import BlogPage from '../components/blog/BlogPage';
 import ContactPage from '../components/contact/ContactPage';
+import { connect } from 'react-redux';
 
+/**
+ * Root container of application
+ * */
 class App extends Component {
-    constructor(){
-        super();
-    }
-
     componentWillMount(){
 
     }
 
     render() {
         return (
-          <div>
-              <Navigation />
-              <div className="pages-stack">
+            <div>
+                <Navigation />
+                <div className="pages-stack">
                   <HomePage />
                   <DocumentationPage />
                   <ManualPage />
@@ -37,9 +37,15 @@ class App extends Component {
               <button className="menu-button">
                   <span>Menu</span>
               </button>
-          </div>
+            </div>
         );
     }
 }
 
-export default App;
+// map the redux store state to props on this container
+const mapStateToProps = ({}) =>{
+    return {}
+};
+
+// connect to the redux store
+export default connect(mapStateToProps)(App)

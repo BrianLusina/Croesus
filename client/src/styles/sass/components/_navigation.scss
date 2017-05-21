@@ -1,0 +1,63 @@
+.link {
+  font-size: 0.85em;
+  font-weight: bold;
+  position: relative;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  &:hover, &:focus {
+    color: #fff;
+  }
+}
+
+.link--page {
+  display: block;
+  color: #cecece;
+
+  &:not(.link--faded)::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 30px;
+    height: 2px;
+    margin: 5px 0 0 -15px;
+    background: #fff;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transform: scale3d(0, 1, 1);
+    transform: scale3d(0, 1, 1);
+  }
+
+  &:hover:before {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+  }
+
+  &.link--faded {
+    font-size: 0.65em;
+  }
+
+}
+
+.link--faded {
+  color: #4f4f64;
+
+  &:hover, &:focus {
+    color: #5c5edc;
+  }
+}
+
+.link--social {
+  font-size: 1.5em;
+  margin: 0 0.75em;
+}
+
+.text-hidden {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
