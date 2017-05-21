@@ -12,15 +12,16 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 class Config(object):
     """
     Default configuration for application
-    This is abstract and thus will not be used when configuring the application. the instance variables
-    and class variables will be inherited by subclass configurations and either they will be used as is
-    of there will be overrides
+    This is abstract and thus will not be used when configuring the application. 
+    the instance variables and class variables will be inherited by subclass
+    configurations and either they will be used as is of there will be overrides
     :cvar THREADS_PER_PAGE: Application threads. A common general assumption is
     using 2 per available processor cores - to handle
-    incoming requests using one and performing background
-    operations using the other.
-    :cvar CSRF_SESSION_KEY Use a secure, unique and absolutely secret key for signing the data.
-    :cvar SQLALCHEMY_DATABASE_URI Define the database - we are working with SQLite for this example    
+    incoming requests using one and performing background operations using the other.
+    :cvar CSRF_SESSION_KEY Use a secure, unique and absolutely secret key for signing
+     the data.
+    :cvar SQLALCHEMY_DATABASE_URI Define the database - we are working with SQLite for
+     this example    
     """
 
     __abstract__ = True
@@ -43,6 +44,10 @@ class Config(object):
     # task configurations
     CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
     CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_ACCEPT_CONTENT = ['json']
+    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_ENABLE_UTC = True
     REDIS_SERVER = os.environ.get("REDIS_SERVER")
     REDIS_PORT = os.environ.get("REDIS_PORT")
     REDIS_DB = os.environ.get("REDIS_DB")

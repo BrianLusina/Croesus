@@ -85,7 +85,7 @@ Form
   display: block;
   width: 16px;
   height: 16px;
-  background: url("images/cd-arrow.svg") no-repeat center center;
+  background: $icon-arrow no-repeat center center;
   pointer-events: none;
 }
 .cd-form select {
@@ -170,11 +170,11 @@ Form
 }
 .cd-form input[type="radio"] + label::after {
   /* custom image for radio button */
-  background-image: url("images/contact/cd-icon-radio.svg");
+  background-image: $icon-radio;
 }
 .cd-form input[type="checkbox"] + label::after {
   /* custom image for checkbox */
-  background-image: url("images/contact/cd-icon-check.svg");
+  background-image: $icon-check;
 }
 .cd-form input[type="radio"]:focus + label::before,
 .cd-form input[type="checkbox"]:focus + label::before {
@@ -231,7 +231,7 @@ Form
   transform: scale(0.9);
 }
 .cd-form [required] {
-  background: url("images/contact/cd-required.svg") no-repeat top right;
+  background: $icon-required no-repeat top right;
 }
 .cd-form .error-message p {
   background: #e94b35;
@@ -309,32 +309,32 @@ Custom icons
   color:white;
 }
 .cd-form .user {
-  background: url("images/contact/cd-icon-user.svg") no-repeat 16px center;
+  background: $icon-user no-repeat 16px center;
 
 }
 .cd-form [required].user {
-  background: url("images/contact/cd-icon-user.svg") no-repeat 16px center, url("images/contact/cd-required.svg") no-repeat top right;
+  background: $icon-user no-repeat 16px center, $icon-required no-repeat top right;
 }
 .cd-form .company {
-  background: url("images/contact/cd-icon-company.svg") no-repeat 16px center;
+  background: $icon-company no-repeat 16px center;
   color:black !important;
 }
 .cd-form [required].company {
-  background: url("images/contact/cd-icon-company.svg") no-repeat 16px center, url("images/contact/cd-required.svg") no-repeat top right;
+  background: $icon-company no-repeat 16px center, $icon-required no-repeat top right;
 
 }
 .cd-form .email {
-  background: url("images/contact/cd-icon-email.svg") no-repeat 16px center;
+  background: $icon-email no-repeat 16px center;
 }
 .cd-form [required].email {
-  background: url("images/contact/cd-icon-email.svg") no-repeat 16px center, url("images/contact/cd-required.svg") no-repeat top right;
+  background: $icon-email no-repeat 16px center, $icon-required no-repeat top right;
 }
 
 .cd-form .message {
-  background: url("images/contact/cd-icon-message.svg") no-repeat 16px 16px;
+  background: $icon-message no-repeat 16px 16px;
 }
 .cd-form [required].message {
-  background: url("images/contact/cd-icon-message.svg") no-repeat 16px 16px, url("images/contact/cd-required.svg") no-repeat top right;
+  background: $icon-message no-repeat 16px 16px, $icon-required no-repeat top right;
 }
 
 /* --------------------------------

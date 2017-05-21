@@ -1,0 +1,77 @@
+// Menu button
+
+.no-js .menu-button {
+  display: none;
+}
+
+.menu-button {
+  position: absolute;
+  z-index: 1000;
+  top: 30px;
+  left: 30px;
+  width: 30px;
+  height: 24px;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
+
+  &::before, &::after, & span {
+    background: #5f656f;
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    pointer-events: none;
+    -webkit-transition: -webkit-transform 0.25s;
+    transition: transform 0.25s;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+  }
+
+  & span {
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 2px;
+    text-indent: 200%;
+    -webkit-transition: opacity 0.25s;
+    transition: opacity 0.25s;
+  }
+
+  &::before {
+    -webkit-transform: translate3d(0, -10px, 0) scale3d(0.8, 1, 1);
+    transform: translate3d(0, -10px, 0) scale3d(0.8, 1, 1);
+  }
+
+  &::after {
+    -webkit-transform: translate3d(0, 10px, 0) scale3d(0.8, 1, 1);
+    transform: translate3d(0, 10px, 0) scale3d(0.8, 1, 1);
+  }
+
+}
+
+// menu button when open
+.menu-button--open {
+  span {
+    opacity: 0;
+  }
+
+  &::before {
+    -webkit-transform: rotate3d(0, 0, 1, 45deg);
+    transform: rotate3d(0, 0, 1, 45deg);
+  }
+
+  &::after {
+    -webkit-transform: rotate3d(0, 0, 1, -45deg);
+    transform: rotate3d(0, 0, 1, -45deg);
+  }
+}

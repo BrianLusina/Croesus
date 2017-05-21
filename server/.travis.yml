@@ -1,0 +1,16 @@
+language: python
+sudo: false
+cache: pip
+python:
+  - 2.7
+  - 3.5
+
+install: pip install -r requirements.txt
+
+script:
+  - python manage.py test
+  - python-codacy-coverage -r coverage.xml
+  - codecov
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

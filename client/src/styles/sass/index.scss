@@ -1,3 +1,6 @@
+//helpers
+@import "helpers/module";
+
 //Base styles
 @import "base/module";
 
@@ -12,9 +15,6 @@
 
 //vendor styles
 @import "vendors/module";
-
-//helpers
-@import "helpers/module";
 
 //Pages
 @import "pages/module";

@@ -79,7 +79,7 @@ Main components
     cursor: pointer;
     margin-left: 10px;
     background-size: 32px 64px;
-    background: rgba(211, 104, 104, 0.9) url("../../../images/maps/cd-icon-controller.svg") no-repeat;
+    background: rgba(211, 104, 104, 0.9) $icon-controller no-repeat;
 }
 .no-touch #cd-zoom-in:hover, .no-touch #cd-zoom-out:hover {
   background-color: #d36868;
