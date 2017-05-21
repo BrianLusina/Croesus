@@ -10,7 +10,12 @@ from .models import UserProfile, UserAccount, UserAccountStatus, FacebookAccount
 @auth.route("register", methods=["GET", "POST"])
 def register():
     """
-    Registers a new user 
+    Registers a new user, get request data, parse it and register user accordingly
+    successful registration of user will store data in db and send back a response to client
+    informing user to confirm their email account. (An email will be sent for confirmation)
+    Thus, afterwards, the user will then confirm their email and the client 
+    the client will then redirect user to login and they can proceed to login with their
+     registered credentials
     :return: JSON response of the registering user process
     """
     pass
