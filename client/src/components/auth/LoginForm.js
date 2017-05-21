@@ -14,6 +14,15 @@ export default class LoginForm extends Component{
 
         this.handleModalClose = this.handleModalClose.bind(this);
     }
+    /**
+     * Component will receive props
+     * @param {Object} nextProps Props received from parent container
+     * */
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            modalOpen:nextProps.openLoginModal
+        });
+    }
 
     render(){
         return(
