@@ -1,14 +1,20 @@
 /**
  * Created by lusinabrian on 05/05/17.
+ * Home page of application
  */
 import React, { Component } from 'react';
-import Auth from './auth/AuthContainer';
+import LoginForm from './auth/LoginForm';
+import SignUpForm from './auth/SignUpForm';
 
 
 export default class HomePage extends Component{
 
     constructor(){
         super();
+        this.state = {
+            openLoginModal:false,
+            openSignUpModal:false
+        };
 
         this.handleOnLoginClick = this.handleOnLoginClick.bind(this);
         this.handleOnSignUpClicked = this.handleOnSignUpClicked.bind(this);
@@ -44,7 +50,9 @@ export default class HomePage extends Component{
                     </nav>
                 </header>
                 <img className="poster" src="" alt="img01" />
-                <Auth />
+
+                <LoginForm openLoginModal={this.state.openLoginModal}/>
+                <SignUpForm openSignUpModal={this.state.openSignUpModal}/>
             </div>
         )
     }
@@ -55,7 +63,9 @@ export default class HomePage extends Component{
      * */
     handleOnLoginClick(e){
         e.preventDefault();
-        let modal = document.getElementsByClassName("cd-user-modal");
+        this.setState({
+            openLoginModal:true
+        });
     }
 
     /**
@@ -63,7 +73,9 @@ export default class HomePage extends Component{
      * @param {Object} e event object*/
     handleOnSignUpClicked(e){
         e.preventDefault();
-
+        this.setState({
+            openSignUpModal:true
+        })
     }
 
     /**

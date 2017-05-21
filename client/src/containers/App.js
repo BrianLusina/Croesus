@@ -10,6 +10,7 @@ import AboutPage from '../components/about/AboutPage';
 import BlogPage from '../components/blog/BlogPage';
 import ContactPage from '../components/contact/ContactPage';
 import { connect } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
     constructor(){
@@ -22,23 +23,25 @@ class App extends Component {
 
     render() {
         return (
-          <div>
-              <Navigation />
-              <div className="pages-stack">
-                  <HomePage />
-                  <DocumentationPage />
-                  <ManualPage />
-                  <SoftwarePage />
-                  <CustomSettingsPage />
-                  <TrainingPage />
-                  <AboutPage />
-                  <BlogPage />
-                  <ContactPage />
-              </div>
-              <button className="menu-button">
-                  <span>Menu</span>
-              </button>
-          </div>
+            <MuiThemeProvider>
+                <div>
+                    <Navigation />
+                    <div className="pages-stack">
+                      <HomePage />
+                      <DocumentationPage />
+                      <ManualPage />
+                      <SoftwarePage />
+                      <CustomSettingsPage />
+                      <TrainingPage />
+                      <AboutPage />
+                      <BlogPage />
+                      <ContactPage />
+                  </div>
+                  <button className="menu-button">
+                      <span>Menu</span>
+                  </button>
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

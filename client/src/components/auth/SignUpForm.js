@@ -3,8 +3,18 @@
  * @notes: SignUp Form component
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class SignUpForm extends Component{
+    constructor(){
+        super();
+        this.state = {
+            modalOpen:false
+        };
+
+        this.handleModalClose = this.handleModalClose.bind(this);
+    }
+
     render(){
         return(
             <div id="cd-signup">
@@ -49,5 +59,18 @@ export default class SignUpForm extends Component{
             </div>
         )
     }
+
+    /**
+     * Handle closing of modal dialog
+     * */
+    handleModalClose(){
+        this.setState({
+            modalOpen:false
+        });
+    }
 }
 
+// required proptypes
+SignUpForm.propTypes = {
+    openSignUpModal: PropTypes.bool.isRequired
+};

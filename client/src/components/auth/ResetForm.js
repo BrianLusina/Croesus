@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 
 export default class ResetForm extends Component{
+
     render(){
         return(
             <form className="cd-form">

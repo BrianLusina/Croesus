@@ -3,8 +3,18 @@
  * @notes: Login Form modal
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class LoginForm extends Component{
+    constructor(){
+        super();
+        this.state = {
+            modalOpen:false
+        };
+
+        this.handleModalClose = this.handleModalClose.bind(this);
+    }
+
     render(){
         return(
             <div id="cd-login">
@@ -42,4 +52,20 @@ export default class LoginForm extends Component{
             </div>
         )
     }
+
+
+
+    /**
+     * Handle closing of modal dialog
+     * */
+    handleModalClose(){
+        this.setState({
+            modalOpen:false
+        });
+    }
 }
+
+// required proptypes
+LoginForm.propTypes = {
+    openLoginModal: PropTypes.bool.isRequired
+};
