@@ -1,5 +1,15 @@
 from . import auth
+from .security import generate_confirmation_token
 from flask import jsonify
+
+
+@auth.route("register", methods=["GET", "POST"])
+def register():
+    """
+    Registers a new user 
+    :return: JSON response of the registering user process
+    """
+    pass
 
 
 @auth.route("login", methods=["GET", "POST"])
