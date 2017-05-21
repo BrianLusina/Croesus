@@ -5,7 +5,7 @@ Will deal with security utility
 """
 
 from itsdangerous import URLSafeTimedSerializer
-from flask import current_app
+from flask import current_app, abort
 from flask_mail import Message
 from app import mail
 
@@ -24,9 +24,20 @@ def generate_confirmation_token(email):
 def confirm_token(token):
     """
     Used to confirm user token during registration process
-    :param token: 
-    :return: 
+    we use the loads() method, which takes the token and expiration period
+    :param token: token used in registration process
+    :return: An email as long as the token has not expired
     """
+    serializer = URLSafeTimedSerializer(current_app.config.get("SECRET_KEY"))
+    try:
+        email = serializer.loads(
+            token,
+            salt=current_app.config.get("SECURITY_PASSWORD_SALT"),
+            max_age=86400  # 24 hours
+        )
+        return email
+    except:
+        abort(404)
 
 
 def send_email(to, subject, template):
