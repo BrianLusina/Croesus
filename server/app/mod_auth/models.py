@@ -13,8 +13,59 @@ from datetime import datetime
 from sqlalchemy.orm import relationship, backref, dynamic
 
 
+class UserAccountStatus(db.Model):
+    """
+    Stores the user's account status
+    :cvar __tablename__ name of this model as a table in the db
+    :cvar id id of the account status
+    :cvar code account status code
+    :cvar name account status name
+    """
+    __tablename__ = "user_account_status"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    code = Column(String(40), nullable=False)
+    name = Column(String(200), nullable=False)
+
+    def __init__(self, code, name):
+        self.code = code
+        self.name = name
+
+    def __repr__(self):
+        """
+        Create human readable representation of user account status
+        :return: string representation of user account status
+        """
+        return "Id: {}, Code:{}, Name:{}".format(self.id, self.code, self.name)
+
+
 class UserAccount(Base):
+    """
+    User account model
+    :cvar uuid unique user id
+    :cvar first_name first name of user
+    :cvar username unique user name of user
+    :cvar email email of user
+    :cvar email_confirmation_token token for confirming this user 
+    :cvar password_hash user's hashed password
+    :cvar admin boolean indicating if this user is an admin or not
+    
+    :cvar user_account_status_id FK id of user account status
+    """
     __tablename__ = "user_account"
+
+    uuid = Column(String(250), default=str(uuid.uuid4()), nullable=False)
+    username = Column(String(250), nullable=False, unique=True, index=True)
+    email = Column(String(250), nullable=False, unique=True, index=True)
+    email_confirmation_token = Column(String(350), nullable=True)
+    last_seen = Column(DateTime)
+    password_hash = Column(String(250), nullable=False)
+    admin = Column(Boolean, nullable=True, default=False)
+    registered_on = Column(DateTime, nullable=False)
+    confirmed = Column(Boolean, nullable=False, default=False)
+    confirmed_on = Column(DateTime, nullable=True)
+
+    user_profile_id = Column(Integer, ForeignKey("user_profile.id"))
+    user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"))
 
     def __repr__(self):
         pass
@@ -27,7 +78,21 @@ class UserAccount(Base):
 
 
 class UserProfile(Base):
+    """
+    User profile. This will represent the actual information of the user
+    :cvar first_name first name of user
+    :cvar last_name user's last name
+    :cvar email user's email address
+    :cvar accept_terms_of_service boolean value indicating user accepts terms of service
+    :cvar time_zone user's current timezone
+    """
     __tablename__ = "user_profile"
+
+    first_name = Column(String(100), nullable=False, index=True)
+    last_name = Column(String(100), nullable=False, index=True)
+    email = Column(String(250), nullable=False, unique=True, index=True)
+    accept_terms_of_service = Column(Boolean, nullable=False, default=True)
+    time_zone = Column(DateTime)
 
     def from_json(self):
         pass
