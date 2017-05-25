@@ -44,8 +44,8 @@ class BaseTestCase(ContextTestCase):
 
         db.create_all()
 
-        self.create_author_accounts()
-        self.add_story()
+        self.create_user_accounts()
+        # self.add_story()
 
         db.session.commit()
 
@@ -55,38 +55,41 @@ class BaseTestCase(ContextTestCase):
         self.app_context.pop()
 
     @staticmethod
-    def create_author_accounts():
+    def create_user_accounts():
         """
         Creates new users for testing follow feature
         :return: 2 new unique users to test follow and unfollow feature
         """
 
-        author1 = AuthorAccount(first_name="test1", last_name="hadithi1",
-                                username="test1hadithi", email="test1hadithi@hadithi.com",
-                                password="password", registered_on=datetime.now())
+        user_account1 = UserAccount(first_name="test1", last_name="hadithi1",
+                                    username="test1hadithi",
+                                    email="test1hadithi@hadithi.com",
+                                    password="password", registered_on=datetime.now())
 
-        author2 = AuthorAccount(first_name="test2", last_name="hadithi2",
-                                username="test2hadithi", email="test2hadithi@hadithi.com",
-                                password="password", registered_on=datetime.now())
+        user_account2 = UserAccount(first_name="test2", last_name="hadithi2",
+                                    username="test2hadithi",
+                                    email="test2hadithi@hadithi.com",
+                                    password="password", registered_on=datetime.now())
 
-        author3 = AuthorAccount(first_name="Guy De", last_name="Maupassant",
-                                username="guydemaupassant", email="guydemaupassant@hadithi.com",
-                                password="password", registered_on=datetime.now())
+        user_account3 = UserAccount(first_name="Guy De", last_name="Maupassant",
+                                    username="guydemaupassant",
+                                    email="guydemaupassant@hadithi.com",
+                                    password="password", registered_on=datetime.now())
 
-        author4 = AuthorAccount(first_name="brian", last_name="lusina",
-                                username="lusinabrian", email="lusinabrian@hadithi.com",
-                                password="password", registered_on=datetime.now())
+        user_account4 = UserAccount(first_name="brian", last_name="lusina",
+                                    username="lusinabrian", email="lusinabrian@hadithi.com",
+                                    password="password", registered_on=datetime.now())
         try:
-            db.session.add(author1)
-            db.session.add(author2)
-            db.session.add(author3)
-            db.session.add(author4)
+            db.session.add(user_account1)
+            db.session.add(user_account2)
+            db.session.add(user_account3)
+            db.session.add(user_account4)
             db.session.commit()
         except IntegrityError as ie:
             print("Integrity Error: ", ie)
             db.session.rollback()
 
-        return author1, author2, author3, author4
+        return user_account1, user_account2, user_account3, user_account4
 
     def login(self):
         """
@@ -99,27 +102,27 @@ class BaseTestCase(ContextTestCase):
             follow_redirects=True
         )
 
-    def add_story(self):
-        """
-        Adds a dummy story to the database
-        :return:
-        """
-        author1, author2, author3, author4 = self.create_author_accounts()
-        story = Story.query.filter_by(author_id=author1.id).first()
-        if story is None:
-            try:
-                story = Story(title="Gotham in flames", tagline="Dark city catches fire",
-                              category="Fiction", content="", author_id=author1.id)
-                db.session.add(story)
-            except IntegrityError as e:
-                print(e)
-                db.session.rollback()
-        return story
-
-    def save_user_story(self, story_id):
-        return self.client.get(
-            url_for("story.save_story", app_id=story_id),
-            follow_redirects=True)
+        # def add_story(self):
+        #     """
+        #     Adds a dummy story to the database
+        #     :return:
+        #     """
+        #     user_account1, user_account2, user_account3, user_account4 = self.create_user_accounts()
+        #     story = Story.query.filter_by(user_account_id=user_account1.id).first()
+        #     if story is None:
+        #         try:
+        #             story = Story(title="Gotham in flames", tagline="Dark city catches fire",
+        #                           category="Fiction", content="", user_account_id=user_account1.id)
+        #             db.session.add(story)
+        #         except IntegrityError as e:
+        #             print(e)
+        #             db.session.rollback()
+        #     return story
+        # 
+        # def save_user_story(self, story_id):
+        #     return self.client.get(
+        #         url_for("story.save_story", app_id=story_id),
+        #         follow_redirects=True)
 
 
 if __name__ == "__main__":
