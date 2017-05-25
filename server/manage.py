@@ -113,32 +113,32 @@ def init_db(migration):
 
 
 # todo: user commands
-# @manager.option('-e', '--email', help='email address', required=True)
-# @manager.option('-p', '--password', help='password', required=True)
-# @manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
-# def user_add(email, password, admin=False):
-#     """add a user to the database"""
-#     if admin:
-#         roles = ["Admin"]
-#     else:
-#         roles = ["User"]
-#     User.register(
-#         email=email,
-#         password=password,
-#         confirmed=True,
-#         roles=roles
-#     )
+@manager.option('-e', '--email', help='email address', required=True)
+@manager.option('-p', '--password', help='password', required=True)
+@manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
+def user_add(email, password, admin=False):
+    """add a user to the database"""
+    # if admin:
+    #     roles = ["Admin"]
+    # else:
+    #     roles = ["User"]
+    # User.register(
+    #     email=email,
+    #     password=password,
+    #     confirmed=True,
+    #     roles=roles
+    # )
 
 
-# @manager.option('-e', '--email', help='email address', required=True)
-# def user_del(email):
-#     """delete a user from the database"""
-#     obj = User.find(email=email)
-#     if obj:
-#         obj.delete()
-#         print("Deleted")
-#     else:
-#         print("User not found")
+@manager.option('-e', '--email', help='email address', required=True)
+def user_del(email):
+    """delete a user from the database"""
+    # obj = User.find(email=email)
+    # if obj:
+    #     obj.delete()
+    #     print("Deleted")
+    # else:
+    #     print("User not found")
 
 
 @manager.command
