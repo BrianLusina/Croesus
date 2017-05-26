@@ -107,7 +107,8 @@ class UserAccount(Base, UserMixin):
     def to_json(self):
         return dict(
             id=self.id, uuid=self.uuid, username=self.username,
-            profile_id=self.user_profile_id, account_status_id=self.user_account_status_id,
+            profile_id=self.user_profile_id,
+            account_status_id=self.user_account_status_id,
             email=self.email, date_created=self.date_created,
             date_modified=self.date_modified, registerd_on=self.registered_on,
             confimed=self.confirmed, confirmed_on=self.confirmed_on,

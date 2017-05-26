@@ -36,5 +36,5 @@ setup(
     url=grep('__url__'),
     install_requires=read('requirements.txt'),
     license='MIT',
-    zip_safe=False,
+    zip_safe=False
 )

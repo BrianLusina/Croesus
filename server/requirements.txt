@@ -2,6 +2,7 @@ alembic==0.9.1
 amqp==2.1.4
 appdirs==1.4.3
 beautifulsoup4==4.5.3
+better-exceptions==0.1.8
 billiard==3.5.0.2
 blinker==1.4
 celery==4.0.2

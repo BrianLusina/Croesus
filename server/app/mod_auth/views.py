@@ -2,6 +2,7 @@ from . import auth
 from .security import generate_confirmation_token, confirm_token
 from flask import jsonify, request, redirect, url_for
 from app import db
+import json
 from datetime import datetime
 from flask_login import current_user
 from .models import UserProfile, UserAccount, UserAccountStatus, FacebookAccount, TwitterAccount, GoogleAccount
@@ -13,12 +14,12 @@ def register():
     Registers a new user, get request data, parse it and register user accordingly
     successful registration of user will store data in db and send back a response to client
     informing user to confirm their email account. (An email will be sent for confirmation)
-    Thus, afterwards, the user will then confirm their email and the client 
+    Thus, afterwards, the user will then confirm their email and
     the client will then redirect user to login and they can proceed to login with their
      registered credentials
     :return: JSON response of the registering user process
     """
-    pass
+    return jsonify(request)
 
 
 @auth.route('confirm/<token>')
