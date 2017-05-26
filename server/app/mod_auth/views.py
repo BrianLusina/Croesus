@@ -2,6 +2,7 @@ from . import auth
 from .security import generate_confirmation_token, confirm_token
 from flask import jsonify, request, redirect, url_for
 from app import db
+import requests
 import json
 from datetime import datetime
 from flask_login import current_user
@@ -19,7 +20,35 @@ def register():
      registered credentials
     :return: JSON response of the registering user process
     """
-    return jsonify(request)
+    # if the data from request values is available, perform data transaction
+    if request.values is not None:
+        email = request.values.get("email")
+
+        user_account = UserAccount.query.filter_by(email=email).first()
+
+        # check if the user already exists
+        if user_account is not None:
+            # return registration failed message back to client
+            return jsonify(dict())
+        else:
+            # create the new user and store values in dict
+            user_data = dict(
+                email=request.values.get("email"),
+                first_name=request.values.get("first_name"),
+                last_name=request.values.get("last_name"),
+                username=request.values.get("username"),
+                password=request.values.get("password"),
+            )
+            new_user_account = UserAccount()
+            new_user_account.from_json(user_account=user_data)
+
+            db.session.add(new_user_account)
+            db.session.commit()
+
+            # send user confirmation email asynchronously
+
+            # post a success message back to client so that the client can redirect user
+    return jsonify(dict())
 
 
 @auth.route('confirm/<token>')

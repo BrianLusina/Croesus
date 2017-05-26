@@ -1,5 +1,5 @@
 import os
-
+import better_exceptions
 from flask_migrate import Migrate, MigrateCommand, upgrade
 from flask_script import Manager, Shell, Server
 from setup_environment import setup_environment_variables

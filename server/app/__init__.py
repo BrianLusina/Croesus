@@ -3,6 +3,7 @@
 This defines the application module that essentially creates a new flask app object
 """
 import jinja2
+import os
 import redis
 from celery import Celery
 from config import config, Config
@@ -85,9 +86,9 @@ def create_app(config_name):
     db.init_app(app)
 
     # redis configuration
-    redisdb = Config.REDIS_DB
-    redis_port = Config.REDIS_PORT
-    redis_server = Config.REDIS_SERVER
+    redisdb = os.environ.get("REDIS_DB")
+    redis_port = os.environ.get("REDIS_PORT")
+    redis_server = os.environ.get("REDIS_SERVER")
 
     redis_db.set(name="host", value=redis_server)
     redis_db.set(name="port", value=redis_port)
