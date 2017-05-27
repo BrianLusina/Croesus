@@ -4,9 +4,13 @@ lifetime
 """
 import os
 from abc import ABCMeta, abstractmethod
+from setup_environment import setup_environment_variables
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+# import environment variables
+setup_environment_variables()
 
 
 class Config(object):
@@ -33,10 +37,10 @@ class Config(object):
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     POSTGRES_USER = os.environ.get("POSTGRES_USER")
     POSTGRES_DB = os.environ.get("POSTGRES_DB")
     POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     DATABASE_CONNECT_OPTIONS = {}
 
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'
