@@ -21,15 +21,14 @@ def register():
     :return: JSON response of the registering user process
     """
     # if the data from request values is available, perform data transaction
-    if request.values is not None:
+    if request.method == "POST":
         email = request.values.get("email")
-
         user_account = UserAccount.query.filter_by(email=email).first()
 
         # check if the user already exists
         if user_account is not None:
             # return registration failed message back to client
-            return jsonify(dict())
+            return jsonify(dict(response=400, message="User already exists"))
         else:
             # create the new user and store values in dict
             user_data = dict(
@@ -39,8 +38,20 @@ def register():
                 username=request.values.get("username"),
                 password=request.values.get("password"),
             )
-            new_user_account = UserAccount()
-            new_user_account.from_json(user_account=user_data)
+            new_user_account = UserAccount(
+                email=request.values.get("email"),
+                username=request.values.get("username"),
+                password=request.values.get("password"),
+            )
+
+            new_user_profile = UserProfile(
+                email=request.values.get("email"),
+                first_name=request.values.get("first_name"),
+                last_name=request.values.get("last_name"),
+                accept_tos=request.values.get("accept_tos"),
+            )
+
+            new_user_account_status = UserAccountStatus(code="", name="")
 
             db.session.add(new_user_account)
             db.session.commit()
@@ -48,6 +59,7 @@ def register():
             # send user confirmation email asynchronously
 
             # post a success message back to client so that the client can redirect user
+            return jsonify(dict(status="success", message="User created", response=200))
     return jsonify(dict())
 
 

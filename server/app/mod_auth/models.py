@@ -17,6 +17,7 @@ from .. import db, login_manager
 from datetime import datetime
 from sqlalchemy.orm import relationship
 import json
+from time import gmtime
 
 
 class UserAccountStatus(db.Model):
@@ -31,10 +32,6 @@ class UserAccountStatus(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     code = Column(String(40), nullable=False)
     name = Column(String(200), nullable=False)
-
-    def __init__(self, code, name):
-        self.code = code
-        self.name = name
 
     def __repr__(self):
         """
@@ -65,7 +62,7 @@ class UserAccount(Base, UserMixin):
     last_seen = Column(DateTime)
     password_hash = Column(String(250), nullable=False)
     admin = Column(Boolean, nullable=True, default=False)
-    registered_on = Column(DateTime, nullable=False)
+    registered_on = Column(DateTime, nullable=False, default=datetime.now())
     confirmed = Column(Boolean, nullable=False, default=False)
     confirmed_on = Column(DateTime, nullable=True)
 
@@ -101,7 +98,7 @@ class UserAccount(Base, UserMixin):
                "Registered:{}\n Confirmed: [{} date: {}]\n Last Seen: {}" \
             .format(self.id, self.uuid, self.username, self.user_profile_id,
                     self.user_account_status_id, self.email, self.date_created,
-                    self.date_modified,self.registered_on, self.confirmed,
+                    self.date_modified, self.registered_on, self.confirmed,
                     self.confirmed_on, self.last_seen)
 
     def to_json(self):
@@ -119,7 +116,8 @@ class UserAccount(Base, UserMixin):
         user = json.loads(user_account)
         self.username = user["username"]
         self.email = user["email"]
-        self.password_hash = user["password"]
+        self.password = user["password"],
+        self.registered_on = user["registered_on"]
 
 
 class UserProfile(Base):
@@ -137,6 +135,7 @@ class UserProfile(Base):
     last_name = Column(String(100), nullable=False, index=True)
     email = Column(String(250), nullable=False, unique=True, index=True)
     accept_tos = Column(Boolean, nullable=False, default=True)
+    # todo: getting user timezone
     time_zone = Column(DateTime)
 
     def from_json(self, user_profile):
