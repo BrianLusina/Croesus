@@ -18,6 +18,8 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 import json
 from time import gmtime
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from flask import current_app
 
 
 class UserAccountStatus(db.Model):
@@ -91,6 +93,33 @@ class UserAccount(Base, UserMixin):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def generate_reset_token(self, expiration=3600):
+        """
+        generates a reset token for this user account
+        :param expiration: expiration time,
+        :return: reset token
+        """
+        serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+        return serializer.dumps({"reset": self.id})
+
+    def generate_confirm_token(self, expiration=3600):
+        """
+
+        :param expiration:
+        :return:
+        """
+        serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+        return serializer.dumps({"confirm": self.id})
+
+    def generate_auth_token(self, expiration):
+        """
+        Generates an authentication token
+        :param expiration: expiration time
+        :return:
+        """
+        serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+        return serializer.dumps({"id": self.id}).decode("ascii")
 
     def __repr__(self):
         return "Id: {},\n uuid: {}, Username: {} ProfileId:{}, AccountStatusId:{}" \

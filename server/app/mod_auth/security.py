@@ -7,7 +7,16 @@ Will deal with security utility
 from itsdangerous import URLSafeTimedSerializer
 from flask import current_app, abort
 from flask_mail import Message
-from app import mail
+from app import mail, celery
+
+
+@celery.task
+def send_mail_async(msg):
+    """
+    Task to send mail asynchronously
+    :param msg: Message to send
+    """
+    mail.send(msg)
 
 
 def generate_confirmation_token(email):
@@ -53,4 +62,4 @@ def send_email(to, subject, template):
         html=template,
         sender=current_app.config.get("MAIL_DEFAULT_SENDER")
     )
-    mail.send(msg)
+    send_mail_async.delay(msg)

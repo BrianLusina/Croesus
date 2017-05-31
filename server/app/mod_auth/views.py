@@ -1,5 +1,5 @@
 from . import auth
-from .security import generate_confirmation_token, confirm_token
+from .security import generate_confirmation_token, confirm_token, send_email
 from flask import jsonify, request, redirect, url_for
 from app import db
 import requests
@@ -57,6 +57,7 @@ def register():
             db.session.commit()
 
             # send user confirmation email asynchronously
+
 
             # post a success message back to client so that the client can redirect user
             return jsonify(dict(status="success", message="User created", response=200))
