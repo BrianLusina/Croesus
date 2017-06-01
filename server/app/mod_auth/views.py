@@ -1,5 +1,5 @@
 from . import auth
-from .security import generate_confirmation_token, confirm_token, send_email, send_mail_async
+from .security import generate_confirmation_token, confirm_token, send_mail_async
 from flask import jsonify, request, redirect, url_for, render_template
 from app import db
 import requests
@@ -44,8 +44,14 @@ def register():
                 accept_tos=True,
             )
 
+            db.session.add(new_user_profile)
+            db.session.commit()
+
             new_user_account_status = UserAccountStatus(code="0",
                                                         name="EMAIL_NON_CONFIRMED")
+
+            db.session.add(new_user_account_status)
+            db.session.commit()
 
             new_user_account = UserAccount(
                 email=email,
@@ -57,8 +63,6 @@ def register():
 
             token = new_user_account.generate_confirm_token()
 
-            db.session.add(new_user_profile)
-            db.session.add(new_user_account_status)
             db.session.add(new_user_account)
             db.session.commit()
 
