@@ -32,6 +32,7 @@ class Config(object):
     __metaclass__ = ABCMeta
     SSL_DISABLE = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'arco'
+    SERVER_NAME = os.environ.get("SERVER_NAME", "ARCO")
 
     # DATABASE CONFIGS
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
