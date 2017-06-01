@@ -34,6 +34,7 @@ class UserAccountStatus(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     code = Column(String(40), nullable=False)
     name = Column(String(200), nullable=False)
+    user_account = relationship("UserAccount", backref="user_account_status", lazy="dynamic")
 
     def __repr__(self):
         """
@@ -41,6 +42,58 @@ class UserAccountStatus(db.Model):
         :return: string representation of user account status
         """
         return "Id: {}, Code:{}, Name:{}".format(self.id, self.code, self.name)
+
+
+class UserProfile(Base):
+    """
+    User profile. This will represent the actual information of the user
+    :cvar first_name first name of user
+    :cvar last_name user's last name
+    :cvar email user's email address
+    :cvar accept_tos boolean value indicating user accepts terms of service
+    :cvar time_zone user's current timezone
+    """
+    __tablename__ = "user_profile"
+
+    first_name = Column(String(100), nullable=False, index=True)
+    last_name = Column(String(100), nullable=False, index=True)
+    email = Column(String(250), nullable=False, unique=True, index=True)
+    accept_tos = Column(Boolean, nullable=False, default=True)
+    user_account = relationship("UserAccount", backref="user_profile", lazy="dynamic")
+
+    # todo: getting user timezone
+    time_zone = Column(DateTime)
+
+    def from_json(self, user_profile):
+        user = json.loads(user_profile)
+        self.first_name = user["first_name"]
+        self.last_name = user["last_name"]
+        self.email = user["email"]
+        self.accept_tos = user["accept_tos"]
+        self.time_zone = user["time_zone"]
+
+    def to_json(self):
+        return dict(
+            first_name=self.first_name,
+            last_name=self.last_name,
+            date_created=self.date_created,
+            date_modified=self.date_modified,
+            email=self.email,
+            accept_terms_of_service=self.accept_tos,
+            time_zone=self.time_zone,
+        )
+
+    def __repr__(self):
+        return "FirstName: {first_name}, LastName:{last_name}\n " \
+               "Dates:[Created:{date_created}, Modified:{date_modified}]\n " \
+               "Email:{email} accept_terms_of_service:{accept_tos}\n" \
+               " TimeZone:{time_zone}".format(first_name=self.first_name,
+                                              last_name=self.last_name,
+                                              date_created=self.date_created,
+                                              date_modified=self.date_modified,
+                                              email=self.email,
+                                              accept_tos=self.accept_tos,
+                                              time_zone=self.time_zone, )
 
 
 class UserAccount(Base, UserMixin):
@@ -148,56 +201,6 @@ class UserAccount(Base, UserMixin):
         self.email = user["email"]
         self.password = user["password"],
         self.registered_on = user["registered_on"]
-
-
-class UserProfile(Base):
-    """
-    User profile. This will represent the actual information of the user
-    :cvar first_name first name of user
-    :cvar last_name user's last name
-    :cvar email user's email address
-    :cvar accept_tos boolean value indicating user accepts terms of service
-    :cvar time_zone user's current timezone
-    """
-    __tablename__ = "user_profile"
-
-    first_name = Column(String(100), nullable=False, index=True)
-    last_name = Column(String(100), nullable=False, index=True)
-    email = Column(String(250), nullable=False, unique=True, index=True)
-    accept_tos = Column(Boolean, nullable=False, default=True)
-    # todo: getting user timezone
-    time_zone = Column(DateTime)
-
-    def from_json(self, user_profile):
-        user = json.loads(user_profile)
-        self.first_name = user["first_name"]
-        self.last_name = user["last_name"]
-        self.email = user["email"]
-        self.accept_tos = user["accept_tos"]
-        self.time_zone = user["time_zone"]
-
-    def to_json(self):
-        return dict(
-            first_name=self.first_name,
-            last_name=self.last_name,
-            date_created=self.date_created,
-            date_modified=self.date_modified,
-            email=self.email,
-            accept_terms_of_service=self.accept_tos,
-            time_zone=self.time_zone,
-        )
-
-    def __repr__(self):
-        return "FirstName: {first_name}, LastName:{last_name}\n " \
-               "Dates:[Created:{date_created}, Modified:{date_modified}]\n " \
-               "Email:{email} accept_terms_of_service:{accept_tos}\n" \
-               " TimeZone:{time_zone}".format(first_name=self.first_name,
-                                              last_name=self.last_name,
-                                              date_created=self.date_created,
-                                              date_modified=self.date_modified,
-                                              email=self.email,
-                                              accept_tos=self.accept_tos,
-                                              time_zone=self.time_zone, )
 
 
 # This callback is used to reload the user object from the user ID stored in the session
