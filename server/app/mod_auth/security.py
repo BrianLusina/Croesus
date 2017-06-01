@@ -5,18 +5,31 @@ Will deal with security utility
 """
 
 from itsdangerous import URLSafeTimedSerializer
-from flask import current_app, abort
+from flask import current_app, abort, render_template, url_for
 from flask_mail import Message
 from app import mail, celery
 
 
 @celery.task
-def send_mail_async(msg):
+def send_mail_async(to, subject, template, confirm_url):
     """
     Task to send mail asynchronously
-    :param msg: Message to send
+    :param confirm_url: Url used to confirm user email
+    :param template: template to use in the email sent
+    :param subject: subject of email
+    :param to: recipients of this email
     """
-    mail.send(msg)
+    app = current_app._get_current_object()
+
+    msg = Message(
+        subject=app.config["MAIL_SUBJECT_PREFIX"] + " " + subject,
+        sender=current_app.config.get("MAIL_DEFAULT_SENDER"),
+        recipients=[to],
+    )
+    msg.html = render_template(template, confirm_url=confirm_url)
+
+    with current_app.app_context():
+        mail.send(msg)
 
 
 def generate_confirmation_token(email):
@@ -47,20 +60,3 @@ def confirm_token(token):
         return email
     except:
         abort(404)
-
-
-def send_email(to, subject, template, **kwargs):
-    """
-    Sends a confirmation email to registering user
-    :param to: who we are sending this email to
-    :param subject: subject of email
-    :param template: template of the email
-    """
-    app = current_app._get_current_object()
-    msg = Message(
-        subject=app.config["ARCO_MAIL_SUBJECT_PREFIX"] + " " + subject,
-        sender=current_app.config.get("MAIL_DEFAULT_SENDER"),
-        recipients=[to],
-        html=template,
-    )
-    send_mail_async.delay(msg)

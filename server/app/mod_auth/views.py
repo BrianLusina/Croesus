@@ -1,5 +1,5 @@
 from . import auth
-from .security import generate_confirmation_token, confirm_token, send_email
+from .security import generate_confirmation_token, confirm_token, send_email, send_mail_async
 from flask import jsonify, request, redirect, url_for, render_template
 from app import db
 import requests
@@ -52,7 +52,7 @@ def register():
                 username=username,
                 password=password,
                 user_profile_id=new_user_profile.id,
-                use_account_status_id=new_user_account_status.id
+                user_account_status_id=new_user_account_status.id
             )
 
             token = new_user_account.generate_confirm_token()
@@ -65,16 +65,15 @@ def register():
             # _external adds the full absolute URL that includes the hostname and port
             confirm_url = url_for("auth.confirm_email", token=token, _external=True)
 
-            html = render_template("auth.confirm_email.html", confirm_url=confirm_url)
-
             # send user confirmation email asynchronously
-            send_email(to=new_user_account.email, subject="Please Confirm you email",
-                       template=html, )
+            send_mail_async.delay(new_user_account.email, "Please Confirm you email",
+                                  "auth.confirm_email.html", confirm_url)
 
             login_user(new_user_account)
 
             # post a success message back to client so that the client can redirect user
-            return jsonify(dict(status="success", message="User created", response=200))
+            return jsonify(dict(status="success", message="User created",
+                                state="User Logged in", response=200))
     return jsonify(dict())
 
 
