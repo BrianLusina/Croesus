@@ -1,11 +1,11 @@
 from . import auth
 from .security import generate_confirmation_token, confirm_token, send_email
-from flask import jsonify, request, redirect, url_for
+from flask import jsonify, request, redirect, url_for, render_template
 from app import db
 import requests
 import json
 from datetime import datetime
-from flask_login import current_user
+from flask_login import current_user, login_user
 from .models import UserProfile, UserAccount, UserAccountStatus, FacebookAccount, TwitterAccount, GoogleAccount
 
 
@@ -31,33 +31,47 @@ def register():
             return jsonify(dict(response=400, message="User already exists"))
         else:
             # create the new user and store values in dict
-            user_data = dict(
-                email=request.values.get("email"),
-                first_name=request.values.get("first_name"),
-                last_name=request.values.get("last_name"),
-                username=request.values.get("username"),
-                password=request.values.get("password"),
-            )
-            new_user_account = UserAccount(
-                email=request.values.get("email"),
-                username=request.values.get("username"),
-                password=request.values.get("password"),
-            )
+            email = request.values.get("email")
+            first_name = request.values.get("first_name")
+            last_name = request.values.get("last_name")
+            username = request.values.get("username")
+            password = request.values.get("password")
 
             new_user_profile = UserProfile(
-                email=request.values.get("email"),
-                first_name=request.values.get("first_name"),
-                last_name=request.values.get("last_name"),
-                accept_tos=request.values.get("accept_tos"),
+                email=email,
+                first_name=first_name,
+                last_name=last_name,
+                accept_tos=True,
             )
 
-            new_user_account_status = UserAccountStatus(code="", name="")
+            new_user_account_status = UserAccountStatus(code="0",
+                                                        name="EMAIL_NON_CONFIRMED")
 
+            new_user_account = UserAccount(
+                email=email,
+                username=username,
+                password=password,
+                user_profile_id=new_user_profile.id,
+                use_account_status_id=new_user_account_status.id
+            )
+
+            token = new_user_account.generate_confirm_token()
+
+            db.session.add(new_user_profile)
+            db.session.add(new_user_account_status)
             db.session.add(new_user_account)
             db.session.commit()
 
-            # send user confirmation email asynchronously
+            # _external adds the full absolute URL that includes the hostname and port
+            confirm_url = url_for("auth.confirm_email", token=token, _external=True)
 
+            html = render_template("auth.confirm_email.html", confirm_url=confirm_url)
+
+            # send user confirmation email asynchronously
+            send_email(to=new_user_account.email, subject="Please Confirm you email",
+                       template=html, )
+
+            login_user(new_user_account)
 
             # post a success message back to client so that the client can redirect user
             return jsonify(dict(status="success", message="User created", response=200))

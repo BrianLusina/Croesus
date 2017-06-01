@@ -105,11 +105,12 @@ class UserAccount(Base, UserMixin):
 
     def generate_confirm_token(self, expiration=3600):
         """
-
-        :param expiration:
-        :return:
+        Generates a confirmation token
+        :param expiration: time to expire
+        :return: confirmation token
         """
         serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+        self.email_confirmation_token = serializer.dumps({"confirm": self.id})
         return serializer.dumps({"confirm": self.id})
 
     def generate_auth_token(self, expiration):

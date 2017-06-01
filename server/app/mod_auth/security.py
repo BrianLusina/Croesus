@@ -49,17 +49,18 @@ def confirm_token(token):
         abort(404)
 
 
-def send_email(to, subject, template):
+def send_email(to, subject, template, **kwargs):
     """
     Sends a confirmation email to registering user
     :param to: who we are sending this email to
     :param subject: subject of email
     :param template: template of the email
     """
+    app = current_app._get_current_object()
     msg = Message(
-        subject=subject,
+        subject=app.config["ARCO_MAIL_SUBJECT_PREFIX"] + " " + subject,
+        sender=current_app.config.get("MAIL_DEFAULT_SENDER"),
         recipients=[to],
         html=template,
-        sender=current_app.config.get("MAIL_DEFAULT_SENDER")
     )
     send_mail_async.delay(msg)
