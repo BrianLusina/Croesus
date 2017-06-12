@@ -78,6 +78,8 @@ def register():
             # post a success message back to client so that the client can redirect user
             return jsonify(dict(status="success", message="User created",
                                 state="User Logged in", response=200))
+    elif request.method == "GET":
+        return jsonify(dict())
     return jsonify(dict())
 
 
@@ -127,7 +129,7 @@ def confirm_email(token):
 
 @auth.route("login", methods=["GET", "POST"])
 def login():
-    pass
+    return jsonify(dict(message="Logged in success", response_code=200))
 
 
 @auth.route("signup", methods=["GET", "POST"])
