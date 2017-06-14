@@ -8,11 +8,14 @@
  */
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/rootReducer';
+import LogRocket from 'logrocket';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const configureStore = () => {
     return createStore(
-        rootReducer, composeWithDevTools()
+        rootReducer, composeWithDevTools(
+            applyMiddleware(LogRocket.reduxMiddleware())
+        )
     );
 };
 
