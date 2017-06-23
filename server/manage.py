@@ -13,14 +13,9 @@ setup_environment_variables()
 # create the application with given configuration from environment
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
-# import the data with app context
-# this prevents the data from being deleted after every migration
-# with app.app_context():
-#     from app.models import *
-
 manager = Manager(app)
 migrate = Migrate(app, db, directory="migrations")
-server = Server(host="127.0.0.1", port=7000)
+server = Server(host="127.0.0.1", port=5000)
 public_server = Server(host="0.0.0.0", port=5000)
 
 

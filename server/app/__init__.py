@@ -100,10 +100,11 @@ def create_app(config_name):
     # initialize flask mail
     mail.init_app(app)
 
-    error_handlers(app)
-    register_app_blueprints(app)
-    app_request_handlers(app, db)
+    # error_handlers(app)
+    # app_request_handlers(app, db)
     app_logger_handler(app, config_name)
+
+    register_app_blueprints(app)
 
     # this will reduce the load time for templates and increase the application performance
     app.jinja_env.cache = {}
@@ -203,7 +204,7 @@ def error_handlers(app):
 def register_app_blueprints(app_):
     """
     Registers the application blueprints
-    :param app: the current flask app
+    :param app_: the current flask app
     """
     from app.mod_dashboard import dashboard
     from app.mod_home import home

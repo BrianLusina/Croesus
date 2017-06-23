@@ -15,6 +15,7 @@ def index():
     Entry point into the app
     :return: renders the home page
     """
-    if current_user is not None:
-        return redirect(url_for("dashboard.dashboard"))
-    return render_template("home.index.html")
+    return "home"
+    # if current_user is not None:
+    #     return redirect(url_for("dashboard.dashboard"))
+    # return render_template("home.index.html")
