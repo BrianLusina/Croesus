@@ -3,15 +3,15 @@
 This defines the application module that essentially creates a new flask app object
 """
 import jinja2
+from datetime import datetime
 import os
 import redis
 from celery import Celery
 from config import config, Config
-from flask import Flask
-from flask_login import LoginManager
+from flask import Flask, g
+from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
-
 
 # initialize objects of flask extensions that will be used and then initialize the application
 # once the flask object has been created and initialized. 1 caveat for this is that when
@@ -102,8 +102,8 @@ def create_app(config_name):
 
     error_handlers(app)
     register_app_blueprints(app)
-    app_request_handlers(app)
-    app_logger_handler(app)
+    app_request_handlers(app, db)
+    app_logger_handler(app, config_name)
 
     # this will reduce the load time for templates and increase the application performance
     app.jinja_env.cache = {}
@@ -111,21 +111,77 @@ def create_app(config_name):
     return app
 
 
-def app_request_handlers(app):
+def app_request_handlers(app, db_):
     """
     This will handle all the requests sent to the application
-    This will include before and after requests which could be used to update a user's status or the 
-    database that is currently in use
+    This will include before and after requests which could be used to update a user's status or
+     the database that is currently in use
     :param app: the current flask app
     """
 
+    @app.before_request
+    def before_request():
+        """
+        Before submitting the request, change the currently logged in user 'last seen' status to now
+        this will update the database last_seen column and every time the user makes a request (refreshes the
+        page), the last seen will be updated. this is called before any request is ma
+        """
+        g.user = current_user
+        if current_user.is_authenticated:
+            current_user.last_seen = datetime.now()
+            db.session.add(g.user)
+            db_.session.add(current_user)
+            db_.session.commit()
 
-def app_logger_handler(app):
+            # @app.after_request
+            # def after_request(response):
+            #     for query in get_debug_queries():
+            #         if query.duration >= DATABASE_QUERY_TIMEOUT:
+            #             app.logger.warning(
+            #                 "SLOW QUERY: %s\nParameters: %s\nDuration: %fs\nContext: %s\n" %
+            #                 (query.statement, query.parameters, query.duration,
+            #                  query.context))
+            #     return response
+
+
+def app_logger_handler(app, config_name):
     """
-    Will handle error logging for the application and will store the app log files in a file that can 
-    later be accessed.
+    Will handle error logging for the application and will store the app log files in a file
+    that can later be accessed.
     :param app: current flask application
     """
+    import logging
+    from logging.handlers import SMTPHandler, RotatingFileHandler
+    MAIL_SERVER = app.config.get("MAIL_SERVER")
+
+    if config_name == "production":
+        if not app.debug and MAIL_SERVER != "":
+            credentials = None
+
+            MAIL_USERNAME = app.config.get("MAIL_USERNAME")
+            MAIL_PASSWORD = app.config.get("MAIL_PASSWORD")
+
+            if MAIL_USERNAME or MAIL_PASSWORD:
+                credentials = (MAIL_USERNAME, MAIL_PASSWORD)
+
+            mail_handler = SMTPHandler(mailhost=(MAIL_SERVER, app.config.get("MAIL_HOST")),
+                                       fromaddr="no-reply@" + MAIL_SERVER,
+                                       toaddrs=app.config.get("ADMINS"),
+                                       subject="Arco app failure",
+                                       credentials=credentials)
+            mail_handler.setLevel(logging.ERROR)
+            app.logger.addHandler(mail_handler)
+
+        if not app.debug and os.environ.get("HEROKU") is None:
+            # log file will be saved in the tmp directory
+            file_handler = RotatingFileHandler(filename="tmp/arco.log", mode="a", maxBytes=1 * 1024 * 1024,
+                                               backupCount=10)
+            file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%('
+                                                        'lineno)d]'))
+            app.logger.setLevel(logging.INFO)
+            file_handler.setLevel(logging.INFO)
+            app.logger.addHandler(file_handler)
+            app.logger.info("Arco Blog")
 
 
 def error_handlers(app):
@@ -141,9 +197,10 @@ def error_handlers(app):
         :return: a template instructing user they have sent a request that does not exist on
          the server
         """
+        return error, 404
 
 
-def register_app_blueprints(app):
+def register_app_blueprints(app_):
     """
     Registers the application blueprints
     :param app: the current flask app
@@ -153,7 +210,7 @@ def register_app_blueprints(app):
     from app.mod_blog import blog
     from app.mod_auth import auth
 
-    app.register_blueprint(auth)
-    app.register_blueprint(home)
-    app.register_blueprint(dashboard)
-    app.register_blueprint(blog)
+    app_.register_blueprint(auth)
+    app_.register_blueprint(home)
+    app_.register_blueprint(dashboard)
+    app_.register_blueprint(blog)
