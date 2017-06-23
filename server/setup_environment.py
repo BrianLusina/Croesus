@@ -12,6 +12,3 @@ def setup_environment_variables():
             var = line.strip().split("=")
             if len(var) == 2:
                 os.environ[var[0]] = var[1]
-
-if __name__ == "__main__":
-    setup_environment_variables()

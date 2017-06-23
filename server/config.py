@@ -3,14 +3,10 @@ Configurations for flask application. These are global variables that the app wi
 lifetime
 """
 import os
-from abc import ABCMeta, abstractmethod
-from setup_environment import setup_environment_variables
+from abc import ABCMeta
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-# import environment variables
-setup_environment_variables()
 
 
 class Config(object):
@@ -30,9 +26,8 @@ class Config(object):
 
     __abstract__ = True
     __metaclass__ = ABCMeta
-    SSL_DISABLE = False
+
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'arco'
-    SERVER_NAME = os.environ.get("SERVER_NAME", "ARCO")
 
     # DATABASE CONFIGS
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True

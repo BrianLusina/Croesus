@@ -1,4 +1,3 @@
-# coding=utf-8
 """
 This defines the application module that essentially creates a new flask app object
 """
@@ -7,7 +6,7 @@ from datetime import datetime
 import os
 import redis
 from celery import Celery
-from config import config, Config
+from config import config
 from flask import Flask, g
 from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
@@ -21,11 +20,10 @@ mail = Mail()
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "auth.login"
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL,
-                backend=Config.CELERY_RESULT_BACKEND)
-# redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
-#                              db=Config.REDIS_DB)
-redis_db = redis.StrictRedis()
+celery = Celery(__name__, broker=os.environ.get("CELERY_BROKER_URL"),
+                backend=os.environ.get("CELERY_RESULT_BACKEND"))
+redis_db = redis.StrictRedis(host=os.environ.get("REDIS_SERVER"),
+                             port=os.environ.get("REDIS_PORT"), db=os.environ.get("REDIS_DB"))
 
 
 class ArcoApp(Flask):
@@ -85,23 +83,14 @@ def create_app(config_name):
     # initialize the db
     db.init_app(app)
 
-    # redis configuration
-    redisdb = os.environ.get("REDIS_DB")
-    redis_port = os.environ.get("REDIS_PORT")
-    redis_server = os.environ.get("REDIS_SERVER")
-
-    redis_db.set(name="host", value=redis_server)
-    redis_db.set(name="port", value=redis_port)
-    redis_db.set(name="db", value=redisdb)
-
     # initialize the login manager
     login_manager.init_app(app)
 
     # initialize flask mail
     mail.init_app(app)
 
-    # error_handlers(app)
-    # app_request_handlers(app, db)
+    error_handlers(app)
+    app_request_handlers(app, db)
     app_logger_handler(app, config_name)
 
     register_app_blueprints(app)

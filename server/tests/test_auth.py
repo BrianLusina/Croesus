@@ -1,8 +1,8 @@
 import unittest
 from flask_login import current_user
 from tests import BaseTestCase
-from app.mod_auth.token import generate_confirmation_token, confirm_token
-from app.models import AuthorAccount
+from app.mod_auth.security import generate_confirmation_token, confirm_token
+from app.mod_auth.models import UserAccount
 from datetime import datetime
 from app import db
 
@@ -87,7 +87,7 @@ class TestAuthentication(BaseTestCase):
 
             # self.assertIn(b'You have confirmed your account', response.data)
             # self.assertTemplateUsed('main/index.html')
-            author = AuthorAccount.query.filter_by(email='guydemaupassant@hadithi.com').first()
+            author = UserAccount.query.filter_by(email='guydemaupassant@hadithi.com').first()
             self.assertTrue(response.status_code == 200)
             # todo: confirmed on tests keeps failing
             # self.assertIsInstance(author.confirmed_on, datetime)
@@ -109,7 +109,7 @@ class TestAuthentication(BaseTestCase):
     @unittest.skip
     def test_confirm_token_route_expired_token(self):
         # Ensure user cannot confirm account with expired token.
-        author = AuthorAccount(first_name="Test", last_name="Hadithi", email="test@hadithi.com",
+        author = UserAccount(first_name="Test", last_name="Hadithi", email="test@hadithi.com",
                                username="testhadithi", password="password", registered_on=datetime.now())
         db.session.add(author)
         db.session.commit()
