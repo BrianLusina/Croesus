@@ -35,6 +35,7 @@ class UserAccountStatus(db.Model):
     code = Column(String(40), nullable=False)
     name = Column(String(200), nullable=False)
     user_account = relationship("UserAccount", backref="user_account_status", lazy="dynamic")
+    user_account_id = Column(Integer, ForeignKey("user_account.id"))
 
     def __repr__(self):
         """
@@ -122,7 +123,9 @@ class UserAccount(Base, UserMixin):
     confirmed_on = Column(DateTime, nullable=True)
 
     user_profile_id = Column(Integer, ForeignKey("user_profile.id"))
-    user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"))
+
+    # 0 means NON_CONFIRMED
+    user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"), default=0)
 
     @property
     def registered(self):

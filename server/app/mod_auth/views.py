@@ -37,6 +37,7 @@ def register():
             username = request.values.get("username")
             password = request.values.get("password")
 
+            # create a new user profile
             new_user_profile = UserProfile(
                 email=email,
                 first_name=first_name,
@@ -44,30 +45,35 @@ def register():
                 accept_tos=True,
             )
 
+            # add the new user profile and commit
             db.session.add(new_user_profile)
             db.session.commit()
 
-            new_user_account_status = UserAccountStatus(code="0",
-                                                        name="EMAIL_NON_CONFIRMED")
-
-            db.session.add(new_user_account_status)
-            db.session.commit()
-
+            # add the new user account and commit it
             new_user_account = UserAccount(
                 email=email,
                 username=username,
                 password=password,
                 user_profile_id=new_user_profile.id,
-                user_account_status_id=new_user_account_status.id
             )
-
-            token = new_user_account.generate_confirm_token()
 
             db.session.add(new_user_account)
             db.session.commit()
 
+            # now we add the status of this new account and commit it
+            new_user_account_status = UserAccountStatus(code="0", name="EMAIL_NON_CONFIRMED",
+                                                        user_account_id=new_user_account.id)
+
+            db.session.add(new_user_account_status)
+            db.session.commit()
+
+            # create a token from the new user account
+            token = new_user_account.generate_confirm_token()
+
             # _external adds the full absolute URL that includes the hostname and port
             confirm_url = url_for("auth.confirm_email", token=token, _external=True)
+
+            # send the user email
 
             # send user confirmation email asynchronously
             send_mail_async.delay(new_user_account.email, "Please Confirm you email",
