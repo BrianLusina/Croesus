@@ -1,11 +1,12 @@
 from . import auth
 from .security import generate_confirmation_token, confirm_token, send_mail_async
-from flask import jsonify, request, redirect, url_for, render_template
+from flask import jsonify, request, redirect, url_for, abort, render_template
 from app import db
+from .forms import ResetPasswordForm
 import requests
 import json
 from datetime import datetime
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user, login_required
 from .models import UserProfile, UserAccount, UserAccountStatus, FacebookAccount, TwitterAccount, GoogleAccount
 
 
@@ -16,8 +17,8 @@ def register():
     successful registration of user will store data in db and send back a response to client
     informing user to confirm their email account. (An email will be sent for confirmation)
     Thus, afterwards, the user will then confirm their email and
-    the client will then redirect user to login and they can proceed to login with their
-     registered credentials
+    the client will then redirect user to login and they can proceed to login with their registered
+    credentials
     :return: JSON response of the registering user process
     """
     # if the data from request values is available, perform data transaction
@@ -49,22 +50,22 @@ def register():
             db.session.add(new_user_profile)
             db.session.commit()
 
+            # now we add the status of this new account and commit it
+            new_user_account_status = UserAccountStatus(code="0", name="EMAIL_NON_CONFIRMED")
+
+            db.session.add(new_user_account_status)
+            db.session.commit()
+
             # add the new user account and commit it
             new_user_account = UserAccount(
                 email=email,
                 username=username,
                 password=password,
                 user_profile_id=new_user_profile.id,
+                user_account_status_id=new_user_account_status.id
             )
 
             db.session.add(new_user_account)
-            db.session.commit()
-
-            # now we add the status of this new account and commit it
-            new_user_account_status = UserAccountStatus(code="0", name="EMAIL_NON_CONFIRMED",
-                                                        user_account_id=new_user_account.id)
-
-            db.session.add(new_user_account_status)
             db.session.commit()
 
             # create a token from the new user account
@@ -73,17 +74,21 @@ def register():
             # _external adds the full absolute URL that includes the hostname and port
             confirm_url = url_for("auth.confirm_email", token=token, _external=True)
 
-            # send the user email
-
             # send user confirmation email asynchronously
+            # Todo: fails to send email, why?
             send_mail_async.delay(new_user_account.email, "Please Confirm you email",
                                   "auth.confirm_email.html", confirm_url)
 
+            # log in the new user
             login_user(new_user_account)
 
             # post a success message back to client so that the client can redirect user
+            # to login
             return jsonify(dict(status="success", message="User created",
-                                state="User Logged in", response=200))
+                                state="User Logged in", response=200,
+                                confirm_email_sent=True)
+                           )
+
     elif request.method == "GET":
         return jsonify(dict())
     return jsonify(dict())
@@ -135,17 +140,92 @@ def confirm_email(token):
 
 @auth.route("login", methods=["GET", "POST"])
 def login():
-    return jsonify(dict(message="Logged in success", response_code=200))
+    if request.method == "POST":
+        # if request is POST, retrieve data and log in the user
+        user_email = request.values.get("email")
+        user_password = request.values.get("password")
 
+        # get the user object and check if they exist
+        user = UserAccount.query.filter_by(email=user_email).first()
 
-@auth.route("signup", methods=["GET", "POST"])
-def signup():
-    pass
+        # if the user exists, check their password
+        if user is not None:
+            if user.verify_password(user_password):
+                # log in the user
+                login_user(user)
+
+                # return response to client
+                return jsonify(dict(message="Logged in success", success=True, response_code=200))
+            else:
+                # wrong password, return error message to client
+                return jsonify(dict(message="Log in Failure", success=False, response_code=400,
+                                    cause="Wrong password"))
+        else:
+            # this user does not exist
+            return jsonify(dict(message="User does not exist", success=False, response_code=400))
+    return jsonify(dict())
 
 
 @auth.route("reset", methods=["GET", "POST"])
 def reset_password():
-    pass
+    """
+    Resets the user's password if they have forgotten it. In this case, we shall get the user email
+    and send a confirmation link to the given email. This, in turn, will let us know that the user
+    exists, because they will then click on the url in their email and be given instructions on
+    resetting the user password
+    :return: Response to user stating that their new password has been sent to their email
+    """
+    if request.method == "POST":
+        # get email from request
+        email = request.values.get("email")
+
+        # generate token
+        token = generate_confirmation_token(email)
+
+        # create the recover url to be sent in the email
+        recover_url = url_for("auth.reset_with_token", token=token, _external=True)
+
+        # send user confirmation email asynchronously
+        # Todo: fails to send email, why?
+        send_mail_async.delay(email, "Please reset requested", "auth.reset_email.html", recover_url)
+
+        return jsonify(dict(message="Password reset sent", success=True))
+
+    return jsonify(dict())
+
+
+@auth.route("reset_password/<token>")
+def reset_with_token(token):
+    """
+    Resets the user account with the given token they will get from the url given in their email
+    :param token: random secure token user will get in their email address
+    :return:
+    """
+    # get the email for user to reset their account
+    email = confirm_token(token)
+
+    if email is None:
+        abort(404)
+
+    form = ResetPasswordForm(request.form)
+
+    if form.validate_on_submit():
+        # get the author or throw an error
+        user = UserAccount.query.filter_by(email=email).first_or_404()
+
+        user.password = form.password.data
+
+        user.confirmed = True
+        user.confirmed_on = datetime.now()
+
+        # update the confirmed_on column
+        db.session.add(user)
+        db.session.commit()
+
+        # todo: redirect to client login page
+        return redirect(url_for('auth.login'))
+    # render this template
+    return render_template('auth.reset_with_token.html', form=form)
 
 
 @auth.route("facebook", methods=["GET", "POST"])
@@ -170,3 +250,15 @@ def login_with_twitter():
     Login user with facebook
     """
     pass
+
+
+@auth.route("logout")
+@login_required
+def logout():
+    """
+    Logs out the user from server session
+    :return: json response
+    :rtype: dict
+    """
+    logout_user()
+    return jsonify(dict(message="User logged out", success=True))

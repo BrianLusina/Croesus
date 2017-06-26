@@ -24,7 +24,8 @@ from flask import current_app
 
 class UserAccountStatus(db.Model):
     """
-    Stores the user's account status
+    Stores the user's account status, 0 means the email has not been confirmed, while 1 means the
+     email has been confirmed
     :cvar __tablename__ name of this model as a table in the db
     :cvar id id of the account status
     :cvar code account status code
@@ -35,7 +36,6 @@ class UserAccountStatus(db.Model):
     code = Column(String(40), nullable=False)
     name = Column(String(200), nullable=False)
     user_account = relationship("UserAccount", backref="user_account_status", lazy="dynamic")
-    user_account_id = Column(Integer, ForeignKey("user_account.id"))
 
     def __repr__(self):
         """
@@ -123,9 +123,7 @@ class UserAccount(Base, UserMixin):
     confirmed_on = Column(DateTime, nullable=True)
 
     user_profile_id = Column(Integer, ForeignKey("user_profile.id"))
-
-    # 0 means NON_CONFIRMED
-    user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"), default=0)
+    user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"))
 
     @property
     def registered(self):
