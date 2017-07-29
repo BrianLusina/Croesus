@@ -1,0 +1,14 @@
+{% load staticfiles %}
+{% block content %}
+<main>
+    <h1>The Team</h1>
+        {% for p in person %}
+        <section>
+            <a href="{% url 'member_detail' p.slug %}"> <img src="{{ p.image }}"/> </a>
+            <h2>{{ p.first_name }}</h2>
+            <p class="person-title">{{ p.title }}</p>
+            <p class="person-email">{{ p.email }}</p>
+        </section>
+        {% endfor %}
+    </main>
+{% endblock %}

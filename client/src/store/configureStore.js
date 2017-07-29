@@ -12,7 +12,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 const configureStore = () => {
     return createStore(
-        rootReducer, composeWithDevTools()
+        rootReducer, composeWithDevTools(
+            applyMiddleware()
+        )
     );
 };
 

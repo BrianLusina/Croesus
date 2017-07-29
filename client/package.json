@@ -10,6 +10,7 @@
     "react-dom": "^15.4.2"
   },
   "devDependencies": {
+    "babel-plugin-add-react-displayname": "^0.0.4",
     "enzyme": "^2.8.2",
     "expect": "^1.20.2",
     "isomorphic-fetch": "^2.2.1",

@@ -29,6 +29,10 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+<<<<<<< HEAD
+=======
+migrations
+>>>>>>> remove log rocket dependency
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

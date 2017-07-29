@@ -1,5 +1,9 @@
 import os
+<<<<<<< HEAD
 
+=======
+import better_exceptions
+>>>>>>> remove log rocket dependency
 from flask_migrate import Migrate, MigrateCommand, upgrade
 from flask_script import Manager, Shell, Server
 from setup_environment import setup_environment_variables
@@ -13,11 +17,14 @@ setup_environment_variables()
 # create the application with given configuration from environment
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
+<<<<<<< HEAD
 # import the data with app context
 # this prevents the data from being deleted after every migration
 # with app.app_context():
 #     from app.models import *
 
+=======
+>>>>>>> remove log rocket dependency
 manager = Manager(app)
 migrate = Migrate(app, db, directory="migrations")
 server = Server(host="127.0.0.1", port=5000)
@@ -113,6 +120,7 @@ def init_db(migration):
 
 
 # todo: user commands
+<<<<<<< HEAD
 # @manager.option('-e', '--email', help='email address', required=True)
 # @manager.option('-p', '--password', help='password', required=True)
 # @manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
@@ -139,6 +147,34 @@ def init_db(migration):
 #         print("Deleted")
 #     else:
 #         print("User not found")
+=======
+@manager.option('-e', '--email', help='email address', required=True)
+@manager.option('-p', '--password', help='password', required=True)
+@manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
+def user_add(email, password, admin=False):
+    """add a user to the database"""
+    # if admin:
+    #     roles = ["Admin"]
+    # else:
+    #     roles = ["User"]
+    # User.register(
+    #     email=email,
+    #     password=password,
+    #     confirmed=True,
+    #     roles=roles
+    # )
+
+
+@manager.option('-e', '--email', help='email address', required=True)
+def user_del(email):
+    """delete a user from the database"""
+    # obj = User.find(email=email)
+    # if obj:
+    #     obj.delete()
+    #     print("Deleted")
+    # else:
+    #     print("User not found")
+>>>>>>> remove log rocket dependency
 
 
 @manager.command

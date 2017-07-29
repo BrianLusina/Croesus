@@ -36,5 +36,9 @@ setup(
     url=grep('__url__'),
     install_requires=read('requirements.txt'),
     license='MIT',
+<<<<<<< HEAD
     zip_safe=False,
+=======
+    zip_safe=False
+>>>>>>> remove log rocket dependency
 )
