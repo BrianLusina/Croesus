@@ -2,10 +2,7 @@ alembic==0.9.1
 amqp==2.1.4
 appdirs==1.4.3
 beautifulsoup4==4.5.3
-<<<<<<< HEAD
-=======
 better-exceptions==0.1.8
->>>>>>> remove log rocket dependency
 billiard==3.5.0.2
 blinker==1.4
 celery==4.0.2
@@ -16,20 +13,13 @@ coverage==4.3.4
 cssselect==1.0.1
 feedfinder2==0.0.4
 feedparser==5.2.1
-<<<<<<< HEAD
-Flask==0.12.1
-=======
 Flask==0.12.2
->>>>>>> remove log rocket dependency
 Flask-Login==0.4.0
 Flask-Mail==0.9.1
 Flask-Migrate==2.0.3
 Flask-Script==2.0.5
 Flask-SQLAlchemy==2.2
-<<<<<<< HEAD
-=======
 Flask-Testing==0.6.2
->>>>>>> remove log rocket dependency
 Flask-WTF==0.14.2
 gunicorn==19.7.1
 idna==2.5
@@ -40,14 +30,12 @@ kombu==4.0.2
 lxml==3.7.3
 Mako==1.0.6
 MarkupSafe==1.0
-<<<<<<< HEAD
 newspaper3k==0.1.9
-=======
->>>>>>> remove log rocket dependency
 nltk==3.2.2
 olefile==0.44
 packaging==16.8
 Pillow==4.1.0
+pkg-resources==0.0.0
 psycopg2==2.7.1
 py==1.4.33
 pyparsing==2.2.0
@@ -55,13 +43,11 @@ pytest==3.0.7
 python-dateutil==2.6.0
 python-editor==1.0.3
 pytz==2017.2
-<<<<<<< HEAD
 PyYAML==3.12
-=======
->>>>>>> remove log rocket dependency
 redis==2.10.5
 requests==2.13.0
 requests-file==1.4.1
+Rx==1.5.9
 six==1.10.0
 SQLAlchemy==1.1.9
 tldextract==2.0.2
