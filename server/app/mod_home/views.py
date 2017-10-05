@@ -5,6 +5,7 @@ Entry point to API application. This will be for running simple checks on the ap
 from flask import jsonify, url_for, redirect, request
 from flask_login import current_user
 from . import home
+from ..__meta__ import __version__, __project__, __copyright__
 
 
 @home.route("")
@@ -13,8 +14,10 @@ from . import home
 def index():
     """
     Entry point into the app
-    :return: renders the home page
+    :return: renders the api information
     """
-    if current_user is not None:
-        return redirect(url_for("dashboard.dashboard"))
-    return jsonify({})
+    return jsonify({
+        "version": __version__,
+        "project": __project__,
+        "copyright": __copyright__
+    })

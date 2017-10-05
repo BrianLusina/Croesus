@@ -61,24 +61,17 @@ class BaseTestCase(ContextTestCase):
         :return: 2 new unique users to test follow and unfollow feature
         """
 
-        user_account1 = UserAccount(first_name="test1", last_name="hadithi1",
-                                    username="test1hadithi",
-                                    email="test1hadithi@hadithi.com",
-                                    password="password", registered_on=datetime.now())
+        user_account1 = UserProfile(first_name="test1", last_name="hadithi1",
+                                    email="test1hadithi@hadithi.com")
 
-        user_account2 = UserAccount(first_name="test2", last_name="hadithi2",
-                                    username="test2hadithi",
-                                    email="test2hadithi@hadithi.com",
-                                    password="password", registered_on=datetime.now())
+        user_account2 = UserProfile(first_name="test2", last_name="hadithi2",
+                                    email="test2hadithi@hadithi.com")
 
-        user_account3 = UserAccount(first_name="Guy De", last_name="Maupassant",
-                                    username="guydemaupassant",
-                                    email="guydemaupassant@hadithi.com",
-                                    password="password", registered_on=datetime.now())
+        user_account3 = UserProfile(first_name="Guy De", last_name="Maupassant",
+                                    email="guydemaupassant@hadithi.com")
 
-        user_account4 = UserAccount(first_name="brian", last_name="lusina",
-                                    username="lusinabrian", email="lusinabrian@hadithi.com",
-                                    password="password", registered_on=datetime.now())
+        user_account4 = UserProfile(first_name="brian", last_name="lusina",
+                                    email="lusinabrian@hadithi.com")
         try:
             db.session.add(user_account1)
             db.session.add(user_account2)
