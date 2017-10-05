@@ -32,7 +32,7 @@ celery = Celery(__name__, broker=os.environ.get("CELERY_BROKER_URL"),
 logger = logging.getLogger("Croesus-Server")
 
 
-class ArcoApp(Flask):
+class CroesusApp(Flask):
     """
     Custom application class subclassing Flask application. This is to ensure more modularity in
      terms of static files and templates. This way a module will have its own templates and the
@@ -75,7 +75,7 @@ def create_app(config_name):
     :return: a new WSGI Flask app
     :rtype: Flask
     """
-    app = ArcoApp()
+    app = CroesusApp()
 
     # configure the application with the given configuration name, testing, development,
     # production
