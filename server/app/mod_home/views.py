@@ -2,7 +2,7 @@
 Entry point to API application. This will be for running simple checks on the application
 
 """
-from flask import render_template, jsonify, url_for, redirect
+from flask import jsonify, url_for, redirect, request
 from flask_login import current_user
 from . import home
 
@@ -17,4 +17,4 @@ def index():
     """
     if current_user is not None:
         return redirect(url_for("dashboard.dashboard"))
-    return render_template("home.index.html")
+    return jsonify({})

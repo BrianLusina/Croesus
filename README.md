@@ -1,9 +1,9 @@
-# Arco Project
+# Croesus Project
 
-[![Build Status](https://travis-ci.org/BrianLusina/Arco.svg?branch=master)](https://travis-ci.org/BrianLusina/Arco)
-[![codecov](https://codecov.io/gh/BrianLusina/Arco/branch/master/graph/badge.svg)](https://codecov.io/gh/BrianLusina/Arco)
-[![CircleCI](https://circleci.com/gh/BrianLusina/Arco.svg?style=svg)](https://circleci.com/gh/BrianLusina/Arco)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4be2525d96664d3c9d5e471603cb97fc)](https://www.codacy.com/app/BrianLusina/Arco?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BrianLusina/Arco&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/BrianLusina/Croesus.svg?branch=master)](https://travis-ci.org/BrianLusina/Croesus)
+[![codecov](https://codecov.io/gh/BrianLusina/Arco/branch/master/graph/badge.svg)](https://codecov.io/gh/BrianLusina/Croesus)
+[![CircleCI](https://circleci.com/gh/BrianLusina/Croesus.svg?style=svg)](https://circleci.com/gh/BrianLusina/Croesus)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4be2525d96664d3c9d5e471603cb97fc)](https://www.codacy.com/app/BrianLusina/Croesus?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BrianLusina/Croesus&amp;utm_campaign=Badge_Grade)
 
 This is a containerized application with the server having a contained [Flask](http://flask.pocoo.org/) application, client running a [ReactJS](https://facebook.github.io/react/) application with a [PostgreSQL](https://www.postgresql.org/) data backend and [Redis](https://redis.io/) to manage sessions in the server.
 
@@ -120,3 +120,8 @@ docker-compose up
 This will set the applications from the Dockerfiles in each container and start them up.
 
 Each application/container has a README with further instructions on how to set it all up.
+
+[![forthebadge](http://forthebadge.com/images/badges/built-with-swag.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/made-with-python.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com)

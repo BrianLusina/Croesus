@@ -1,9 +1,5 @@
 from flask_wtf import FlaskForm
-<<<<<<< HEAD
 from wtforms import StringField, PasswordField, TextAreaField
-=======
-from wtforms import StringField, TextAreaField
->>>>>>> remove log rocket dependency
 from wtforms.validators import DataRequired, Email
 
 

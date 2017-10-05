@@ -1,33 +1,21 @@
-<<<<<<< HEAD
 # coding=utf-8
-=======
->>>>>>> remove log rocket dependency
 """
 This defines the application module that essentially creates a new flask app object
 """
-import jinja2
-<<<<<<< HEAD
-import redis
-from celery import Celery
-from config import config, Config
-from flask import Flask
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail
-
-
-=======
-from datetime import datetime
 import os
+from datetime import datetime
+
+import jinja2
 import redis
 from celery import Celery
-from config import config
 from flask import Flask, g
 from flask_login import LoginManager, current_user
-from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
+from flask_sqlalchemy import SQLAlchemy
+import logging
 
->>>>>>> remove log rocket dependency
+from config import config, Config
+
 # initialize objects of flask extensions that will be used and then initialize the application
 # once the flask object has been created and initialized. 1 caveat for this is that when
 #  configuring Celery, the broker will remain constant for all configurations
@@ -36,18 +24,12 @@ mail = Mail()
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
 login_manager.login_view = "auth.login"
-<<<<<<< HEAD
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL,
-                backend=Config.CELERY_RESULT_BACKEND)
-# redis_db = redis.StrictRedis(host=Config.REDIS_SERVER, port=Config.REDIS_PORT,
-#                              db=Config.REDIS_DB)
-redis_db = redis.StrictRedis()
-=======
 celery = Celery(__name__, broker=os.environ.get("CELERY_BROKER_URL"),
                 backend=os.environ.get("CELERY_RESULT_BACKEND"))
-redis_db = redis.StrictRedis(host=os.environ.get("REDIS_SERVER"),
-                             port=os.environ.get("REDIS_PORT"), db=os.environ.get("REDIS_DB"))
->>>>>>> remove log rocket dependency
+
+# redis_db = redis.StrictRedis(host=os.environ.get("REDIS_SERVER"),
+#                              port=os.environ.get("REDIS_PORT"), db=os.environ.get("REDIS_DB"))
+logger = logging.getLogger("Croesus-Server")
 
 
 class ArcoApp(Flask):
@@ -107,18 +89,10 @@ def create_app(config_name):
     # initialize the db
     db.init_app(app)
 
-<<<<<<< HEAD
-    # redis configuration
-    redisdb = Config.REDIS_DB
-    redis_port = Config.REDIS_PORT
-    redis_server = Config.REDIS_SERVER
+    # redis_db.set(name="host", value=os.environ.get("REDIS_SERVER"))
+    # redis_db.set(name="port", value=os.environ.get("REDIS_PORT"))
+    # redis_db.set(name="db", value=os.environ.get("REDIS_DB"))
 
-    redis_db.set(name="host", value=redis_server)
-    redis_db.set(name="port", value=redis_port)
-    redis_db.set(name="db", value=redisdb)
-
-=======
->>>>>>> remove log rocket dependency
     # initialize the login manager
     login_manager.init_app(app)
 
@@ -126,16 +100,13 @@ def create_app(config_name):
     mail.init_app(app)
 
     error_handlers(app)
-<<<<<<< HEAD
     register_app_blueprints(app)
-    app_request_handlers(app)
-    app_logger_handler(app)
-=======
+    app_request_handlers(app, db)
+    app_logger_handler(app, config_name)
     app_request_handlers(app, db)
     app_logger_handler(app, config_name)
 
     register_app_blueprints(app)
->>>>>>> remove log rocket dependency
 
     # this will reduce the load time for templates and increase the application performance
     app.jinja_env.cache = {}
@@ -143,23 +114,6 @@ def create_app(config_name):
     return app
 
 
-<<<<<<< HEAD
-def app_request_handlers(app):
-    """
-    This will handle all the requests sent to the application
-    This will include before and after requests which could be used to update a user's status or the 
-    database that is currently in use
-    :param app: the current flask app
-    """
-
-
-def app_logger_handler(app):
-    """
-    Will handle error logging for the application and will store the app log files in a file that can 
-    later be accessed.
-    :param app: current flask application
-    """
-=======
 def app_request_handlers(app, db_):
     """
     This will handle all the requests sent to the application
@@ -203,6 +157,11 @@ def app_logger_handler(app, config_name):
     from logging.handlers import SMTPHandler, RotatingFileHandler
     MAIL_SERVER = app.config.get("MAIL_SERVER")
 
+    if app.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
     if config_name == "production":
         if not app.debug and MAIL_SERVER != "":
             credentials = None
@@ -231,7 +190,6 @@ def app_logger_handler(app, config_name):
             file_handler.setLevel(logging.INFO)
             app.logger.addHandler(file_handler)
             app.logger.info("Arco Blog")
->>>>>>> remove log rocket dependency
 
 
 def error_handlers(app):
@@ -247,36 +205,19 @@ def error_handlers(app):
         :return: a template instructing user they have sent a request that does not exist on
          the server
         """
-<<<<<<< HEAD
-
-
-def register_app_blueprints(app):
-    """
-    Registers the application blueprints
-    :param app: the current flask app
-=======
-        return error, 404
 
 
 def register_app_blueprints(app_):
     """
     Registers the application blueprints
-    :param app_: the current flask app
->>>>>>> remove log rocket dependency
-    """
+    :param app: the current flask app
+        return error, 404
+        """
     from app.mod_dashboard import dashboard
     from app.mod_home import home
     from app.mod_blog import blog
     from app.mod_auth import auth
-
-<<<<<<< HEAD
-    app.register_blueprint(auth)
-    app.register_blueprint(home)
-    app.register_blueprint(dashboard)
-    app.register_blueprint(blog)
-=======
     app_.register_blueprint(auth)
     app_.register_blueprint(home)
     app_.register_blueprint(dashboard)
     app_.register_blueprint(blog)
->>>>>>> remove log rocket dependency

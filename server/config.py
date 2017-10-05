@@ -3,11 +3,8 @@ Configurations for flask application. These are global variables that the app wi
 lifetime
 """
 import os
-<<<<<<< HEAD
 from abc import ABCMeta, abstractmethod
-=======
 from abc import ABCMeta
->>>>>>> remove log rocket dependency
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -30,28 +27,17 @@ class Config(object):
 
     __abstract__ = True
     __metaclass__ = ABCMeta
-<<<<<<< HEAD
     SSL_DISABLE = False
-=======
-
->>>>>>> remove log rocket dependency
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'arco'
 
     # DATABASE CONFIGS
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-<<<<<<< HEAD
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     POSTGRES_USER = os.environ.get("POSTGRES_USER")
     POSTGRES_DB = os.environ.get("POSTGRES_DB")
     POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
-=======
-    POSTGRES_USER = os.environ.get("POSTGRES_USER")
-    POSTGRES_DB = os.environ.get("POSTGRES_DB")
-    POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
->>>>>>> remove log rocket dependency
     DATABASE_CONNECT_OPTIONS = {}
 
     SECURITY_PASSWORD_SALT = os.environ.get("SECURITY_PASSWORD_SALT") or 'precious_arco'
