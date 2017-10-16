@@ -12,12 +12,12 @@ import './styles/sass/index.css';
 import App from './containers/App';
 import configureStore from './store/configureStore';
 import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
+// injectTapEventPlugin();
 
 // initialize store
 const store = configureStore();

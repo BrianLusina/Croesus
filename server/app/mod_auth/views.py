@@ -1,21 +1,14 @@
 from . import auth
-<<<<<<< HEAD
-from .security import generate_confirmation_token, confirm_token
-from flask import jsonify, request, redirect, url_for
 from app import db
-from datetime import datetime
 from flask_login import current_user
-=======
 from .security import generate_confirmation_token, confirm_token, send_mail_async
 from flask import jsonify, request, redirect, url_for, abort, render_template
 from app import db
 from .forms import ResetPasswordForm
 import requests
-import json
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
->>>>>>> remove log rocket dependency
-from .models import UserProfile, UserAccount, UserAccountStatus, FacebookAccount, TwitterAccount, GoogleAccount
+from .models import UserProfile, UserAccount, UserAccountStatus #, FacebookAccount
 
 
 @auth.route("register", methods=["GET", "POST"])
@@ -24,17 +17,8 @@ def register():
     Registers a new user, get request data, parse it and register user accordingly
     successful registration of user will store data in db and send back a response to client
     informing user to confirm their email account. (An email will be sent for confirmation)
-<<<<<<< HEAD
-    Thus, afterwards, the user will then confirm their email and the client 
-    the client will then redirect user to login and they can proceed to login with their
-     registered credentials
-    :return: JSON response of the registering user process
-    """
-    pass
-=======
-    Thus, afterwards, the user will then confirm their email and
-    the client will then redirect user to login and they can proceed to login with their registered
-    credentials
+    Thus, afterwards, the user will then confirm their email and the client will then
+     redirect user to login and they can proceed to login with their registered credentials
     :return: JSON response of the registering user process
     """
     # if the data from request values is available, perform data transaction
@@ -102,13 +86,11 @@ def register():
             # to login
             return jsonify(dict(status="success", message="User created",
                                 state="User Logged in", response=200,
-                                confirm_email_sent=True)
-                           )
+                                confirm_email_sent=True))
 
     elif request.method == "GET":
         return jsonify(dict())
     return jsonify(dict())
->>>>>>> remove log rocket dependency
 
 
 @auth.route('confirm/<token>')
@@ -157,14 +139,12 @@ def confirm_email(token):
 
 @auth.route("login", methods=["GET", "POST"])
 def login():
-<<<<<<< HEAD
     pass
 
 
 @auth.route("signup", methods=["GET", "POST"])
 def signup():
     pass
-=======
     if request.method == "POST":
         # if request is POST, retrieve data and log in the user
         user_email = request.values.get("email")
@@ -189,14 +169,10 @@ def signup():
             # this user does not exist
             return jsonify(dict(message="User does not exist", success=False, response_code=400))
     return jsonify(dict())
->>>>>>> remove log rocket dependency
 
 
 @auth.route("reset", methods=["GET", "POST"])
 def reset_password():
-<<<<<<< HEAD
-    pass
-=======
     """
     Resets the user's password if they have forgotten it. In this case, we shall get the user email
     and send a confirmation link to the given email. This, in turn, will let us know that the user
@@ -255,7 +231,6 @@ def reset_with_token(token):
         return redirect(url_for('auth.login'))
     # render this template
     return render_template('auth.reset_with_token.html', form=form)
->>>>>>> remove log rocket dependency
 
 
 @auth.route("facebook", methods=["GET", "POST"])
@@ -280,8 +255,6 @@ def login_with_twitter():
     Login user with facebook
     """
     pass
-<<<<<<< HEAD
-=======
 
 
 @auth.route("logout")
@@ -294,4 +267,3 @@ def logout():
     """
     logout_user()
     return jsonify(dict(message="User logged out", success=True))
->>>>>>> remove log rocket dependency

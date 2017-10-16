@@ -4,7 +4,7 @@ Tasks that will be carried out by celery when this module is called upon.
 Will run tasks in the background and fetch related data
 """
 from app import celery
-from app import redis_db
+# from app import redis_db
 import json
 import newspaper
 import time

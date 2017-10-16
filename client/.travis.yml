@@ -1,9 +1,12 @@
 language: node_js
 sudo: false
 node_js:
-    - "5.0"
-    - "5.11"
     - "6"
+    - "7"
+    - "8"
+
+allow_failures:
+  - "8"
 
 cache:
   directories:
@@ -20,11 +23,10 @@ branches:
 before_script:
     - npm install
 
-# todo: configure coverage reports
 script:
   - npm run test
-  #- npm run test:coverage
-  #- codecov
+  - npm run test:coverage
+  - codecov
   #- npm run send-cover-report
 
 after_success:

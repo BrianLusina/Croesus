@@ -7,13 +7,10 @@ No template is rendered, neither are static files loaded. This will be used to d
 data from various news articles and sites. client will handle static files and HTML page 
 rendering.
 """
-from . import blog
-from flask import jsonify, request, url_for
-<<<<<<< HEAD
+from flask import jsonify
+
 from app.mod_blog.blog_tasks import fetch_news
-=======
-# from app.mod_blog.blog_tasks import fetch_news
->>>>>>> remove log rocket dependency
+from . import blog
 
 
 @blog.route("", methods=["GET", "POST"])
@@ -24,7 +21,6 @@ def display_top_news():
     :return: JSON response of data related to blog posts and news
     """
     try:
-<<<<<<< HEAD
         news_results = fetch_news.apply_async()
 
         if news_results.state != "FAILURE":
@@ -32,19 +28,14 @@ def display_top_news():
             print("id", news_results.id)
             print("state", news_results.state)
             print("info", news_results.info)
-=======
-        # news_results = fetch_news.apply_async()
+            # news_results = fetch_news.apply_async()
 
-        # if news_results.state != "FAILURE":
-        #     print(news_results)
-        #     print("id", news_results.id)
-        #     print("state", news_results.state)
-        #     print("info", news_results.info)
->>>>>>> remove log rocket dependency
-
+            # if news_results.state != "FAILURE":
+            #     print(news_results)
+            #     print("id", news_results.id)
+            #     print("state", news_results.state)
+            #     print("info", news_results.info)
             # return jsonify(news_results)
         return jsonify({}), 202
     except ValueError as ve:
         print(ve)
-
-

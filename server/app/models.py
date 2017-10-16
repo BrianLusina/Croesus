@@ -1,13 +1,14 @@
 from sqlalchemy import Column, Integer, DateTime, func
 from abc import ABCMeta, abstractmethod
 from app import db
+from app.utils import makecls
 
 
 class Base(db.Model):
     """
     Base model class from which other models will inherit from
     """
-    __metaclass__ = ABCMeta
+    __metaclass__ = makecls(ABCMeta)
     __abstract__ = True
 
     id = Column(Integer, primary_key=True, autoincrement=True)

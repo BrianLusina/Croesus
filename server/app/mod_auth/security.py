@@ -5,11 +5,9 @@ Will deal with security utility
 """
 
 from itsdangerous import URLSafeTimedSerializer
-<<<<<<< HEAD
 from flask import current_app, abort
 from flask_mail import Message
 from app import mail
-=======
 from flask import current_app, abort, render_template, url_for
 from flask_mail import Message
 from app import mail, celery
@@ -35,7 +33,6 @@ def send_mail_async(to, subject, template, confirm_url):
 
     with current_app.app_context():
         mail.send(msg)
->>>>>>> remove log rocket dependency
 
 
 def generate_confirmation_token(email):
@@ -66,7 +63,6 @@ def confirm_token(token):
         return email
     except:
         abort(404)
-<<<<<<< HEAD
 
 
 def send_email(to, subject, template):
@@ -83,5 +79,3 @@ def send_email(to, subject, template):
         sender=current_app.config.get("MAIL_DEFAULT_SENDER")
     )
     mail.send(msg)
-=======
->>>>>>> remove log rocket dependency
