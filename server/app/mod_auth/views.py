@@ -9,8 +9,10 @@ import requests
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
 from .models import UserProfile, UserAccount, UserAccountStatus #, FacebookAccount
+from .exceptions import UserAlreadyExists
 
 
+@auth.route("register/", methods=["GET", "POST"])
 @auth.route("register", methods=["GET", "POST"])
 def register():
     """
@@ -29,7 +31,7 @@ def register():
         # check if the user already exists
         if user_account is not None:
             # return registration failed message back to client
-            return jsonify(dict(response=400, message="User already exists"))
+            raise UserAlreadyExists()
         else:
             # create the new user and store values in dict
             email = request.values.get("email")
@@ -39,12 +41,8 @@ def register():
             password = request.values.get("password")
 
             # create a new user profile
-            new_user_profile = UserProfile(
-                email=email,
-                first_name=first_name,
-                last_name=last_name,
-                accept_tos=True,
-            )
+            new_user_profile = UserProfile(email=email, first_name=first_name,
+                                           last_name=last_name, accept_tos=True)
 
             # add the new user profile and commit
             db.session.add(new_user_profile)
@@ -57,19 +55,16 @@ def register():
             db.session.commit()
 
             # add the new user account and commit it
-            new_user_account = UserAccount(
-                email=email,
-                username=username,
-                password=password,
-                user_profile_id=new_user_profile.id,
-                user_account_status_id=new_user_account_status.id
-            )
+            new_user_account = UserAccount(email=email, username=username,
+                                           password=password,
+                                           user_profile_id=new_user_profile.id,
+                                           user_account_status_id=new_user_account_status.id)
 
             db.session.add(new_user_account)
             db.session.commit()
 
             # create a token from the new user account
-            token = new_user_account.generate_confirm_token()
+            token = new_user_account.generate_confirmation_token()
 
             # _external adds the full absolute URL that includes the hostname and port
             confirm_url = url_for("auth.confirm_email", token=token, _external=True)
@@ -88,9 +83,13 @@ def register():
                                 state="User Logged in", response=200,
                                 confirm_email_sent=True))
 
-    elif request.method == "GET":
-        return jsonify(dict())
-    return jsonify(dict())
+    if request.method == "GET":
+        return jsonify(
+            dict(message="Welcome to Croesus",
+                 more="Register with a POST to /auth/register/ with email, username, and password"
+                 )
+        ), 200
+    return jsonify(dict()), 200
 
 
 @auth.route('confirm/<token>')
@@ -137,6 +136,7 @@ def confirm_email(token):
     return redirect(url_for('auth.login'))
 
 
+@auth.route("login/", methods=["GET", "POST"])
 @auth.route("login", methods=["GET", "POST"])
 def login():
     pass

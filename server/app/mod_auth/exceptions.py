@@ -7,6 +7,7 @@ from flask_api.exceptions import APIException, AuthenticationFailed, NotFound
 class UserAlreadyExists(APIException):
     """Raises a 406 status when username is already taken """
     status_code = 406
+    message = "User already exists"
     detail = 'This name is already taken'
 
 

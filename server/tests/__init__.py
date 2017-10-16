@@ -60,7 +60,7 @@ class BaseTestCase(ContextTestCase):
         :return: tuple of user profiles
         """
 
-        user1_profile = UserProfile(first_name="user1", last_name="user1Lastname",
+        user1_profile = UserProfile(first_name="user1", last_name="user1LastName",
                                     email="user1@example.com")
 
         user2_profile = UserProfile(first_name="user2", last_name="user2LastName",
