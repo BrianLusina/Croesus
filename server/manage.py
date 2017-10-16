@@ -2,22 +2,14 @@ import os
 import better_exceptions
 from flask_migrate import Migrate, MigrateCommand, upgrade
 from flask_script import Manager, Shell, Server
-from setup_environment import setup_environment_variables
-from app import create_app, db, logger
+from app import create_app, db, app_logger
 import alembic
 import alembic.config
-import faulthandler
-
-# Enables dumping of error signals
-# a file can optionally be passed
-# check http://devdocs.io/python~3.6/library/faulthandler for more info
-faulthandler.enable()
-
-# import environment variables
-setup_environment_variables()
+from sqlalchemy.exc import IntegrityError
 
 # create the application with given configuration from environment
 app = create_app(os.getenv("FLASK_CONFIG") or "default")
+port = 5000
 
 # import the data with app context
 # this prevents the data from being deleted after every migration
@@ -26,14 +18,14 @@ app = create_app(os.getenv("FLASK_CONFIG") or "default")
 
 manager = Manager(app)
 migrate = Migrate(app, db, directory="migrations")
-server = Server(host="127.0.0.1", port=5000)
-public_server = Server(host="0.0.0.0", port=5000)
+server = Server(host="127.0.0.1", port=port)
+public_server = Server(host="0.0.0.0", port=port)
 
 
 def make_shell_context():
     """
     Makes a shell context
-    :return dictionary object 
+    :return dictionary object
     :rtype: dict
     """
     return dict(app=app, db=db)
@@ -44,17 +36,14 @@ manager.add_command("db", MigrateCommand)
 manager.add_command("runserver", server)
 manager.add_command("publicserver", public_server)
 
-cov = None
-if os.environ.get('FLASK_COVERAGE'):
-    import coverage
-
-    cov = coverage.coverage(branch=True, include='app/*')
-    cov.start()
-
 
 @manager.command
 def test(cover=False):
     """Run the unit tests."""
+    import coverage
+    cov = coverage.coverage(branch=True, include='app/*')
+    cov.start()
+
     if cover and not os.environ.get('FLASK_COVERAGE'):
         import sys
         os.environ['FLASK_COVERAGE'] = '1'
@@ -63,10 +52,11 @@ def test(cover=False):
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
-    if cov:
+    if cover:
         cov.stop()
         cov.save()
-        print('Coverage Summary:')
+        print("Coverage Summary:")
+
         cov.report()
         basedir = os.path.abspath(os.path.dirname(__file__))
         covdir = os.path.join(basedir, 'coverage')
@@ -77,9 +67,18 @@ def test(cover=False):
         # generate xml report
         cov.xml_report()
 
-        print('HTML version: file://%s/index.html' % covdir)
-        print("XML version: file://%s" % basedir)
+        print("HTML version: file://{}/index.html".format(covdir))
+        print("XML version: file://{}".format(basedir))
         cov.erase()
+
+
+@manager.command
+def deploy():
+    """Run deployment tasks."""
+    from flask_migrate import upgrade
+
+    # migrate database to latest revision
+    upgrade()
 
 
 @manager.command
@@ -114,36 +113,37 @@ def init_db(migration):
         db.session.commit()
         cfg = alembic.config.Config("app/migrations/alembic.ini")
         alembic.command.stamp(cfg, "head")
-        # todo: add default roles
-        # Role.add_default_roles()
 
 
-# @manager.option('-e', '--email', help='email address', required=True)
-# @manager.option('-p', '--password', help='password', required=True)
-# @manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
-# def user_add(email, password, admin=False):
-#     """add a user to the database"""
-#     if admin:
-#         roles = ["Admin"]
-#     else:
-#         roles = ["User"]
-#     User.register(
-#         email=email,
-#         password=password,
-#         confirmed=True,
-#         roles=roles
-#     )
+@manager.option('-e', '--email', help='email address', required=True)
+@manager.option('-p', '--password', help='password', required=True)
+@manager.option('-a', '--admin', help='make user an admin user', action='store_true', default=None)
+def user_add(email, password, admin=False):
+    from app.mod_auth.models import UserAccount
+    """add a user to the database"""
+    user_account = UserAccount.query.filter_by(email=email).first()
+    if user_account:
+        app_logger.error("User with email {} already exists".format(email))
+    else:
+        user = UserAccount(email=email, password=password, username=email)
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError:
+            app_logger.exception("Failed to save user with email :{}".format(email))
 
 
-# @manager.option('-e', '--email', help='email address', required=True)
-# def user_del(email):
-#     """delete a user from the database"""
-#     obj = User.find(email=email)
-#     if obj:
-#         obj.delete()
-#         print("Deleted")
-#     else:
-#         print("User not found")
+@manager.option('-e', '--email', help='email address', required=True)
+def user_del(email):
+    """delete a user from the database"""
+    from app.mod_auth.models import UserAccount
+    user_account = UserAccount.query.filter_by(email=email)
+    if user_account:
+        db.session.delete(user_account)
+        app_logger.info("User with email: {} deleted".format(email))
+    else:
+        app_logger.error("User with email: {} does not exist in DB".format(email))
+
 
 
 @manager.command
@@ -155,7 +155,7 @@ def drop_db():
 
 if __name__ == "__main__":
     try:
-        logger.info("Running on address {}:{}".format(server.host, server.port))
+        app_logger.info("Running on address {}:{}".format(server.host, server.port))
     except Exception:
-        logger.info("Running on address {}:{}".format(public_server.host, public_server.port))
+        app_logger.info("Running on address {}:{}".format(public_server.host, public_server.port))
     manager.run()

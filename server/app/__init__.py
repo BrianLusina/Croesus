@@ -14,7 +14,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 import logging
 
-from config import config, Config
+from config import config
 
 # initialize objects of flask extensions that will be used and then initialize the application
 # once the flask object has been created and initialized. 1 caveat for this is that when
@@ -29,7 +29,7 @@ celery = Celery(__name__, broker=os.environ.get("CELERY_BROKER_URL"),
 
 # redis_db = redis.StrictRedis(host=os.environ.get("REDIS_SERVER"),
 #                              port=os.environ.get("REDIS_PORT"), db=os.environ.get("REDIS_DB"))
-logger = logging.getLogger("Croesus-Server")
+app_logger = logging.getLogger("Croesus-Server")
 
 
 class CroesusApp(Flask):

@@ -8,7 +8,7 @@ from .forms import ResetPasswordForm
 import requests
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
-from .models import UserProfile, UserAccount, UserAccountStatus, FacebookAccount
+from .models import UserProfile, UserAccount, UserAccountStatus #, FacebookAccount
 
 
 @auth.route("register", methods=["GET", "POST"])

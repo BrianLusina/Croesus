@@ -1,10 +1,10 @@
 import unittest
-from app import create_app, db
-from app.mod_auth.models import UserAccount, UserAccountStatus, UserProfile
-from sqlalchemy.exc import IntegrityError
-from flask import url_for
 from datetime import datetime
 from flask_testing import TestCase
+from sqlalchemy.exc import IntegrityError
+import json
+from app import create_app, db, app_logger
+from app.mod_auth.models import UserAccount, UserProfile
 
 
 class ContextTestCase(TestCase):
@@ -44,8 +44,7 @@ class BaseTestCase(ContextTestCase):
 
         db.create_all()
 
-        self.create_user_accounts()
-        # self.add_story()
+        self.create_accounts()
 
         db.session.commit()
 
@@ -55,34 +54,48 @@ class BaseTestCase(ContextTestCase):
         self.app_context.pop()
 
     @staticmethod
-    def create_user_accounts():
+    def create_user_profiles():
         """
-        Creates new users for testing follow feature
-        :return: 2 new unique users to test follow and unfollow feature
+        Creates user profiles
+        :return: tuple of user profiles
         """
 
-        user_account1 = UserProfile(first_name="test1", last_name="hadithi1",
-                                    email="test1hadithi@hadithi.com")
+        user1_profile = UserProfile(first_name="user1", last_name="user1Lastname",
+                                    email="user1@example.com")
 
-        user_account2 = UserProfile(first_name="test2", last_name="hadithi2",
-                                    email="test2hadithi@hadithi.com")
+        user2_profile = UserProfile(first_name="user2", last_name="user2LastName",
+                                    email="user2@example.com")
+        db.session.add(user1_profile)
+        db.session.add(user2_profile)
+        db.session.commit()
 
-        user_account3 = UserProfile(first_name="Guy De", last_name="Maupassant",
-                                    email="guydemaupassant@hadithi.com")
+        return user1_profile, user2_profile
 
-        user_account4 = UserProfile(first_name="brian", last_name="lusina",
-                                    email="lusinabrian@hadithi.com")
+    def create_accounts(self):
+        """
+        Creates accounts with users bucket lists and bucket list items
+        :return: dictionary with the 2 new unique users to test
+        """
+        user1_profile, user2_profile = self.create_user_profiles()
+
+        user1_account = UserAccount(username="user1", email="user1@example.com",
+                                    password="user1_pass",
+                                    registered_on=datetime.now(),
+                                    user_profile_id=user1_profile.id)
+
+        user2_account = UserAccount(username="user2", email="user2@example.com",
+                                    password="user2_pass", registered_on=datetime.now(),
+                                    user_profile_id=user2_profile.id)
+
         try:
-            db.session.add(user_account1)
-            db.session.add(user_account2)
-            db.session.add(user_account3)
-            db.session.add(user_account4)
+            db.session.add(user2_account)
+            db.session.add(user1_account)
             db.session.commit()
         except IntegrityError as ie:
-            print("Integrity Error: ", ie)
+            app_logger.exception("Encountered error creating values {}".format(ie))
             db.session.rollback()
 
-        return user_account1, user_account2, user_account3, user_account4
+        return user1_account, user2_account
 
     def login(self):
         """
@@ -90,32 +103,24 @@ class BaseTestCase(ContextTestCase):
         :return: The authenticated user for the test app
         """
         return self.client.post(
-            "auth/login",
-            data=dict(email='guydemaupassant@hadithi.com', password='password', confirm='password'),
-            follow_redirects=True
+            "/auth/login/", data=dict(email='user1@example.com', username="user1",
+                                      password='user1_pass'), follow_redirects=True
         )
 
-        # def add_story(self):
-        #     """
-        #     Adds a dummy story to the database
-        #     :return:
-        #     """
-        #     user_account1, user_account2, user_account3, user_account4 = self.create_user_accounts()
-        #     story = Story.query.filter_by(user_account_id=user_account1.id).first()
-        #     if story is None:
-        #         try:
-        #             story = Story(title="Gotham in flames", tagline="Dark city catches fire",
-        #                           category="Fiction", content="", user_account_id=user_account1.id)
-        #             db.session.add(story)
-        #         except IntegrityError as e:
-        #             print(e)
-        #             db.session.rollback()
-        #     return story
-        # 
-        # def save_user_story(self, story_id):
-        #     return self.client.get(
-        #         url_for("story.save_story", app_id=story_id),
-        #         follow_redirects=True)
+    def get_jwt_token(self):
+        """
+        Gets JWT(JSON Web Token) token from the login response
+        :return: JWT token
+        :rtype: str
+        """
+        login_response = self.login()
+        login_data = json.loads(login_response.data.decode("utf-8"))
+        jwt_token = login_data.get("token")
+        return jwt_token
+
+    def get_headers(self):
+        """Returns headers to be used in POST requests"""
+        return {"Authorization": "Bearer {0}".format(self.get_jwt_token())}
 
 
 if __name__ == "__main__":

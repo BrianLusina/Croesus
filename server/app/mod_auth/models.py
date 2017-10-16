@@ -1,25 +1,25 @@
-"""
-Models dealing with authentication
-
-UserAccountStatus deals with the current account status details
-UserAccount deals with authenticating the user, will handle login and authentication details
-UserProfile is the actual user profile and will be used to display the user profile data
-ExternalServiceAccount is for storing data for external service providers
-"""
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
-from app.models import Base
-from abc import ABCMeta
-import uuid
-from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.ext.declarative import declared_attr
-from flask_login import UserMixin
-from .. import db, login_manager
-from datetime import datetime
-from sqlalchemy.orm import relationship
+import hashlib
 import json
-from time import gmtime
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+import uuid
+from datetime import datetime
+
 from flask import current_app
+from flask_login import UserMixin
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from app.models import Base
+from .. import db, login_manager
+
+
+class Permission:
+    FOLLOW = 0x01
+    COMMENT = 0x02
+    WRITE_ARTICLES = 0x04
+    MODERATE_COMMENTS = 0x08
+    ADMINISTER = 0x80
 
 
 class UserAccountStatus(db.Model):
@@ -39,6 +39,7 @@ class UserAccountStatus(db.Model):
     def __init__(self, code, name):
         self.code = code
         self.name = name
+
     user_account = relationship("UserAccount", backref="user_account_status", lazy="dynamic")
 
     def __repr__(self):
@@ -66,39 +67,31 @@ class UserProfile(Base):
     accept_tos = Column(Boolean, nullable=False, default=True)
     user_account = relationship("UserAccount", backref="user_profile", lazy="dynamic")
 
-    # todo: getting user timezone
-    time_zone = Column(DateTime)
-
     def from_json(self, user_profile):
         user = json.loads(user_profile)
         self.first_name = user["first_name"]
         self.last_name = user["last_name"]
         self.email = user["email"]
         self.accept_tos = user["accept_tos"]
-        self.time_zone = user["time_zone"]
 
     def to_json(self):
         return dict(
+            id=self.id,
             first_name=self.first_name,
             last_name=self.last_name,
             date_created=self.date_created,
             date_modified=self.date_modified,
             email=self.email,
             accept_terms_of_service=self.accept_tos,
-            time_zone=self.time_zone,
         )
 
     def __repr__(self):
         return "FirstName: {first_name}, LastName:{last_name}\n " \
                "Dates:[Created:{date_created}, Modified:{date_modified}]\n " \
-               "Email:{email} accept_terms_of_service:{accept_tos}\n" \
-               " TimeZone:{time_zone}".format(first_name=self.first_name,
-                                              last_name=self.last_name,
-                                              date_created=self.date_created,
-                                              date_modified=self.date_modified,
-                                              email=self.email,
-                                              accept_tos=self.accept_tos,
-                                              time_zone=self.time_zone, )
+               "Email:{email} accept_terms_of_service:{accept_tos}\n".format(
+            first_name=self.first_name, last_name=self.last_name,
+            date_created=self.date_created, date_modified=self.date_modified,
+            email=self.email, accept_tos=self.accept_tos)
 
 
 class UserAccount(Base, UserMixin):
@@ -107,10 +100,10 @@ class UserAccount(Base, UserMixin):
     :cvar uuid unique user id
     :cvar username unique user name of user
     :cvar email email of user
-    :cvar email_confirmation_token token for confirming this user 
+    :cvar email_confirmation_token token for confirming this user
     :cvar password_hash user's hashed password
     :cvar admin boolean indicating if this user is an admin or not
-    
+
     :cvar user_account_status_id FK id of user account status
     """
     __tablename__ = "user_account"
@@ -119,12 +112,14 @@ class UserAccount(Base, UserMixin):
     username = Column(String(250), nullable=False, unique=True, index=True)
     email = Column(String(250), nullable=False, unique=True, index=True)
     email_confirmation_token = Column(String(350), nullable=True)
-    last_seen = Column(DateTime)
+    last_seen = Column(DateTime(), default=datetime.now())
     password_hash = Column(String(250), nullable=False)
     admin = Column(Boolean, nullable=True, default=False)
-    registered_on = Column(DateTime, nullable=False, default=datetime.now())
+    registered_on = Column(DateTime(), nullable=False, default=datetime.now())
     confirmed = Column(Boolean, nullable=False, default=False)
-    confirmed_on = Column(DateTime, nullable=True)
+    confirmed_on = Column(DateTime(), nullable=True)
+    avatar_hash = Column(String(32))
+    member_since = Column(DateTime(), default=datetime.now)
 
     user_profile_id = Column(Integer, ForeignKey("user_profile.id"))
     user_account_status_id = Column(Integer, ForeignKey("user_account_status.id"))
@@ -161,7 +156,26 @@ class UserAccount(Base, UserMixin):
         serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
         return serializer.dumps({"reset": self.id})
 
-    def generate_confirm_token(self, expiration=3600):
+    def reset_password(self, token, new_password):
+        """
+        Resets the user password given reset token and their new password
+        :param token: token from generate_reset_token
+        :param new_password: new password to reset
+        :return: True
+        :rtype: bool
+        """
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('reset') != self.id:
+            return False
+        self.password = new_password
+        db.session.add(self)
+        return True
+
+    def generate_confirmation_token(self, expiration=3600):
         """
         Generates a confirmation token
         :param expiration: time to expire
@@ -170,6 +184,60 @@ class UserAccount(Base, UserMixin):
         serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
         self.email_confirmation_token = serializer.dumps({"confirm": self.id})
         return serializer.dumps({"confirm": self.id})
+
+    def confirm_token(self, token):
+        """
+        Confirms a given token
+        :param token: token generated while registering new user
+        :return: Boolean
+        :rtype: bool
+        """
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get('confirm') != self.id:
+            return False
+        self.confirmed = True
+        db.session.add(self)
+        return True
+
+    def generate_email_change_token(self, new_email, expiration=3600):
+        """
+        Generates email change token
+        :param new_email, new users email
+        :param expiration: period of time before user's email change token is generated
+        :return: generated token for changing email
+        """
+        serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
+
+        return serializer.dumps({"change_email": self.id, "new_email": new_email})
+
+    def change_email(self, token):
+        """
+        Allows the changing of user email given a generated token. This token will be usedd
+        to verify that this user is the one authorizing the emeial change
+        :param token: generated email change token
+        :return: True if email change succeeds, False otherwise
+        :rtype: bool
+        """
+        s = Serializer(current_app.config["SECRET_KEY"])
+        try:
+            data = s.loads(token)
+        except:
+            return False
+        if data.get("change_email") != self.id:
+            return False
+        new_email = data.get("new_email")
+        if new_email is None:
+            return False
+        if self.query.filter_by(email=new_email).first() is not None:
+            return False
+        self.email = new_email
+        self.avatar_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
+        db.session.add(self)
+        return True
 
     def generate_auth_token(self, expiration):
         """
@@ -180,13 +248,50 @@ class UserAccount(Base, UserMixin):
         serializer = Serializer(current_app.config["SECRET_KEY"], expires_in=expiration)
         return serializer.dumps({"id": self.id}).decode("ascii")
 
+    def verify_auth_token(self, token):
+        """
+        Verifies the generated auth token
+        :param token: token to verify
+        :return: None or the user
+        """
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return None
+        return self.query.get(data['id'])
+
+    def can(self, permissions):
+        """
+        Checks if the current user has the given persmissions
+        :param permissions:
+        :return:
+        """
+        return self.role is not None and \
+               (self.role.permissions & permissions) == permissions
+
+    def is_administrator(self):
+        """
+        Checks if the user is an admin
+        :return: True if admin, False otherwise
+        :rtype: bool
+        """
+        return self.can(Permission.ADMINISTER)
+
+    def ping(self):
+        """
+        Pings the current user and updates their last seen attribute
+        """
+        self.last_seen = datetime.now()
+        db.session.add(self)
+
     def __repr__(self):
         return "Id: {},\n uuid: {}, Username: {} ProfileId:{}, AccountStatusId:{}" \
                "Email:{} \n Dates: [created: {}, modified: {}]\n " \
                "Registered:{}\n Confirmed: [{} date: {}]\n Last Seen: {}" \
             .format(self.id, self.uuid, self.username, self.user_profile_id,
                     self.user_account_status_id, self.email, self.date_created,
-                    self.date_modified,self.registered_on, self.confirmed,
+                    self.date_modified, self.registered_on, self.confirmed,
                     self.date_modified, self.registered_on, self.confirmed,
                     self.confirmed_on, self.last_seen)
 
@@ -195,9 +300,9 @@ class UserAccount(Base, UserMixin):
             id=self.id, uuid=self.uuid, username=self.username,
             profile_id=self.user_profile_id, account_status_id=self.user_account_status_id,
             email=self.email, date_created=self.date_created,
-            date_modified=self.date_modified, registerd_on=self.registered_on,
-            confimed=self.confirmed, confirmed_on=self.confirmed_on,
-            last_seen=self.last_seen
+            date_modified=self.date_modified, registered_on=self.registered_on,
+            confirmed=self.confirmed, confirmed_on=self.confirmed_on,
+            last_seen=self.last_seen, member_since=self.member_since
         )
 
     def from_json(self, user_account):
@@ -211,107 +316,3 @@ class UserAccount(Base, UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return UserAccount.query.get(int(user_id))
-
-
-class ExternalServiceAccount(db.Model):
-    """
-    Abstract class that will superclass all external service accounts,
-
-    :cvar first_name: first name as received from the external service account
-    :cvar last_name: last name as received from external service account
-    """
-    __metaclass__ = ABCMeta
-    __abstract__ = True
-
-    first_name = Column(String(250), nullable=False)
-    last_name = Column(String(250), nullable=False)
-    email = Column(String(250), nullable=False)
-
-    def __init__(self, email, first_name, last_name):
-        self.email = email
-        self.first_name = first_name
-        self.last_name = last_name
-
-    @declared_attr
-    def user_profile_id(self):
-        """
-        This is a declared attr, that will be used in all external accounts
-        :return: User profile id that is a foreign and primary key
-        """
-        return Column(Integer, ForeignKey(UserProfile.id), primary_key=True)
-
-
-class FacebookAccount(ExternalServiceAccount):
-    """
-    Facebook account details for the author
-    :cvar __tablename__: name of this table as represented in the database
-    :cvar facebook_id: Facebook id received from
-    """
-    __tablename__ = "facebook_account"
-    facebook_id = Column(String(100), nullable=True, unique=True)
-
-    def __init__(self, facebook_id, email, first_name, last_name):
-        super().__init__(email, first_name, last_name)
-        self.facebook_id = facebook_id
-
-
-class TwitterAccount(ExternalServiceAccount):
-    """
-    Twitter account table
-    :cvar __tablename__: table name as rep in database
-    :cvar twitter_id: The twitter id as set in Twitter, or as received from Twitter
-    """
-    __tablename__ = "twitter_account"
-    twitter_id = Column(String(100), nullable=True, unique=True)
-
-    def __init__(self, twitter_id, email, first_name, last_name):
-        super().__init__(email, first_name, last_name)
-        self.twitter_id = twitter_id
-
-
-class GoogleAccount(ExternalServiceAccount):
-    """
-    Google Account table
-    :cvar __tablename__: name of table in database
-    :cvar google_id: Google id as received from Google on registration
-    """
-    __tablename__ = "google_account"
-    google_id = Column(String(100), nullable=True, unique=True)
-
-    def __init__(self, google_id, email, first_name, last_name):
-        super().__init__(email, first_name, last_name)
-        self.google_id = google_id
-
-
-class AsyncOperationStatus(Base):
-    """
-    Dictionary table that stores 3 available statuses, pending, ok, error
-    """
-    __tablename__ = "async_operation_status"
-
-    code = Column("code", String(20), nullable=True)
-
-    def __repr__(self):
-        pass
-
-
-class AsyncOperation(Base):
-    """
-
-    """
-    __tablename__ = "async_operation"
-
-    async_operation_status_id = Column(Integer, ForeignKey(AsyncOperationStatus.id))
-    user_profile_id = Column(Integer, ForeignKey(UserProfile.id))
-
-    status = relationship("AsyncOperationStatus", foreign_keys=async_operation_status_id)
-    user_profile = relationship("UserProfile", foreign_keys=user_profile_id)
-
-    def __repr__(self):
-        pass
-
-# todo add events
-# event.listen(
-#     AsyncOperationStatus.__table__, "after_create",
-#     DDL(""" INSERT INTO async_operation_status (id,code) VALUES(1,'pending'),(2, 'ok'),(3, 'error'); """)
-# )

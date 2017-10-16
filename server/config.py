@@ -3,11 +3,13 @@ Configurations for flask application. These are global variables that the app wi
 lifetime
 """
 import os
-from abc import ABCMeta, abstractmethod
 from abc import ABCMeta
+from setup_environment import setup_environment_variables
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+setup_environment_variables()
 
 
 class Config(object):
