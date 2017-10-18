@@ -1,10 +1,11 @@
 import json
 import unittest
-
-from flask_api.exceptions import AuthenticationFailed
+from unittest.mock import patch
+from flask_api.exceptions import AuthenticationFailed, NotFound
 from flask_login import current_user
 from app.mod_auth.exceptions import UserAlreadyExists, CredentialsRequired
 from tests import BaseTestCase
+from app.mod_auth.tasks import send_mail_async
 
 
 class RegistrationTestCases(BaseTestCase):
@@ -15,17 +16,12 @@ class RegistrationTestCases(BaseTestCase):
         response = self.client.get('auth/register/', follow_redirects=True)
         self.assert200(response)
 
-    def test_registration_returns_200_on_post_request(self):
-        """Test POST request to registration route returns 200"""
-        response = self.client.post("auth/register/", follow_redirects=True)
-        self.assert200(response)
-
-    def test_registration_returns_201_when_user_data_is_posted(self):
+    @patch.object(send_mail_async, "delay")
+    def test_registration_returns_201_when_user_data_is_posted(self, mock_send_email_task):
         """Test POST request with data to registration returns 201 response"""
-        user = {'username': 'user3', 'password': 'user3_password',
-                "email": "user3@example.com",
-                "first_name": "user3_first_name", "last_name": "user3_last_name"}
-        req = self.client.post('/auth/register/', data=user)
+        user_data = dict(email="doge@woof.com", first_name="doge", last_name="doge",
+                         password="ihatecats", username="dogewoof")
+        req = self.client.post('/auth/register/', data=user_data)
         self.assertEqual(req.status_code, 201)
 
     def test_registration_raises_exception_when_user_exists(self):
@@ -40,7 +36,7 @@ class RegistrationTestCases(BaseTestCase):
 class LoginTestCases(BaseTestCase):
     """ Tests correct user login"""
 
-    def test_correct_logging_in_returns_200(self):
+    def test_correct_log_in_returns_200(self):
         """Test login route returns 200"""
         response = self.login()
         self.assert200(response)
@@ -79,6 +75,19 @@ class LoginTestCases(BaseTestCase):
             self.assertTrue(current_user.is_active)
             self.assertTrue(current_user.is_authenticated)
 
+    def test_correct_token_generation(self):
+        """Tests correct token generation"""
+        rv = self.client.post("/auth/login/", data={'username': 'its-me', 'password': 'i have no idea'})
+        res_json = json.loads(rv.data.decode("utf-8"))
+        jwt_token = res_json.get('token')
+        self.assertIsNone(jwt_token)
+
+
+class LogoutTestCases(BaseTestCase):
+    """
+    logout test cases
+    """
+
     def test_log_out_with_valid_jwt_token(self):
         """Test user can correctly log out when passing JWT token in header"""
         with self.client:
@@ -88,13 +97,14 @@ class LoginTestCases(BaseTestCase):
             headers = {'Authorization': 'Bearer {0}'.format(jwt_token)}
             logout_response = self.client.get("/auth/logout/", headers=headers)
             self.assertIn('You have logged out successfully', logout_response.data.decode("utf-8"))
+            self.assert200(logout_response)
 
-    def test_correct_token_generation(self):
-        """Tests correct token generation"""
-        rv = self.client.post("/auth/login/", data={'username': 'its-me', 'password': 'i have no idea'})
-        res_json = json.loads(rv.data.decode("utf-8"))
-        jwt_token = res_json.get('token')
-        self.assertIsNone(jwt_token)
+    # def test_anonymous_user_logout_raises_error(self):
+    #     """Test that anonymous user logout raises error"""
+    #     with self.assertRaises(NotFound) as ctx:
+    #         self.client.get("/auth/logout/")
+    #         self.assertIn(NotFound.detail, ctx.exception)
+    #         self.assertEqual(NotFound.status_code, 404)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
 from . import auth
-from app import db
-from flask_login import current_user
-from .security import generate_confirmation_token, confirm_token, send_mail_async
+from .security import generate_confirmation_token, confirm_token, generate_auth_token
+from .tasks import send_mail_async
 from flask import jsonify, request, redirect, url_for, abort, render_template
 from app import db
 from .forms import ResetPasswordForm
@@ -9,7 +8,8 @@ import requests
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
 from .models import UserProfile, UserAccount, UserAccountStatus #, FacebookAccount
-from .exceptions import UserAlreadyExists
+from flask_api.exceptions import AuthenticationFailed, NotFound
+from .exceptions import UserAlreadyExists, CredentialsRequired
 
 
 @auth.route("register/", methods=["GET", "POST"])
@@ -49,7 +49,8 @@ def register():
             db.session.commit()
 
             # now we add the status of this new account and commit it
-            new_user_account_status = UserAccountStatus(code="0", name="EMAIL_NON_CONFIRMED")
+            new_user_account_status = UserAccountStatus(code="0",
+                                                        name="EMAIL_NON_CONFIRMED")
 
             db.session.add(new_user_account_status)
             db.session.commit()
@@ -81,7 +82,7 @@ def register():
             # to login
             return jsonify(dict(status="success", message="User created",
                                 state="User Logged in", response=200,
-                                confirm_email_sent=True))
+                                confirm_email_sent=True)), 201
 
     if request.method == "GET":
         return jsonify(
@@ -139,36 +140,32 @@ def confirm_email(token):
 @auth.route("login/", methods=["GET", "POST"])
 @auth.route("login", methods=["GET", "POST"])
 def login():
-    pass
-
-
-@auth.route("signup", methods=["GET", "POST"])
-def signup():
-    pass
     if request.method == "POST":
-        # if request is POST, retrieve data and log in the user
-        user_email = request.values.get("email")
-        user_password = request.values.get("password")
+        username = request.values.get("username")
+        password = request.values.get("password")
+        user_account = UserAccount.query.filter_by(username=username).first()
 
-        # get the user object and check if they exist
-        user = UserAccount.query.filter_by(email=user_email).first()
-
-        # if the user exists, check their password
-        if user is not None:
-            if user.verify_password(user_password):
-                # log in the user
-                login_user(user)
-
-                # return response to client
-                return jsonify(dict(message="Logged in success", success=True, response_code=200))
+        # check for password validity
+        if user_account is not None:
+            if user_account.verify_password(password):
+                token = generate_auth_token(username, password)
+                db.session.commit()
+                login_user(user_account)
+                return jsonify({
+                    "message": 'You have logged in successfully',
+                    "response": "Success",
+                    'token': token
+                })
             else:
-                # wrong password, return error message to client
-                return jsonify(dict(message="Log in Failure", success=False, response_code=400,
-                                    cause="Wrong password"))
+                raise AuthenticationFailed()
         else:
-            # this user does not exist
-            return jsonify(dict(message="User does not exist", success=False, response_code=400))
-    return jsonify(dict())
+            return jsonify({
+                "message": "Username {} does not exist".format(username),
+                "error": True
+            }), 401
+
+    if request.method == "GET":
+        raise CredentialsRequired()
 
 
 @auth.route("reset", methods=["GET", "POST"])
@@ -258,6 +255,7 @@ def login_with_twitter():
 
 
 @auth.route("logout")
+@auth.route("logout/")
 @login_required
 def logout():
     """
@@ -265,5 +263,13 @@ def logout():
     :return: json response
     :rtype: dict
     """
-    logout_user()
-    return jsonify(dict(message="User logged out", success=True))
+    user_account = UserAccount.query.filter_by(id=current_user.id).first()
+
+    if user_account:
+        logout_user()
+        return jsonify({
+            "message": "You have logged out successfully",
+            "success": True
+        }), 200
+    else:
+        raise NotFound()

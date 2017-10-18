@@ -1,5 +1,7 @@
 from tests import BaseTestCase
 import unittest
+from unittest.mock import patch
+from app.mod_auth.tasks import send_mail_async
 from app.mod_auth.models import UserAccount
 from datetime import datetime
 import time
@@ -11,8 +13,8 @@ class UserAccountModelTests(BaseTestCase):
     """
     Tests for user account model
     """
-
-    def test_on_user_register_a_new_account_is_created(self):
+    @patch.object(send_mail_async, "delay")
+    def test_on_user_register_a_new_account_is_created(self, mock_send_email_async):
         """Test that new registration creates a new user account"""
         with self.client:
             self.client.post("/auth/register/", data=dict(email="johndoe@example.com",
