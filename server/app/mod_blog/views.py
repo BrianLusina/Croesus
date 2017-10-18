@@ -9,7 +9,7 @@ rendering.
 """
 from flask import jsonify
 
-from app.mod_blog.blog_tasks import fetch_news
+from app.mod_blog.tasks import fetch_news
 from . import blog
 
 
