@@ -6,6 +6,8 @@ from flask_login import current_user
 from app.mod_auth.exceptions import UserAlreadyExists, CredentialsRequired
 from tests import BaseTestCase
 from app.mod_auth.tasks import send_mail_async
+from app.mod_auth.models import UserAccount
+from flask import url_for
 
 
 class RegistrationTestCases(BaseTestCase):
@@ -105,6 +107,32 @@ class LogoutTestCases(BaseTestCase):
     #         self.client.get("/auth/logout/")
     #         self.assertIn(NotFound.detail, ctx.exception)
     #         self.assertEqual(NotFound.status_code, 404)
+
+
+class AuthBackgroundTasks(BaseTestCase):
+    """Tests that background tasks are executed"""
+
+    @patch.object(send_mail_async, "delay")
+    def test_registration_sends_email_to_user(self, mock_send_email_task):
+        """Test POST request with data to registration sends email in background"""
+        user_data = dict(email="doge@woof.com", first_name="doge", last_name="doge",
+                         password="ihatecats", username="dogewoof")
+        user_account = UserAccount(email="doge@woof.com", password="ihatecats", username="dogewoof")
+        req = self.client.post('/auth/register/', data=user_data)
+        self.assertEqual(req.status_code, 201)
+
+        # create a token from the new user account
+        token = user_account.generate_confirmation_token()
+
+        # _external adds the full absolute URL that includes the hostname and port
+        confirm_url = "http://localhost/auth/confirm/{token}".format(token=token.decode("utf-8"))
+
+        self.assertTrue(mock_send_email_task.called)
+        # assert that the task was called once
+        # self.assertTrue(mock_send_email_task.assert_called_once_with(to=user_data.get("email"),
+        #                                                              subject="Please confirm your email",
+        #                                                              template="auth.confirm_email.html",
+        #                                                              confirm_url=confirm_url))
 
 
 if __name__ == "__main__":

@@ -71,9 +71,10 @@ def register():
             confirm_url = url_for("auth.confirm_email", token=token, _external=True)
 
             # send user confirmation email asynchronously
-            # Todo: fails to send email, why?
-            send_mail_async.delay(new_user_account.email, "Please Confirm you email",
-                                  "auth.confirm_email.html", confirm_url)
+            send_mail_async.delay(to=new_user_account.email,
+                                  subject="Please Confirm you email",
+                                  template="auth.confirm_email.html",
+                                  confirm_url=confirm_url)
 
             # log in the new user
             login_user(new_user_account)
