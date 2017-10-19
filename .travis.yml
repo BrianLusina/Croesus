@@ -31,8 +31,8 @@ script:
   - npm run test
   - cd ..
   - cd server
-  - ./setup_env.sh
   - sudo pip3 install -r requirements.txt
+  - ./setup_env.sh
   - python3 manage.py test
 
 after_success:
