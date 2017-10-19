@@ -1,6 +1,7 @@
 version: 2.0
 jobs:
         build:
+                working_directory: ~/croesus
                 docker:
                         - image: circleci/node:8.7.0-onbuild
                         
@@ -14,60 +15,55 @@ jobs:
                                   POSTGRES_USER: ubuntu
                                   POSTGRES_DB: circle_test
                                   POSTGRES_PASSWORD: ""
+
+                steps:
+                        - checkout
+                        - restore_cache:
+                                key: croesus-{{ .Branch }}
+                                keys:
+                                        - client-{{ checksum "client/package.json" }}
+                                        - server-{{ checksum "server/requirements.txt" }}
+                                                                                      
+                        - run:
+                                name: Client Dependencies
+                                command: |
+                                        cd client
+                                        npm install
+                                        cd ..
                         
-                        working_directory: ~/croesus
-                        
-                        steps:
-                                - checkout
-                       
-                                  # Download and cache dependencies
-                                - restore_cache:
+                        - run:
+                                name: Server dependencies
+                                command: |
+                                        cd server
+                                        python3 -m venv venv
+                                        . venv/bin/activate
+                                        pip install -r requirements.txt
+                                        cd ..
+                                
+                        - save_cache:
+                                paths:
                                         key: croesus-{{ .Branch }}
                                         keys:
                                                 - client-{{ checksum "client/package.json" }}
                                                 - server-{{ checksum "server/requirements.txt" }}
-                                                                                      
-                                - run:
-                                        name: Client Dependencies
-                                        command: |
-                                                cd client
-                                                npm install
-                                                cd ..
-
-                                - run:
-                                        name: Server dependencies
-                                        command: |
-                                                cd server
-                                                python3 -m venv venv
-                                                . venv/bin/activate
-                                                pip install -r requirements.txt
-                                                cd ..
-                                
-                                - save_cache:
                                         paths:
-                                                key: croesus-{{ .Branch }}
-                                                keys:
-                                                        - client-{{ checksum "client/package.json" }}
-                                                        - server-{{ checksum "server/requirements.txt" }}
-                                                paths:
-                                                        - ./server/venv
-                                                        - ./client/node_modules
-
-                                - run:
-                                        name: Client tests
-                                        command: |
-                                                cd client
-                                                npm run test
-                                                cd ..
-                                - run:
-                                        name: Server tests
-                                        command: |
-                                                cd server
-                                                . venv/bin/activate
-                                                ./setup_env.sh
-                                                python manage.py test --cover
-                                                codecov
+                                                - ./server/venv
+                                                - ./client/node_modules
+                        - run:
+                                name: Client tests
+                                command: |
+                                        cd client
+                                        npm run test
+                                        cd ..
+                        - run:
+                                name: Server tests
+                                command: |
+                                        cd server
+                                        . venv/bin/activate
+                                        ./setup_env.sh
+                                        python manage.py test --cover
+                                        codecov
                                      
-                                - store_artifacts:
-                                        path: test-reports
-                                        destination: test-reports
+                        - store_artifacts:
+                                path: test-reports
+                                destination: test-reports
