@@ -2,7 +2,7 @@
 
 touch .env
 
-echo POSTGRES_USER=${POSTGRES_USER} >> .env >> .env
+echo POSTGRES_USER=${POSTGRES_USER} >> .env
 echo POSTGRES_DB=${POSTGRES_DB} >> .env
 echo POSTGRES_PASSWORD=${POSTGRES_PASSWORD} >> .env
 echo SECRET_KEY=${SECRET_KEY} >> .env
