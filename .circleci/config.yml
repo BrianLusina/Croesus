@@ -41,14 +41,14 @@ jobs:
                                         cd ..
                                 
                         - save_cache:
+                                key: croesus-{{ .Branch }}
+                                keys:
+                                        - client-{{ checksum "client/package.json" }}
+                                        - server-{{ checksum "server/requirements.txt" }}
                                 paths:
-                                        key: croesus-{{ .Branch }}
-                                        keys:
-                                                - client-{{ checksum "client/package.json" }}
-                                                - server-{{ checksum "server/requirements.txt" }}
-                                        paths:
-                                                - ./server/venv
-                                                - ./client/node_modules
+                                        - ./server/venv
+                                        - ./client/node_modules
+                        
                         - run:
                                 name: Client tests
                                 command: |
