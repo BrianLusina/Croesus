@@ -146,6 +146,25 @@ def app_request_handlers(app, db_):
             #                  query.context))
             #     return response
 
+    @app.before_first_request
+    def _run_on_start():
+        from concurrent.futures import ThreadPoolExecutor as Executor
+
+        def __fetch_blog_articles():
+            """
+            this will run in a background thread to fetch blog articles and store them in redis
+            """
+            from app.mod_blog.tasks import fetch_news
+
+            logging.info("Fetching blog posts...")
+
+            fetch_news.apply_async()
+
+            logging.info("Done Fetching blogs.")
+
+        with Executor(max_workers=5) as exe:
+            exe.submit(__fetch_blog_articles)
+
 
 def app_logger_handler(app, config_name):
     """

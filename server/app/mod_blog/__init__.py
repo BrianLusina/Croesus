@@ -7,6 +7,6 @@ an API to the client
 
 from flask import Blueprint
 
-blog = Blueprint(name="blog", import_name=__name__, url_prefix="/blog/")
+blog = Blueprint(name="blog", import_name=__name__, url_prefix="/blog")
 
 from . import views
