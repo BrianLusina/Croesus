@@ -9,6 +9,7 @@ rendering.
 """
 from flask import jsonify
 import redis
+import json
 import os
 from app.mod_blog.tasks import fetch_news
 from . import blog
@@ -26,14 +27,13 @@ def display_top_news():
     Accessed via route <API_URL>/blog/
     :return: JSON response of data related to blog posts and news
     """
-    # news_results = fetch_news.apply_async()
-    # while news_results.state == "PENDING":
-    #
-    #     if news_results.state != "FAILURE":
-    #         news_results = fetch_news.apply_async()
-    #
-    #     return jsonify(news_results.get())
-    print(r.keys())
+    for key in r.keys():
+        value = r.get(key.decode("utf-8"))
+        if value:
+            val_ = value.decode("utf-8")
+            results = val_.split(",")
+            print("Res", results)
+
     return jsonify({
         "message": "Could not fetch blog posts at the moment",
     }), 200

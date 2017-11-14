@@ -29,4 +29,4 @@ def fetch_news(self):
     self.update_state(state="COMPLETE", meta={"result": results})
     time.sleep(1)
 
-    return json.dumps(results)
+    return results
