@@ -31,7 +31,7 @@ lxml==3.7.3
 Mako==1.0.6
 MarkupSafe==1.0
 newspaper3k==0.1.9
-nltk==3.2.2
+nltk==3.4.5
 olefile==0.44
 packaging==16.8
 Pillow==4.1.0
