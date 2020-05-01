@@ -1,0 +1,56 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - codacy-coverage > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - material-ui > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - enzyme > cheerio > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-core > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > eslint > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > eslint-plugin-flowtype > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > html-webpack-plugin > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > webpack-manifest-plugin > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-jest > babel-core > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > eslint > inquirer > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > react-dev-utils > inquirer > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > eslint > table > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > webpack-dev-server > http-proxy-middleware > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-preset-react-app > babel-plugin-dynamic-import-node > babel-types > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-preset-react-app > babel-plugin-dynamic-import-node > babel-template > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > jest > jest-cli > jest-runtime > babel-core > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-preset-react-app > babel-plugin-dynamic-import-node > babel-template > babel-types > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-preset-react-app > babel-plugin-dynamic-import-node > babel-template > babel-traverse > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > jest > jest-cli > jest-runtime > babel-jest > babel-core > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > babel-preset-react-app > babel-plugin-dynamic-import-node > babel-template > babel-traverse > babel-types > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - nock > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - codacy-coverage > request-promise > request-promise-core > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > extract-text-webpack-plugin > async > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - react-scripts > webpack > async > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
+    - sinon > nise > @sinonjs/formatio > @sinonjs/samsam > lodash:
+        patched: '2020-05-01T03:59:15.050Z'
