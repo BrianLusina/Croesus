@@ -8,7 +8,7 @@
     "express": "^4.16.1",
     "material-ui": "^1.0.0-beta.12",
     "material-ui-icons": "^1.0.0-beta.10",
-    "mongoose": "^5.9.9",
+    "mongoose": "^5.9.16",
     "passport": "^0.4.0",
     "prop-types": "^15.6.0",
     "react": "^16.13.1",
@@ -20,13 +20,13 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "socket.io": "^2.0.3",
-    "socket.io-client": "^2.0.3"
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "codacy-coverage": "^2.0.3",
     "codecov": "^3.7.0",
-    "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "expect": "^21.1.0",
     "istanbul": "^0.4.5",
     "mocha": "^6.0.0",
