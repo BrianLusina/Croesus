@@ -8,7 +8,7 @@
     "express": "^4.16.1",
     "material-ui": "^1.0.0-beta.12",
     "material-ui-icons": "^1.0.0-beta.10",
-    "mongoose": "^5.9.16",
+    "mongoose": "^5.9.18",
     "passport": "^0.4.0",
     "prop-types": "^15.6.0",
     "react": "^16.13.1",
