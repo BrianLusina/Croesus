@@ -36,7 +36,7 @@ olefile==0.44
 packaging==16.8
 Pillow==6.2.3
 psycopg2==2.7.1
-py==1.4.33
+py==1.10.0
 pyparsing==2.2.0
 pytest==3.0.7
 python-dateutil==2.6.0
